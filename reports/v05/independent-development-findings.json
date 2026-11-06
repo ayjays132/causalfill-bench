@@ -1,0 +1,30 @@
+{
+  "findings": [
+    {
+      "construction": {
+        "experiments": 10,
+        "labels_per_world_sensor": 8,
+        "supported_terminal_histories": 2300875336,
+        "worlds": 11
+      },
+      "detection_method": "Source inspection and finite combinatorial construction; a billions-of-path runtime was not executed.",
+      "id": "V05-REPLAY-ALIASES",
+      "kind": "resource-amplification risk",
+      "limits": "The history count is algebraically represented by multiplicities, not an executed-test count or a formal proof of generic replay correctness.",
+      "observed": "Initial decision_sufficiency.replay_certificate expanded every distinct observation-label history independently, including labels with identical semantic support.",
+      "post_fix": {
+        "best_cost": 1,
+        "exact_supported_histories": 2300875336,
+        "resource_cap_negative_control": "passes",
+        "verified_replay_states": 76,
+        "worst_cost": 10
+      },
+      "regression": "tools/stress_vision_audit_v05.py::replay_alias_checks",
+      "repair": "Replay merges histories having the same fixed world, remaining experiment set, and compatible-world set; exact multiplicities and cost extrema are retained. A one-million unique replay-state cap returns an explicit incomplete result.",
+      "status": "repaired-and-regression-tested"
+    }
+  ],
+  "no_other_failure_claim": "No false accept, false reject, pixel mismatch, leakage counterexample, or protocol failure was found in the completed independent development audit. Later robotics audit results are recorded separately.",
+  "role": "author/evaluator source review; no model run",
+  "schema": "causalfill.development-findings.v05"
+}

@@ -1,0 +1,199 @@
+{
+  "public": {
+    "family": "proof",
+    "difficulty": 1,
+    "prompt": "Fill the missing proof of a controller's signed output condition. Read the immutable formal statement F, its variable count and goal literal. Supply a resolution refutation of F plus the negated goal, AND a concrete satisfying model of F. This establishes the stated conclusion without exploiting inconsistent assumptions. Use the exact statement digest; changing or weakening the theorem is invalid. Only compact proof-index triples are accepted; no source code, new premises, admitted axioms or prose proofs. The task is finite propositional logic and is not a Lean or physical-control evaluation.",
+    "slots": {
+      "statement_sha256": {
+        "type": "string",
+        "description": "Exact SHA256 from the fixed public formal statement."
+      },
+      "proof_steps": {
+        "type": "array[array[int,int,int]]",
+        "description": "Resolution steps [left_index,right_index,pivot]; max 12000 steps and protocol size bound."
+      },
+      "consistency_model": {
+        "type": "array[bool]",
+        "description": "Exactly 8 Boolean values satisfying the ORIGINAL premises F."
+      }
+    },
+    "files": [
+      "/docs/resolution.txt",
+      "/formal/statement.json",
+      "/skill/recovery.md",
+      "/workspace/controller.txt"
+    ],
+    "tools": {
+      "check_prefix": {
+        "description": "Check at most 256 proposed resolution steps; never solve or complete the proof",
+        "arguments": {
+          "proof_steps": "list of compact [a,b,p] triples"
+        },
+        "cost": 2
+      }
+    },
+    "budget": 20,
+    "max_calls": 24,
+    "episode_id": "427c76f52ff240afa0132ff0ef3bdc3d",
+    "common_tools": {
+      "list_files": {
+        "arguments": {},
+        "cost": 1
+      },
+      "read_file": {
+        "arguments": {
+          "path": "exact listed virtual path"
+        },
+        "cost": 1
+      },
+      "search_files": {
+        "arguments": {
+          "text": "literal string, 1\u2013160 characters"
+        },
+        "cost": 2
+      },
+      "session_status": {
+        "arguments": {},
+        "cost": 1
+      },
+      "submit": {
+        "arguments": {
+          "fill": "object",
+          "confidence": "number 0..1",
+          "abstain": "boolean",
+          "evidence": "list of returned event IDs"
+        },
+        "cost": 0
+      }
+    },
+    "max_seconds": 600,
+    "tools_enabled": true,
+    "submission_rule": "One final submission. Grades are evaluator-only; no retry after submission."
+  },
+  "events": [
+    {
+      "event_id": "e0001",
+      "tool": "read_file",
+      "arguments": {
+        "path": "/formal/statement.json"
+      },
+      "response": {
+        "path": "/formal/statement.json",
+        "content": "{\"nvars\":8,\"clauses\":[[-7,-5],[-7,2],[-7,4],[-7,-6],[-7,-5,2,3],[-7,-2,3,5],[-7,-5,-3,-2],[-7,-3,2,5],[-7,-3,-1,4],[-7,-4,-1,3],[-7,-4,-3,1],[-7,1,3,4],[-7,-6,1,8],[-7,-1,6,8],[-8,-7,1,6],[-8,-7,-6,-1],[-8,-7]],\"goal\":-7,\"statement_sha256\":\"ef2ffb9834bb29c68906735592ff457f0832779fa5e0ca1583dca174ccd0e10a\"}",
+        "event_id": "e0001",
+        "cost_used": 1
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "7e39038af1fbb68fa24aca3e3d86eb30f1de69a456ec00070737931d629f185c"
+    },
+    {
+      "event_id": "e0002",
+      "tool": "submit",
+      "arguments": {
+        "fill": {
+          "statement_sha256": "ef2ffb9834bb29c68906735592ff457f0832779fa5e0ca1583dca174ccd0e10a",
+          "proof_steps": [
+            [
+              17,
+              16,
+              7
+            ],
+            [
+              17,
+              3,
+              7
+            ],
+            [
+              17,
+              0,
+              7
+            ],
+            [
+              17,
+              1,
+              7
+            ],
+            [
+              17,
+              2,
+              7
+            ],
+            [
+              17,
+              10,
+              7
+            ],
+            [
+              17,
+              5,
+              7
+            ],
+            [
+              17,
+              13,
+              7
+            ],
+            [
+              21,
+              24,
+              2
+            ],
+            [
+              22,
+              23,
+              4
+            ],
+            [
+              26,
+              20,
+              5
+            ],
+            [
+              28,
+              27,
+              3
+            ],
+            [
+              29,
+              25,
+              1
+            ],
+            [
+              30,
+              19,
+              6
+            ],
+            [
+              31,
+              18,
+              8
+            ]
+          ],
+          "consistency_model": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "confidence": 1.0,
+        "abstain": false,
+        "evidence": [
+          "e0001"
+        ]
+      },
+      "response": {
+        "accepted": true,
+        "episode_closed": true,
+        "event_id": "e0002",
+        "cost_used": 1
+      },
+      "previous_hash": "7e39038af1fbb68fa24aca3e3d86eb30f1de69a456ec00070737931d629f185c",
+      "hash": "58fa531515bbcf21d3a62abfb7bf2f6b801620e1acaea2df2b0c2497576521c6"
+    }
+  ]
+}

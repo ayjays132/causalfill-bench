@@ -1,0 +1,202 @@
+{
+  "arguments": {
+    "actions_per_episode": 12,
+    "geometry_cases": 400,
+    "master_seed": 371905,
+    "metamorphic_seed_count": 2,
+    "output": "reports/stress-v0.3/operations-smoke.json",
+    "sections": [
+      "geometry",
+      "robotics",
+      "vending",
+      "grid",
+      "latent"
+    ],
+    "seed_count": 2
+  },
+  "audit_version": "operations-v0.3",
+  "elapsed_seconds": 3.736827,
+  "episode_seeds": [
+    0,
+    1
+  ],
+  "master_seed": 371905,
+  "metamorphic_episode_seeds": [
+    0,
+    1
+  ],
+  "mode": "evaluator-development",
+  "sections": [
+    {
+      "counters": {
+        "check:exact_segment_geometry": 1200,
+        "checks": 1200,
+        "expected_accepts": 1017,
+        "expected_rejects": 183,
+        "passed_checks": 1200,
+        "segment_comparisons": 1200,
+        "verdict_checks": 1200
+      },
+      "elapsed_seconds": 0.073671,
+      "examples": [],
+      "failure_counts": {},
+      "name": "geometry",
+      "notes": [
+        "Exact decimal-rational oracle tests segment endpoints and all six box faces; the implementation under test uses its own predicate."
+      ]
+    },
+    {
+      "counters": {
+        "check:closed_gripper": 36,
+        "check:constant_route_force": 36,
+        "check:defensive_lidar_copy": 36,
+        "check:direct_route": 36,
+        "check:force_boundary": 252,
+        "check:incorrect_target": 108,
+        "check:maximum_valid_waypoints": 36,
+        "check:obstacle_grazing": 216,
+        "check:probe_geometry_only": 108,
+        "check:workspace_boundary": 180,
+        "checks": 1044,
+        "constant_route_force_successes": 36,
+        "direct_successes_twin_0": 0,
+        "direct_successes_twin_1": 18,
+        "episodes": 36,
+        "expected_accepts": 425,
+        "expected_rejects": 475,
+        "passed_checks": 1044,
+        "verdict_checks": 900
+      },
+      "elapsed_seconds": 0.505031,
+      "examples": [],
+      "failure_counts": {},
+      "name": "robotics",
+      "notes": [
+        "Targets are reconstructed by independent exact Gaussian calibration from camera observations. All route verdicts use the independent face-intersection oracle.",
+        "A fixed z=10 detour and fixed 0.5 N force is a legal shortcut control; successes are not classified as verifier false accepts."
+      ]
+    },
+    {
+      "counters": {
+        "actions": 1050,
+        "check:advance_chunking_equivalence": 36,
+        "check:cash_conservation": 1050,
+        "check:expiry_day_is_inclusive": 36,
+        "check:expiry_next_day_removes_stock": 36,
+        "check:fee_obligation_conservation": 1050,
+        "check:fixed_controller_within_budget": 36,
+        "check:independent_quote_arithmetic": 24,
+        "check:invalid_world_atomicity": 295,
+        "check:quote_does_not_mutate_world": 24,
+        "check:stock_conservation": 1050,
+        "check:unit_inventory_and_cash_oracle": 1050,
+        "check:vending_action_contract": 1050,
+        "check:vending_defensive_copies": 36,
+        "check:vending_final_outcome": 36,
+        "check:wrong_procurement_field_rejected": 180,
+        "check:zero_demand_does_not_pass": 36,
+        "checks": 6025,
+        "expected_accepts": 756,
+        "expected_rejects": 546,
+        "fixed_express_episodes": 36,
+        "fixed_express_successes": 36,
+        "fixed_express_successes:dev:d1:t0": 2,
+        "fixed_express_successes:dev:d1:t1": 2,
+        "fixed_express_successes:dev:d2:t0": 2,
+        "fixed_express_successes:dev:d2:t1": 2,
+        "fixed_express_successes:dev:d3:t0": 2,
+        "fixed_express_successes:dev:d3:t1": 2,
+        "fixed_express_successes:train:d1:t0": 2,
+        "fixed_express_successes:train:d1:t1": 2,
+        "fixed_express_successes:train:d2:t0": 2,
+        "fixed_express_successes:train:d2:t1": 2,
+        "fixed_express_successes:train:d3:t0": 2,
+        "fixed_express_successes:train:d3:t1": 2,
+        "fixed_express_successes:transfer:d1:t0": 2,
+        "fixed_express_successes:transfer:d1:t1": 2,
+        "fixed_express_successes:transfer:d2:t0": 2,
+        "fixed_express_successes:transfer:d2:t1": 2,
+        "fixed_express_successes:transfer:d3:t0": 2,
+        "fixed_express_successes:transfer:d3:t1": 2,
+        "fuzz_episodes": 36,
+        "invalid_actions": 295,
+        "passed_checks": 6025,
+        "reachable_expiry_episodes": 14,
+        "reachable_unpaid_fee_episodes": 0,
+        "valid_actions": 755,
+        "verdict_checks": 1302
+      },
+      "elapsed_seconds": 0.216457,
+      "examples": [],
+      "failure_counts": {},
+      "name": "vending",
+      "notes": [
+        "Independent unit inventory oracle uses three public quotes, public forecast and initial constants; hidden noise is copied once only as evaluator-side exogenous scenario data.",
+        "The fixed Express controller sets price 359 and orders five cases on days 0,4,8,...; it receives three Cedar quotes solely to fill the required coefficients. It is a scripted shortcut control, not a model result."
+      ]
+    },
+    {
+      "counters": {
+        "check:cross_twin_grid_rejected": 36,
+        "check:equivalent_grid_composition": 36,
+        "check:fixed_grid_default_adjudicated": 36,
+        "check:grid_composition_metamorphism": 1728,
+        "check:incorrect_grid_program_rejected": 96,
+        "check:independent_grid_semantics": 1728,
+        "check:independently_recovered_grid_program": 36,
+        "check:public_observations_identify_grid_program": 36,
+        "checks": 3732,
+        "episodes": 36,
+        "expected_accepts": 74,
+        "expected_rejects": 166,
+        "fixed_grid_default_successes": 2,
+        "passed_checks": 3732,
+        "verdict_checks": 240
+      },
+      "elapsed_seconds": 1.304227,
+      "examples": [],
+      "failure_counts": {},
+      "name": "grid",
+      "notes": [
+        "Uses an independent coordinate-index grid interpreter and evidence-filtered public grammar enumeration; no generator interpreter or reference-answer calls are used."
+      ]
+    },
+    {
+      "counters": {
+        "check:affine_addition_metamorphism": 1440,
+        "check:dense_basis_certificate_accepted": 72,
+        "check:dense_random_affine_interventions": 1440,
+        "check:five_probe_recovery_matches_dense_oracle": 72,
+        "check:latent_cross_twin_rejected": 72,
+        "check:latent_mutation_rejected": 288,
+        "check:latent_single_coefficient_twin": 72,
+        "check:reordered_zero_augmented_matrix": 72,
+        "checks": 3528,
+        "episodes": 72,
+        "expected_accepts": 144,
+        "expected_rejects": 360,
+        "passed_checks": 3528,
+        "verdict_checks": 504
+      },
+      "elapsed_seconds": 1.633216,
+      "examples": [],
+      "failure_counts": {},
+      "name": "latent",
+      "notes": [
+        "Dense full-basis recovery is an evaluator-side exact oracle. For SparseLatentTask it exceeds the nine-unit solver budget and is never reported as budgeted policy success."
+      ]
+    }
+  ],
+  "source_sha256": {
+    "causalfill/domains/__init__.py": "74c7870d72f6afa7a52cae22b2952e14ea85731fc8b9eb55e130687cfb1f8f23",
+    "causalfill/domains/diagnosis.py": "df2b66386d73e4527c16faa2ad9589e59be38ee21e4525bfd3e677f0ba76b767",
+    "causalfill/domains/grid.py": "8e8bcfdfaef7238c4706b04b981965046f257db3c456187b9b663ed5ffa17753",
+    "causalfill/domains/latent.py": "3cbe4ce70fc92ca0d748e7a8aa7b82f6985e976576f1f884b4bdbc466b35de9d",
+    "causalfill/domains/proof.py": "6f56ba758c299308d8a6d058ba556e27664e2ed8d76956419bba6de6775e2e5b",
+    "causalfill/domains/robotics.py": "b89e035ca757aba1e8e552059c8cf12000c79728f6686a27fa8c1c6b712175f3",
+    "causalfill/domains/vending.py": "e50a449a8c0090858c9579216b646ec37a814f630b93588de6754be005d92174",
+    "causalfill/domains/words.py": "6fa66419f1d55390d46289260914cd4ef0d7b6e18ab87498502695e109ede914",
+    "causalfill/domains/workflow.py": "39f8c242d9e89f3d14bc1ff49bfd17e1c8077dc5dd95ffbeaf917388f905e0b9",
+    "tools/stress_operations.py": "4da3d52f42d610d4fc587d61f51456cac4430ef2a1e425cbb5ca46e06f9a5056"
+  }
+}

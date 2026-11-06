@@ -1,0 +1,1900 @@
+{
+  "public": {
+    "family": "latent_sparse",
+    "difficulty": 3,
+    "prompt": "Recover a masked affine operator f: GF(101)^100 -> GF(101)^100 under a budget of nine cost units. Each output coordinate depends on at most two input coordinates plus an offset. You may choose bounded intervention vectors for the probe tool. Submit offset and sparse rows: output[i] = (offset[i] + sum(term.coefficient * input[term.column] for term in rows[i])) modulo 101. All entries are integers 0..100; columns are indexed from zero. Your map must work on all inputs, not only your probes.",
+    "slots": {
+      "offset": {
+        "type": "integer_vector",
+        "description": "Exactly 100 residues."
+      },
+      "rows": {
+        "type": "sparse_matrix_rows",
+        "description": "Exactly 100 lists of {column: int, coefficient: int}. No duplicate columns within a row; omitted entries mean zero."
+      }
+    },
+    "files": [
+      "/docs/field.txt",
+      "/skill/recovery.md",
+      "/workspace/operator.masked.json"
+    ],
+    "tools": {
+      "probe": {
+        "description": "Evaluate the operator on one intervention vector; no state is changed.",
+        "arguments": {
+          "vector": "list of 100 integers in [0, 100]"
+        },
+        "cost": 1
+      }
+    },
+    "budget": 9,
+    "max_calls": 14,
+    "episode_id": "110b41cedbe540719ea7f8dc53276eca",
+    "common_tools": {
+      "list_files": {
+        "arguments": {},
+        "cost": 1
+      },
+      "read_file": {
+        "arguments": {
+          "path": "exact listed virtual path"
+        },
+        "cost": 1
+      },
+      "search_files": {
+        "arguments": {
+          "text": "literal string, 1\u2013160 characters"
+        },
+        "cost": 2
+      },
+      "session_status": {
+        "arguments": {},
+        "cost": 1
+      },
+      "submit": {
+        "arguments": {
+          "fill": "object",
+          "confidence": "number 0..1",
+          "abstain": "boolean",
+          "evidence": "list of returned event IDs"
+        },
+        "cost": 0
+      }
+    },
+    "max_seconds": 600,
+    "tools_enabled": true,
+    "submission_rule": "One final submission. Grades are evaluator-only; no retry after submission."
+  },
+  "events": [
+    {
+      "event_id": "e0001",
+      "tool": "read_file",
+      "arguments": {
+        "path": "/workspace/operator.masked.json"
+      },
+      "response": {
+        "path": "/workspace/operator.masked.json",
+        "content": "{\"modulus\":101,\"dimension\":100,\"rows\":[{\"offset\":\"[MASK:b_0]\",\"terms\":[{\"column\":\"[MASK:j_0_0]\",\"coefficient\":\"[MASK:a_0_0]\"}]},{\"offset\":\"[MASK:b_1]\",\"terms\":[{\"column\":\"[MASK:j_1_0]\",\"coefficient\":\"[MASK:a_1_0]\"}]},{\"offset\":\"[MASK:b_2]\",\"terms\":[{\"column\":\"[MASK:j_2_0]\",\"coefficient\":\"[MASK:a_2_0]\"}]},{\"offset\":\"[MASK:b_3]\",\"terms\":[{\"column\":\"[MASK:j_3_0]\",\"coefficient\":\"[MASK:a_3_0]\"}]},{\"offset\":\"[MASK:b_4]\",\"terms\":[{\"column\":\"[MASK:j_4_0]\",\"coefficient\":\"[MASK:a_4_0]\"}]},{\"offset\":\"[MASK:b_5]\",\"terms\":[{\"column\":\"[MASK:j_5_0]\",\"coefficient\":\"[MASK:a_5_0]\"}]},{\"offset\":\"[MASK:b_6]\",\"terms\":[{\"column\":\"[MASK:j_6_0]\",\"coefficient\":\"[MASK:a_6_0]\"}]},{\"offset\":\"[MASK:b_7]\",\"terms\":[{\"column\":\"[MASK:j_7_0]\",\"coefficient\":\"[MASK:a_7_0]\"}]},{\"offset\":\"[MASK:b_8]\",\"terms\":[{\"column\":\"[MASK:j_8_0]\",\"coefficient\":\"[MASK:a_8_0]\"}]},{\"offset\":\"[MASK:b_9]\",\"terms\":[{\"column\":\"[MASK:j_9_0]\",\"coefficient\":\"[MASK:a_9_0]\"}]},{\"offset\":\"[MASK:b_10]\",\"terms\":[{\"column\":\"[MASK:j_10_0]\",\"coefficient\":\"[MASK:a_10_0]\"}]},{\"offset\":\"[MASK:b_11]\",\"terms\":[{\"column\":\"[MASK:j_11_0]\",\"coefficient\":\"[MASK:a_11_0]\"}]},{\"offset\":\"[MASK:b_12]\",\"terms\":[{\"column\":\"[MASK:j_12_0]\",\"coefficient\":\"[MASK:a_12_0]\"}]},{\"offset\":\"[MASK:b_13]\",\"terms\":[{\"column\":\"[MASK:j_13_0]\",\"coefficient\":\"[MASK:a_13_0]\"}]},{\"offset\":\"[MASK:b_14]\",\"terms\":[{\"column\":\"[MASK:j_14_0]\",\"coefficient\":\"[MASK:a_14_0]\"}]},{\"offset\":\"[MASK:b_15]\",\"terms\":[{\"column\":\"[MASK:j_15_0]\",\"coefficient\":\"[MASK:a_15_0]\"}]},{\"offset\":\"[MASK:b_16]\",\"terms\":[{\"column\":\"[MASK:j_16_0]\",\"coefficient\":\"[MASK:a_16_0]\"}]},{\"offset\":\"[MASK:b_17]\",\"terms\":[{\"column\":\"[MASK:j_17_0]\",\"coefficient\":\"[MASK:a_17_0]\"}]},{\"offset\":\"[MASK:b_18]\",\"terms\":[{\"column\":\"[MASK:j_18_0]\",\"coefficient\":\"[MASK:a_18_0]\"}]},{\"offset\":\"[MASK:b_19]\",\"terms\":[{\"column\":\"[MASK:j_19_0]\",\"coefficient\":\"[MASK:a_19_0]\"}]},{\"offset\":\"[MASK:b_20]\",\"terms\":[{\"column\":\"[MASK:j_20_0]\",\"coefficient\":\"[MASK:a_20_0]\"}]},{\"offset\":\"[MASK:b_21]\",\"terms\":[{\"column\":\"[MASK:j_21_0]\",\"coefficient\":\"[MASK:a_21_0]\"}]},{\"offset\":\"[MASK:b_22]\",\"terms\":[{\"column\":\"[MASK:j_22_0]\",\"coefficient\":\"[MASK:a_22_0]\"}]},{\"offset\":\"[MASK:b_23]\",\"terms\":[{\"column\":\"[MASK:j_23_0]\",\"coefficient\":\"[MASK:a_23_0]\"}]},{\"offset\":\"[MASK:b_24]\",\"terms\":[{\"column\":\"[MASK:j_24_0]\",\"coefficient\":\"[MASK:a_24_0]\"}]},{\"offset\":\"[MASK:b_25]\",\"terms\":[{\"column\":\"[MASK:j_25_0]\",\"coefficient\":\"[MASK:a_25_0]\"}]},{\"offset\":\"[MASK:b_26]\",\"terms\":[{\"column\":\"[MASK:j_26_0]\",\"coefficient\":\"[MASK:a_26_0]\"}]},{\"offset\":\"[MASK:b_27]\",\"terms\":[{\"column\":\"[MASK:j_27_0]\",\"coefficient\":\"[MASK:a_27_0]\"}]},{\"offset\":\"[MASK:b_28]\",\"terms\":[{\"column\":\"[MASK:j_28_0]\",\"coefficient\":\"[MASK:a_28_0]\"}]},{\"offset\":\"[MASK:b_29]\",\"terms\":[{\"column\":\"[MASK:j_29_0]\",\"coefficient\":\"[MASK:a_29_0]\"}]},{\"offset\":\"[MASK:b_30]\",\"terms\":[{\"column\":\"[MASK:j_30_0]\",\"coefficient\":\"[MASK:a_30_0]\"}]},{\"offset\":\"[MASK:b_31]\",\"terms\":[{\"column\":\"[MASK:j_31_0]\",\"coefficient\":\"[MASK:a_31_0]\"}]},{\"offset\":\"[MASK:b_32]\",\"terms\":[{\"column\":\"[MASK:j_32_0]\",\"coefficient\":\"[MASK:a_32_0]\"}]},{\"offset\":\"[MASK:b_33]\",\"terms\":[{\"column\":\"[MASK:j_33_0]\",\"coefficient\":\"[MASK:a_33_0]\"}]},{\"offset\":\"[MASK:b_34]\",\"terms\":[{\"column\":\"[MASK:j_34_0]\",\"coefficient\":\"[MASK:a_34_0]\"}]},{\"offset\":\"[MASK:b_35]\",\"terms\":[{\"column\":\"[MASK:j_35_0]\",\"coefficient\":\"[MASK:a_35_0]\"}]},{\"offset\":\"[MASK:b_36]\",\"terms\":[{\"column\":\"[MASK:j_36_0]\",\"coefficient\":\"[MASK:a_36_0]\"}]},{\"offset\":\"[MASK:b_37]\",\"terms\":[{\"column\":\"[MASK:j_37_0]\",\"coefficient\":\"[MASK:a_37_0]\"}]},{\"offset\":\"[MASK:b_38]\",\"terms\":[{\"column\":\"[MASK:j_38_0]\",\"coefficient\":\"[MASK:a_38_0]\"}]},{\"offset\":\"[MASK:b_39]\",\"terms\":[{\"column\":\"[MASK:j_39_0]\",\"coefficient\":\"[MASK:a_39_0]\"}]},{\"offset\":\"[MASK:b_40]\",\"terms\":[{\"column\":\"[MASK:j_40_0]\",\"coefficient\":\"[MASK:a_40_0]\"}]},{\"offset\":\"[MASK:b_41]\",\"terms\":[{\"column\":\"[MASK:j_41_0]\",\"coefficient\":\"[MASK:a_41_0]\"}]},{\"offset\":\"[MASK:b_42]\",\"terms\":[{\"column\":\"[MASK:j_42_0]\",\"coefficient\":\"[MASK:a_42_0]\"}]},{\"offset\":\"[MASK:b_43]\",\"terms\":[{\"column\":\"[MASK:j_43_0]\",\"coefficient\":\"[MASK:a_43_0]\"}]},{\"offset\":\"[MASK:b_44]\",\"terms\":[{\"column\":\"[MASK:j_44_0]\",\"coefficient\":\"[MASK:a_44_0]\"}]},{\"offset\":\"[MASK:b_45]\",\"terms\":[{\"column\":\"[MASK:j_45_0]\",\"coefficient\":\"[MASK:a_45_0]\"}]},{\"offset\":\"[MASK:b_46]\",\"terms\":[{\"column\":\"[MASK:j_46_0]\",\"coefficient\":\"[MASK:a_46_0]\"}]},{\"offset\":\"[MASK:b_47]\",\"terms\":[{\"column\":\"[MASK:j_47_0]\",\"coefficient\":\"[MASK:a_47_0]\"}]},{\"offset\":\"[MASK:b_48]\",\"terms\":[{\"column\":\"[MASK:j_48_0]\",\"coefficient\":\"[MASK:a_48_0]\"}]},{\"offset\":\"[MASK:b_49]\",\"terms\":[{\"column\":\"[MASK:j_49_0]\",\"coefficient\":\"[MASK:a_49_0]\"}]},{\"offset\":\"[MASK:b_50]\",\"terms\":[{\"column\":\"[MASK:j_50_0]\",\"coefficient\":\"[MASK:a_50_0]\"}]},{\"offset\":\"[MASK:b_51]\",\"terms\":[{\"column\":\"[MASK:j_51_0]\",\"coefficient\":\"[MASK:a_51_0]\"}]},{\"offset\":\"[MASK:b_52]\",\"terms\":[{\"column\":\"[MASK:j_52_0]\",\"coefficient\":\"[MASK:a_52_0]\"}]},{\"offset\":\"[MASK:b_53]\",\"terms\":[{\"column\":\"[MASK:j_53_0]\",\"coefficient\":\"[MASK:a_53_0]\"}]},{\"offset\":\"[MASK:b_54]\",\"terms\":[{\"column\":\"[MASK:j_54_0]\",\"coefficient\":\"[MASK:a_54_0]\"}]},{\"offset\":\"[MASK:b_55]\",\"terms\":[{\"column\":\"[MASK:j_55_0]\",\"coefficient\":\"[MASK:a_55_0]\"}]},{\"offset\":\"[MASK:b_56]\",\"terms\":[{\"column\":\"[MASK:j_56_0]\",\"coefficient\":\"[MASK:a_56_0]\"}]},{\"offset\":\"[MASK:b_57]\",\"terms\":[{\"column\":\"[MASK:j_57_0]\",\"coefficient\":\"[MASK:a_57_0]\"}]},{\"offset\":\"[MASK:b_58]\",\"terms\":[{\"column\":\"[MASK:j_58_0]\",\"coefficient\":\"[MASK:a_58_0]\"}]},{\"offset\":\"[MASK:b_59]\",\"terms\":[{\"column\":\"[MASK:j_59_0]\",\"coefficient\":\"[MASK:a_59_0]\"}]},{\"offset\":\"[MASK:b_60]\",\"terms\":[{\"column\":\"[MASK:j_60_0]\",\"coefficient\":\"[MASK:a_60_0]\"}]},{\"offset\":\"[MASK:b_61]\",\"terms\":[{\"column\":\"[MASK:j_61_0]\",\"coefficient\":\"[MASK:a_61_0]\"}]},{\"offset\":\"[MASK:b_62]\",\"terms\":[{\"column\":\"[MASK:j_62_0]\",\"coefficient\":\"[MASK:a_62_0]\"}]},{\"offset\":\"[MASK:b_63]\",\"terms\":[{\"column\":\"[MASK:j_63_0]\",\"coefficient\":\"[MASK:a_63_0]\"}]},{\"offset\":\"[MASK:b_64]\",\"terms\":[{\"column\":\"[MASK:j_64_0]\",\"coefficient\":\"[MASK:a_64_0]\"}]},{\"offset\":\"[MASK:b_65]\",\"terms\":[{\"column\":\"[MASK:j_65_0]\",\"coefficient\":\"[MASK:a_65_0]\"}]},{\"offset\":\"[MASK:b_66]\",\"terms\":[{\"column\":\"[MASK:j_66_0]\",\"coefficient\":\"[MASK:a_66_0]\"}]},{\"offset\":\"[MASK:b_67]\",\"terms\":[{\"column\":\"[MASK:j_67_0]\",\"coefficient\":\"[MASK:a_67_0]\"}]},{\"offset\":\"[MASK:b_68]\",\"terms\":[{\"column\":\"[MASK:j_68_0]\",\"coefficient\":\"[MASK:a_68_0]\"}]},{\"offset\":\"[MASK:b_69]\",\"terms\":[{\"column\":\"[MASK:j_69_0]\",\"coefficient\":\"[MASK:a_69_0]\"}]},{\"offset\":\"[MASK:b_70]\",\"terms\":[{\"column\":\"[MASK:j_70_0]\",\"coefficient\":\"[MASK:a_70_0]\"}]},{\"offset\":\"[MASK:b_71]\",\"terms\":[{\"column\":\"[MASK:j_71_0]\",\"coefficient\":\"[MASK:a_71_0]\"}]},{\"offset\":\"[MASK:b_72]\",\"terms\":[{\"column\":\"[MASK:j_72_0]\",\"coefficient\":\"[MASK:a_72_0]\"}]},{\"offset\":\"[MASK:b_73]\",\"terms\":[{\"column\":\"[MASK:j_73_0]\",\"coefficient\":\"[MASK:a_73_0]\"}]},{\"offset\":\"[MASK:b_74]\",\"terms\":[{\"column\":\"[MASK:j_74_0]\",\"coefficient\":\"[MASK:a_74_0]\"}]},{\"offset\":\"[MASK:b_75]\",\"terms\":[{\"column\":\"[MASK:j_75_0]\",\"coefficient\":\"[MASK:a_75_0]\"}]},{\"offset\":\"[MASK:b_76]\",\"terms\":[{\"column\":\"[MASK:j_76_0]\",\"coefficient\":\"[MASK:a_76_0]\"}]},{\"offset\":\"[MASK:b_77]\",\"terms\":[{\"column\":\"[MASK:j_77_0]\",\"coefficient\":\"[MASK:a_77_0]\"}]},{\"offset\":\"[MASK:b_78]\",\"terms\":[{\"column\":\"[MASK:j_78_0]\",\"coefficient\":\"[MASK:a_78_0]\"}]},{\"offset\":\"[MASK:b_79]\",\"terms\":[{\"column\":\"[MASK:j_79_0]\",\"coefficient\":\"[MASK:a_79_0]\"}]},{\"offset\":\"[MASK:b_80]\",\"terms\":[{\"column\":\"[MASK:j_80_0]\",\"coefficient\":\"[MASK:a_80_0]\"}]},{\"offset\":\"[MASK:b_81]\",\"terms\":[{\"column\":\"[MASK:j_81_0]\",\"coefficient\":\"[MASK:a_81_0]\"}]},{\"offset\":\"[MASK:b_82]\",\"terms\":[{\"column\":\"[MASK:j_82_0]\",\"coefficient\":\"[MASK:a_82_0]\"}]},{\"offset\":\"[MASK:b_83]\",\"terms\":[{\"column\":\"[MASK:j_83_0]\",\"coefficient\":\"[MASK:a_83_0]\"}]},{\"offset\":\"[MASK:b_84]\",\"terms\":[{\"column\":\"[MASK:j_84_0]\",\"coefficient\":\"[MASK:a_84_0]\"}]},{\"offset\":\"[MASK:b_85]\",\"terms\":[{\"column\":\"[MASK:j_85_0]\",\"coefficient\":\"[MASK:a_85_0]\"}]},{\"offset\":\"[MASK:b_86]\",\"terms\":[{\"column\":\"[MASK:j_86_0]\",\"coefficient\":\"[MASK:a_86_0]\"}]},{\"offset\":\"[MASK:b_87]\",\"terms\":[{\"column\":\"[MASK:j_87_0]\",\"coefficient\":\"[MASK:a_87_0]\"}]},{\"offset\":\"[MASK:b_88]\",\"terms\":[{\"column\":\"[MASK:j_88_0]\",\"coefficient\":\"[MASK:a_88_0]\"}]},{\"offset\":\"[MASK:b_89]\",\"terms\":[{\"column\":\"[MASK:j_89_0]\",\"coefficient\":\"[MASK:a_89_0]\"}]},{\"offset\":\"[MASK:b_90]\",\"terms\":[{\"column\":\"[MASK:j_90_0]\",\"coefficient\":\"[MASK:a_90_0]\"}]},{\"offset\":\"[MASK:b_91]\",\"terms\":[{\"column\":\"[MASK:j_91_0]\",\"coefficient\":\"[MASK:a_91_0]\"}]},{\"offset\":\"[MASK:b_92]\",\"terms\":[{\"column\":\"[MASK:j_92_0]\",\"coefficient\":\"[MASK:a_92_0]\"}]},{\"offset\":\"[MASK:b_93]\",\"terms\":[{\"column\":\"[MASK:j_93_0]\",\"coefficient\":\"[MASK:a_93_0]\"}]},{\"offset\":\"[MASK:b_94]\",\"terms\":[{\"column\":\"[MASK:j_94_0]\",\"coefficient\":\"[MASK:a_94_0]\"}]},{\"offset\":\"[MASK:b_95]\",\"terms\":[{\"column\":\"[MASK:j_95_0]\",\"coefficient\":\"[MASK:a_95_0]\"}]},{\"offset\":\"[MASK:b_96]\",\"terms\":[{\"column\":\"[MASK:j_96_0]\",\"coefficient\":\"[MASK:a_96_0]\"}]},{\"offset\":\"[MASK:b_97]\",\"terms\":[{\"column\":\"[MASK:j_97_0]\",\"coefficient\":\"[MASK:a_97_0]\"}]},{\"offset\":\"[MASK:b_98]\",\"terms\":[{\"column\":\"[MASK:j_98_0]\",\"coefficient\":\"[MASK:a_98_0]\"}]},{\"offset\":\"[MASK:b_99]\",\"terms\":[{\"column\":\"[MASK:j_99_0]\",\"coefficient\":\"[MASK:a_99_0]\"}]}]}",
+        "event_id": "e0001",
+        "cost_used": 1
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "85a4127355fca864d6f89275031e7bd6488a0cab4af2bea2732aff155f8d3fa3"
+    },
+    {
+      "event_id": "e0002",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "response": {
+        "output": [
+          67,
+          41,
+          64,
+          89,
+          66,
+          96,
+          81,
+          98,
+          65,
+          21,
+          55,
+          97,
+          63,
+          2,
+          36,
+          32,
+          49,
+          38,
+          69,
+          90,
+          57,
+          96,
+          95,
+          62,
+          19,
+          33,
+          86,
+          34,
+          45,
+          5,
+          40,
+          48,
+          35,
+          71,
+          20,
+          9,
+          72,
+          1,
+          65,
+          28,
+          36,
+          81,
+          13,
+          72,
+          59,
+          34,
+          1,
+          9,
+          41,
+          67,
+          39,
+          84,
+          100,
+          57,
+          20,
+          26,
+          47,
+          44,
+          75,
+          1,
+          79,
+          76,
+          72,
+          12,
+          51,
+          79,
+          60,
+          6,
+          46,
+          65,
+          76,
+          72,
+          35,
+          68,
+          1,
+          18,
+          14,
+          75,
+          35,
+          79,
+          66,
+          64,
+          80,
+          1,
+          49,
+          53,
+          32,
+          23,
+          43,
+          13,
+          38,
+          55,
+          26,
+          23,
+          25,
+          30,
+          40,
+          1,
+          3,
+          42
+        ],
+        "modulus": 101,
+        "event_id": "e0002",
+        "cost_used": 2
+      },
+      "previous_hash": "85a4127355fca864d6f89275031e7bd6488a0cab4af2bea2732aff155f8d3fa3",
+      "hash": "f3181a1a53da71c6c40f1ebc1e1fef2a03c047586a04727dab89033755af6f0e"
+    },
+    {
+      "event_id": "e0003",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "response": {
+        "output": [
+          28,
+          100,
+          93,
+          54,
+          25,
+          85,
+          51,
+          37,
+          45,
+          84,
+          74,
+          61,
+          92,
+          3,
+          20,
+          75,
+          61,
+          70,
+          98,
+          71,
+          82,
+          24,
+          26,
+          5,
+          57,
+          55,
+          64,
+          28,
+          40,
+          51,
+          27,
+          0,
+          37,
+          73,
+          69,
+          5,
+          31,
+          37,
+          99,
+          18,
+          86,
+          28,
+          6,
+          44,
+          4,
+          63,
+          66,
+          72,
+          9,
+          5,
+          92,
+          23,
+          26,
+          35,
+          24,
+          32,
+          2,
+          82,
+          42,
+          44,
+          13,
+          77,
+          99,
+          69,
+          25,
+          73,
+          64,
+          3,
+          94,
+          22,
+          6,
+          98,
+          75,
+          16,
+          3,
+          39,
+          35,
+          52,
+          71,
+          65,
+          4,
+          11,
+          90,
+          36,
+          26,
+          63,
+          81,
+          85,
+          88,
+          93,
+          96,
+          76,
+          20,
+          5,
+          86,
+          96,
+          35,
+          59,
+          6,
+          26
+        ],
+        "modulus": 101,
+        "event_id": "e0003",
+        "cost_used": 3
+      },
+      "previous_hash": "f3181a1a53da71c6c40f1ebc1e1fef2a03c047586a04727dab89033755af6f0e",
+      "hash": "f53828f7b26614b9bf5b1499ce3dd15eba71e4b3f8c1cbc164ffdb639de8e753"
+    },
+    {
+      "event_id": "e0004",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54,
+          55,
+          56,
+          57,
+          58,
+          59,
+          60,
+          61,
+          62,
+          63,
+          64,
+          65,
+          66,
+          67,
+          68,
+          69,
+          70,
+          71,
+          72,
+          73,
+          74,
+          75,
+          76,
+          77,
+          78,
+          79,
+          80,
+          81,
+          82,
+          83,
+          84,
+          85,
+          86,
+          87,
+          88,
+          89,
+          90,
+          91,
+          92,
+          93,
+          94,
+          95,
+          96,
+          97,
+          98,
+          99
+        ]
+      },
+      "response": {
+        "output": [
+          67,
+          100,
+          21,
+          85,
+          3,
+          41,
+          2,
+          75,
+          6,
+          83,
+          43,
+          4,
+          7,
+          15,
+          14,
+          71,
+          39,
+          77,
+          86,
+          32,
+          52,
+          99,
+          92,
+          64,
+          22,
+          78,
+          19,
+          74,
+          6,
+          26,
+          54,
+          75,
+          99,
+          36,
+          70,
+          71,
+          10,
+          20,
+          44,
+          42,
+          16,
+          29,
+          22,
+          80,
+          63,
+          26,
+          62,
+          41,
+          20,
+          59,
+          63,
+          3,
+          90,
+          2,
+          34,
+          53,
+          52,
+          89,
+          80,
+          13,
+          58,
+          36,
+          29,
+          68,
+          3,
+          93,
+          21,
+          7,
+          78,
+          27,
+          24,
+          100,
+          87,
+          9,
+          48,
+          78,
+          95,
+          21,
+          15,
+          84,
+          55,
+          13,
+          92,
+          78,
+          36,
+          95,
+          4,
+          64,
+          64,
+          63,
+          6,
+          47,
+          80,
+          66,
+          2,
+          38,
+          65,
+          72,
+          95,
+          74
+        ],
+        "modulus": 101,
+        "event_id": "e0004",
+        "cost_used": 4
+      },
+      "previous_hash": "f53828f7b26614b9bf5b1499ce3dd15eba71e4b3f8c1cbc164ffdb639de8e753",
+      "hash": "e84ccf294271f608bfc433b1814b964a4fbc4dad222bcd64df329e6a478eb2d9"
+    },
+    {
+      "event_id": "e0005",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          1,
+          4,
+          9,
+          16,
+          25,
+          36,
+          49,
+          64,
+          81,
+          100,
+          20,
+          43,
+          68,
+          95,
+          23,
+          54,
+          87,
+          21,
+          58,
+          97,
+          37,
+          80,
+          24,
+          71,
+          19,
+          70,
+          22,
+          77,
+          33,
+          92,
+          52,
+          14,
+          79,
+          45,
+          13,
+          84,
+          56,
+          30,
+          6,
+          85,
+          65,
+          47,
+          31,
+          17,
+          5,
+          96,
+          88,
+          82,
+          78,
+          76,
+          76,
+          78,
+          82,
+          88,
+          96,
+          5,
+          17,
+          31,
+          47,
+          65,
+          85,
+          6,
+          30,
+          56,
+          84,
+          13,
+          45,
+          79,
+          14,
+          52,
+          92,
+          33,
+          77,
+          22,
+          70,
+          19,
+          71,
+          24,
+          80,
+          37,
+          97,
+          58,
+          21,
+          87,
+          54,
+          23,
+          95,
+          68,
+          43,
+          20,
+          100,
+          81,
+          64,
+          49,
+          36,
+          25,
+          16,
+          9,
+          4
+        ]
+      },
+      "response": {
+        "output": [
+          67,
+          100,
+          79,
+          77,
+          16,
+          23,
+          11,
+          38,
+          98,
+          74,
+          36,
+          84,
+          98,
+          70,
+          31,
+          11,
+          91,
+          95,
+          72,
+          99,
+          58,
+          58,
+          29,
+          7,
+          91,
+          47,
+          61,
+          3,
+          64,
+          8,
+          56,
+          77,
+          63,
+          27,
+          3,
+          58,
+          62,
+          98,
+          75,
+          69,
+          44,
+          70,
+          88,
+          12,
+          33,
+          78,
+          80,
+          99,
+          43,
+          79,
+          27,
+          94,
+          85,
+          71,
+          69,
+          97,
+          24,
+          84,
+          62,
+          2,
+          31,
+          60,
+          32,
+          5,
+          9,
+          80,
+          11,
+          73,
+          0,
+          69,
+          72,
+          40,
+          42,
+          3,
+          45,
+          74,
+          9,
+          58,
+          91,
+          70,
+          95,
+          74,
+          54,
+          29,
+          68,
+          88,
+          48,
+          55,
+          73,
+          19,
+          87,
+          34,
+          45,
+          83,
+          85,
+          83,
+          16,
+          20,
+          30,
+          79
+        ],
+        "modulus": 101,
+        "event_id": "e0005",
+        "cost_used": 5
+      },
+      "previous_hash": "e84ccf294271f608bfc433b1814b964a4fbc4dad222bcd64df329e6a478eb2d9",
+      "hash": "9cd771605b786ef7a4d3ce8fc1092927f57d206e4793bd17988fe9d66f944150"
+    },
+    {
+      "event_id": "e0006",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          1,
+          8,
+          27,
+          64,
+          24,
+          14,
+          40,
+          7,
+          22,
+          91,
+          18,
+          11,
+          76,
+          17,
+          42,
+          56,
+          65,
+          75,
+          92,
+          21,
+          70,
+          43,
+          47,
+          88,
+          71,
+          2,
+          89,
+          35,
+          48,
+          33,
+          97,
+          44,
+          82,
+          15,
+          51,
+          95,
+          52,
+          29,
+          32,
+          67,
+          39,
+          55,
+          20,
+          41,
+          23,
+          73,
+          96,
+          98,
+          85,
+          63,
+          38,
+          16,
+          3,
+          5,
+          28,
+          78,
+          60,
+          81,
+          46,
+          62,
+          34,
+          69,
+          72,
+          49,
+          6,
+          50,
+          86,
+          19,
+          57,
+          4,
+          68,
+          53,
+          66,
+          12,
+          99,
+          30,
+          13,
+          54,
+          58,
+          31,
+          80,
+          9,
+          26,
+          36,
+          45,
+          59,
+          84,
+          25,
+          90,
+          83,
+          10,
+          79,
+          94,
+          61,
+          87,
+          77,
+          37,
+          74,
+          93
+        ]
+      },
+      "response": {
+        "output": [
+          67,
+          100,
+          94,
+          53,
+          68,
+          34,
+          65,
+          82,
+          26,
+          94,
+          67,
+          55,
+          79,
+          78,
+          67,
+          20,
+          14,
+          98,
+          22,
+          59,
+          77,
+          5,
+          57,
+          9,
+          30,
+          80,
+          42,
+          5,
+          72,
+          92,
+          15,
+          38,
+          22,
+          33,
+          48,
+          7,
+          15,
+          55,
+          41,
+          11,
+          53,
+          34,
+          32,
+          17,
+          26,
+          95,
+          100,
+          98,
+          36,
+          49,
+          45,
+          89,
+          27,
+          92,
+          40,
+          93,
+          72,
+          1,
+          28,
+          60,
+          27,
+          9,
+          16,
+          76,
+          90,
+          43,
+          58,
+          51,
+          49,
+          38,
+          99,
+          22,
+          34,
+          70,
+          25,
+          77,
+          38,
+          79,
+          60,
+          75,
+          63,
+          66,
+          69,
+          2,
+          29,
+          99,
+          95,
+          80,
+          57,
+          42,
+          4,
+          63,
+          57,
+          48,
+          9,
+          15,
+          59,
+          26,
+          23,
+          69
+        ],
+        "modulus": 101,
+        "event_id": "e0006",
+        "cost_used": 6
+      },
+      "previous_hash": "9cd771605b786ef7a4d3ce8fc1092927f57d206e4793bd17988fe9d66f944150",
+      "hash": "ae243d1fe37bff31dfb78dd2eb40ae915fca5a0be44bccb74f82902ab9f7f488"
+    },
+    {
+      "event_id": "e0007",
+      "tool": "submit",
+      "arguments": {
+        "fill": {
+          "offset": [
+            67,
+            41,
+            64,
+            89,
+            66,
+            96,
+            81,
+            98,
+            65,
+            21,
+            55,
+            97,
+            63,
+            2,
+            36,
+            32,
+            49,
+            38,
+            69,
+            90,
+            57,
+            96,
+            95,
+            62,
+            19,
+            33,
+            86,
+            34,
+            45,
+            5,
+            40,
+            48,
+            35,
+            71,
+            20,
+            9,
+            72,
+            1,
+            65,
+            28,
+            36,
+            81,
+            13,
+            72,
+            59,
+            34,
+            1,
+            9,
+            41,
+            67,
+            39,
+            84,
+            100,
+            57,
+            20,
+            26,
+            47,
+            44,
+            75,
+            1,
+            79,
+            76,
+            72,
+            12,
+            51,
+            79,
+            60,
+            6,
+            46,
+            65,
+            76,
+            72,
+            35,
+            68,
+            1,
+            18,
+            14,
+            75,
+            35,
+            79,
+            66,
+            64,
+            80,
+            1,
+            49,
+            53,
+            32,
+            23,
+            43,
+            13,
+            38,
+            55,
+            26,
+            23,
+            25,
+            30,
+            40,
+            1,
+            3,
+            42
+          ],
+          "rows": [
+            [
+              {
+                "column": 0,
+                "coefficient": 62
+              }
+            ],
+            [
+              {
+                "column": 1,
+                "coefficient": 59
+              }
+            ],
+            [
+              {
+                "column": 2,
+                "coefficient": 29
+              }
+            ],
+            [
+              {
+                "column": 3,
+                "coefficient": 66
+              }
+            ],
+            [
+              {
+                "column": 4,
+                "coefficient": 60
+              }
+            ],
+            [
+              {
+                "column": 5,
+                "coefficient": 90
+              }
+            ],
+            [
+              {
+                "column": 6,
+                "coefficient": 71
+              }
+            ],
+            [
+              {
+                "column": 7,
+                "coefficient": 40
+              }
+            ],
+            [
+              {
+                "column": 8,
+                "coefficient": 81
+              }
+            ],
+            [
+              {
+                "column": 9,
+                "coefficient": 63
+              }
+            ],
+            [
+              {
+                "column": 10,
+                "coefficient": 19
+              }
+            ],
+            [
+              {
+                "column": 11,
+                "coefficient": 65
+              }
+            ],
+            [
+              {
+                "column": 12,
+                "coefficient": 29
+              }
+            ],
+            [
+              {
+                "column": 13,
+                "coefficient": 1
+              }
+            ],
+            [
+              {
+                "column": 14,
+                "coefficient": 85
+              }
+            ],
+            [
+              {
+                "column": 15,
+                "coefficient": 43
+              }
+            ],
+            [
+              {
+                "column": 16,
+                "coefficient": 12
+              }
+            ],
+            [
+              {
+                "column": 17,
+                "coefficient": 32
+              }
+            ],
+            [
+              {
+                "column": 18,
+                "coefficient": 29
+              }
+            ],
+            [
+              {
+                "column": 19,
+                "coefficient": 82
+              }
+            ],
+            [
+              {
+                "column": 20,
+                "coefficient": 25
+              }
+            ],
+            [
+              {
+                "column": 21,
+                "coefficient": 29
+              }
+            ],
+            [
+              {
+                "column": 22,
+                "coefficient": 32
+              }
+            ],
+            [
+              {
+                "column": 23,
+                "coefficient": 44
+              }
+            ],
+            [
+              {
+                "column": 24,
+                "coefficient": 38
+              }
+            ],
+            [
+              {
+                "column": 25,
+                "coefficient": 22
+              }
+            ],
+            [
+              {
+                "column": 26,
+                "coefficient": 79
+              }
+            ],
+            [
+              {
+                "column": 27,
+                "coefficient": 95
+              }
+            ],
+            [
+              {
+                "column": 28,
+                "coefficient": 96
+              }
+            ],
+            [
+              {
+                "column": 29,
+                "coefficient": 46
+              }
+            ],
+            [
+              {
+                "column": 30,
+                "coefficient": 88
+              }
+            ],
+            [
+              {
+                "column": 31,
+                "coefficient": 53
+              }
+            ],
+            [
+              {
+                "column": 32,
+                "coefficient": 2
+              }
+            ],
+            [
+              {
+                "column": 33,
+                "coefficient": 2
+              }
+            ],
+            [
+              {
+                "column": 34,
+                "coefficient": 49
+              }
+            ],
+            [
+              {
+                "column": 35,
+                "coefficient": 97
+              }
+            ],
+            [
+              {
+                "column": 36,
+                "coefficient": 60
+              }
+            ],
+            [
+              {
+                "column": 37,
+                "coefficient": 36
+              }
+            ],
+            [
+              {
+                "column": 38,
+                "coefficient": 34
+              }
+            ],
+            [
+              {
+                "column": 39,
+                "coefficient": 91
+              }
+            ],
+            [
+              {
+                "column": 40,
+                "coefficient": 50
+              }
+            ],
+            [
+              {
+                "column": 41,
+                "coefficient": 48
+              }
+            ],
+            [
+              {
+                "column": 42,
+                "coefficient": 94
+              }
+            ],
+            [
+              {
+                "column": 43,
+                "coefficient": 73
+              }
+            ],
+            [
+              {
+                "column": 44,
+                "coefficient": 46
+              }
+            ],
+            [
+              {
+                "column": 45,
+                "coefficient": 29
+              }
+            ],
+            [
+              {
+                "column": 46,
+                "coefficient": 65
+              }
+            ],
+            [
+              {
+                "column": 47,
+                "coefficient": 63
+              }
+            ],
+            [
+              {
+                "column": 48,
+                "coefficient": 69
+              }
+            ],
+            [
+              {
+                "column": 49,
+                "coefficient": 39
+              }
+            ],
+            [
+              {
+                "column": 50,
+                "coefficient": 53
+              }
+            ],
+            [
+              {
+                "column": 51,
+                "coefficient": 40
+              }
+            ],
+            [
+              {
+                "column": 52,
+                "coefficient": 27
+              }
+            ],
+            [
+              {
+                "column": 53,
+                "coefficient": 79
+              }
+            ],
+            [
+              {
+                "column": 54,
+                "coefficient": 4
+              }
+            ],
+            [
+              {
+                "column": 55,
+                "coefficient": 6
+              }
+            ],
+            [
+              {
+                "column": 56,
+                "coefficient": 56
+              }
+            ],
+            [
+              {
+                "column": 57,
+                "coefficient": 38
+              }
+            ],
+            [
+              {
+                "column": 58,
+                "coefficient": 68
+              }
+            ],
+            [
+              {
+                "column": 59,
+                "coefficient": 43
+              }
+            ],
+            [
+              {
+                "column": 60,
+                "coefficient": 35
+              }
+            ],
+            [
+              {
+                "column": 61,
+                "coefficient": 1
+              }
+            ],
+            [
+              {
+                "column": 62,
+                "coefficient": 27
+              }
+            ],
+            [
+              {
+                "column": 63,
+                "coefficient": 57
+              }
+            ],
+            [
+              {
+                "column": 64,
+                "coefficient": 75
+              }
+            ],
+            [
+              {
+                "column": 65,
+                "coefficient": 95
+              }
+            ],
+            [
+              {
+                "column": 66,
+                "coefficient": 4
+              }
+            ],
+            [
+              {
+                "column": 67,
+                "coefficient": 98
+              }
+            ],
+            [
+              {
+                "column": 68,
+                "coefficient": 48
+              }
+            ],
+            [
+              {
+                "column": 69,
+                "coefficient": 58
+              }
+            ],
+            [
+              {
+                "column": 70,
+                "coefficient": 31
+              }
+            ],
+            [
+              {
+                "column": 71,
+                "coefficient": 26
+              }
+            ],
+            [
+              {
+                "column": 72,
+                "coefficient": 40
+              }
+            ],
+            [
+              {
+                "column": 73,
+                "coefficient": 49
+              }
+            ],
+            [
+              {
+                "column": 74,
+                "coefficient": 2
+              }
+            ],
+            [
+              {
+                "column": 75,
+                "coefficient": 21
+              }
+            ],
+            [
+              {
+                "column": 76,
+                "coefficient": 21
+              }
+            ],
+            [
+              {
+                "column": 77,
+                "coefficient": 78
+              }
+            ],
+            [
+              {
+                "column": 78,
+                "coefficient": 36
+              }
+            ],
+            [
+              {
+                "column": 79,
+                "coefficient": 87
+              }
+            ],
+            [
+              {
+                "column": 80,
+                "coefficient": 39
+              }
+            ],
+            [
+              {
+                "column": 81,
+                "coefficient": 48
+              }
+            ],
+            [
+              {
+                "column": 82,
+                "coefficient": 10
+              }
+            ],
+            [
+              {
+                "column": 83,
+                "coefficient": 35
+              }
+            ],
+            [
+              {
+                "column": 84,
+                "coefficient": 78
+              }
+            ],
+            [
+              {
+                "column": 85,
+                "coefficient": 10
+              }
+            ],
+            [
+              {
+                "column": 86,
+                "coefficient": 49
+              }
+            ],
+            [
+              {
+                "column": 87,
+                "coefficient": 62
+              }
+            ],
+            [
+              {
+                "column": 88,
+                "coefficient": 45
+              }
+            ],
+            [
+              {
+                "column": 89,
+                "coefficient": 80
+              }
+            ],
+            [
+              {
+                "column": 90,
+                "coefficient": 58
+              }
+            ],
+            [
+              {
+                "column": 91,
+                "coefficient": 21
+              }
+            ],
+            [
+              {
+                "column": 92,
+                "coefficient": 95
+              }
+            ],
+            [
+              {
+                "column": 93,
+                "coefficient": 83
+              }
+            ],
+            [
+              {
+                "column": 94,
+                "coefficient": 61
+              }
+            ],
+            [
+              {
+                "column": 95,
+                "coefficient": 66
+              }
+            ],
+            [
+              {
+                "column": 96,
+                "coefficient": 96
+              }
+            ],
+            [
+              {
+                "column": 97,
+                "coefficient": 58
+              }
+            ],
+            [
+              {
+                "column": 98,
+                "coefficient": 3
+              }
+            ],
+            [
+              {
+                "column": 99,
+                "coefficient": 85
+              }
+            ]
+          ]
+        },
+        "confidence": 1.0,
+        "abstain": false,
+        "evidence": [
+          "e0001",
+          "e0002",
+          "e0003",
+          "e0004",
+          "e0005",
+          "e0006"
+        ]
+      },
+      "response": {
+        "accepted": true,
+        "episode_closed": true,
+        "event_id": "e0007",
+        "cost_used": 6
+      },
+      "previous_hash": "ae243d1fe37bff31dfb78dd2eb40ae915fca5a0be44bccb74f82902ab9f7f488",
+      "hash": "d0c09733d8b21dbd19ef465597b920d2de7a8007b48b898b8f3a0f22a99d4e25"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "schema": "causalfill.belief-game-independent-audit.v1",
+  "status": "passed",
+  "seed": 2026110404,
+  "games": 256,
+  "modes": {
+    "adaptive": {
+      "games": 256,
+      "syntactic_policies": 559872,
+      "winning_syntactic_policies": 242496,
+      "certificate_checks": 256,
+      "strategy_replays": 248,
+      "unsolvable_instances": 8
+    },
+    "no_observe": {
+      "games": 256,
+      "syntactic_policies": 32768,
+      "winning_syntactic_policies": 14268,
+      "certificate_checks": 256,
+      "strategy_replays": 212,
+      "unsolvable_instances": 44
+    },
+    "open_loop": {
+      "games": 256,
+      "syntactic_policies": 6912,
+      "winning_syntactic_policies": 3123,
+      "certificate_checks": 256,
+      "strategy_replays": 247,
+      "unsolvable_instances": 9
+    },
+    "open_loop_no_observe": {
+      "games": 256,
+      "syntactic_policies": 2048,
+      "winning_syntactic_policies": 925,
+      "certificate_checks": 256,
+      "strategy_replays": 209,
+      "unsolvable_instances": 47
+    }
+  },
+  "failures": [],
+  "complete_syntactic_policies_enumerated": 601600,
+  "exact_optimum_comparisons": 1024,
+  "deterministic_transcript_sha256": "bd4223552f3d469e087f461c8ac601ed1886cb1a43a39a7eff5b7484ac4a36d5",
+  "source_sha256": {
+    "causalfill/belief_games.py": "6048b38c24a5d13a265c88071cf12a60f50701ebe819080ecf8a742451e05d95",
+    "causalfill/belief_certificates.py": "7cdae1a36d572b5c02458fbd1583171fff964c36135987e560e774f38f2c585a",
+    "tests/test_belief_games.py": "07bf7cf35cd41ce75065edade1ad2b9a481831d9e4cae1c499199eee3c1fa854"
+  },
+  "started_at_utc": "2026-11-04T13:44:17.118101+00:00",
+  "finished_at_utc": "2026-11-04T13:44:19.090874+00:00",
+  "elapsed_seconds": 1.972772,
+  "method": "Enumerate complete depth-three binary-feedback contingency assignments and replay the raw transitions for every initial world. No Bellman/production belief update is used by the numerical oracle.",
+  "limits": [
+    "Finite small-game coverage, not a proof of Python implementation soundness.",
+    "Syntactic policy assignments include unreachable histories and may induce identical realized behavior.",
+    "This internal AI-assisted audit is not an independent laboratory replication or model-solver evaluation."
+  ]
+}

@@ -1,0 +1,9 @@
+# Optional isolation building block; not executed in this release.
+# Resolve this base tag to an immutable digest before a comparative evaluation.
+FROM python:3.12-slim
+WORKDIR /opt/benchmark
+COPY causalfill ./causalfill
+RUN useradd --uid 10001 --create-home evaluator
+USER evaluator
+EXPOSE 8787
+ENTRYPOINT ["python", "-m", "causalfill", "serve", "--host", "0.0.0.0"]

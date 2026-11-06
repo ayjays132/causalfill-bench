@@ -1,0 +1,106 @@
+{
+  "arguments": {
+    "actions_per_episode": 20,
+    "geometry_cases": 400,
+    "master_seed": 371905,
+    "metamorphic_seed_count": 2,
+    "output": "reports/stress-v0.3/operations-vending-smoke.json",
+    "sections": [
+      "vending"
+    ],
+    "seed_count": 2
+  },
+  "audit_version": "operations-v0.3",
+  "elapsed_seconds": 0.377398,
+  "episode_seeds": [
+    0,
+    1
+  ],
+  "master_seed": 371905,
+  "metamorphic_episode_seeds": [
+    0,
+    1
+  ],
+  "mode": "evaluator-development",
+  "sections": [
+    {
+      "counters": {
+        "actions": 1685,
+        "check:advance_chunking_equivalence": 36,
+        "check:cash_conservation": 1685,
+        "check:expiry_day_is_inclusive": 36,
+        "check:expiry_next_day_removes_stock": 36,
+        "check:express_trajectory_independent_of_cedar_twin": 18,
+        "check:fee_obligation_conservation": 1685,
+        "check:fixed_controller_session_result": 36,
+        "check:fixed_controller_within_budget": 36,
+        "check:independent_quote_arithmetic": 43,
+        "check:invalid_world_atomicity": 424,
+        "check:quote_does_not_mutate_world": 43,
+        "check:reachable_insolvency_records_unpaid_fees": 36,
+        "check:stock_conservation": 1685,
+        "check:unit_inventory_and_cash_oracle": 1685,
+        "check:unpaid_fees_fail_invariant_score": 36,
+        "check:vending_action_contract": 1685,
+        "check:vending_defensive_copies": 36,
+        "check:vending_final_outcome": 36,
+        "check:vending_twin_single_lead_parameter": 18,
+        "check:wrong_procurement_field_rejected": 180,
+        "check:zero_demand_does_not_pass": 36,
+        "checks": 9511,
+        "constructed_insolvent_episodes": 36,
+        "expected_accepts": 1266,
+        "expected_rejects": 671,
+        "fixed_controller_tool_calls_total": 1080,
+        "fixed_controller_tool_cost_total": 1548,
+        "fixed_express_episodes": 36,
+        "fixed_express_successes": 36,
+        "fixed_express_successes:dev:d1:t0": 2,
+        "fixed_express_successes:dev:d1:t1": 2,
+        "fixed_express_successes:dev:d2:t0": 2,
+        "fixed_express_successes:dev:d2:t1": 2,
+        "fixed_express_successes:dev:d3:t0": 2,
+        "fixed_express_successes:dev:d3:t1": 2,
+        "fixed_express_successes:train:d1:t0": 2,
+        "fixed_express_successes:train:d1:t1": 2,
+        "fixed_express_successes:train:d2:t0": 2,
+        "fixed_express_successes:train:d2:t1": 2,
+        "fixed_express_successes:train:d3:t0": 2,
+        "fixed_express_successes:train:d3:t1": 2,
+        "fixed_express_successes:transfer:d1:t0": 2,
+        "fixed_express_successes:transfer:d1:t1": 2,
+        "fixed_express_successes:transfer:d2:t0": 2,
+        "fixed_express_successes:transfer:d2:t1": 2,
+        "fixed_express_successes:transfer:d3:t0": 2,
+        "fixed_express_successes:transfer:d3:t1": 2,
+        "fuzz_episodes": 36,
+        "invalid_actions": 424,
+        "passed_checks": 9511,
+        "reachable_expiry_episodes": 19,
+        "reachable_unpaid_fee_episodes": 1,
+        "valid_actions": 1261,
+        "verdict_checks": 1937
+      },
+      "elapsed_seconds": 0.375916,
+      "examples": [],
+      "failure_counts": {},
+      "name": "vending",
+      "notes": [
+        "Independent unit inventory oracle uses three public quotes, public forecast and initial constants; hidden noise is copied once only as evaluator-side exogenous scenario data.",
+        "The fixed Express controller sets price 359 and orders five cases on days 0,4,8,...; it receives three Cedar quotes solely to fill the required coefficients and one initial status for the horizon. It runs through the budgeted Session interface. It is a scripted shortcut control, not a model result."
+      ]
+    }
+  ],
+  "source_sha256": {
+    "causalfill/domains/__init__.py": "74c7870d72f6afa7a52cae22b2952e14ea85731fc8b9eb55e130687cfb1f8f23",
+    "causalfill/domains/diagnosis.py": "df2b66386d73e4527c16faa2ad9589e59be38ee21e4525bfd3e677f0ba76b767",
+    "causalfill/domains/grid.py": "8e8bcfdfaef7238c4706b04b981965046f257db3c456187b9b663ed5ffa17753",
+    "causalfill/domains/latent.py": "3cbe4ce70fc92ca0d748e7a8aa7b82f6985e976576f1f884b4bdbc466b35de9d",
+    "causalfill/domains/proof.py": "6f56ba758c299308d8a6d058ba556e27664e2ed8d76956419bba6de6775e2e5b",
+    "causalfill/domains/robotics.py": "b89e035ca757aba1e8e552059c8cf12000c79728f6686a27fa8c1c6b712175f3",
+    "causalfill/domains/vending.py": "e50a449a8c0090858c9579216b646ec37a814f630b93588de6754be005d92174",
+    "causalfill/domains/words.py": "6fa66419f1d55390d46289260914cd4ef0d7b6e18ab87498502695e109ede914",
+    "causalfill/domains/workflow.py": "39f8c242d9e89f3d14bc1ff49bfd17e1c8077dc5dd95ffbeaf917388f905e0b9",
+    "tools/stress_operations.py": "3e7792d82d891a55bd76d892f00ea757d60af9a568467131153c563add1bf2f6"
+  }
+}

@@ -1,0 +1,472 @@
+{
+  "public": {
+    "family": "latent",
+    "difficulty": 1,
+    "prompt": "Recover the masked affine operator f: GF(101)^8 -> GF(101)^8. You may intervene with the probe tool. Submit offset and sparse rows, where output[i] = (offset[i] + sum(term.coefficient * input[term.column] for term in rows[i])) modulo 101. Indices start at zero. Infer a map that works on new inputs, not just your observed examples. All coefficients and coordinates are canonical integers 0 through 100.",
+    "slots": {
+      "offset": {
+        "type": "integer_vector",
+        "description": "Exactly 8 residues."
+      },
+      "rows": {
+        "type": "sparse_matrix_rows",
+        "description": "Exactly 8 lists of {column: int, coefficient: int}. No duplicate columns within a row; omitted entries mean zero."
+      }
+    },
+    "files": [
+      "/docs/field.txt",
+      "/skill/recovery.md",
+      "/workspace/operator.masked.json"
+    ],
+    "tools": {
+      "probe": {
+        "description": "Evaluate the operator on one intervention vector; no state is changed.",
+        "arguments": {
+          "vector": "list of 8 integers in [0, 100]"
+        },
+        "cost": 1
+      }
+    },
+    "budget": 16,
+    "max_calls": 20,
+    "episode_id": "b826b5399a4446a9bd66214be56555e0",
+    "common_tools": {
+      "list_files": {
+        "arguments": {},
+        "cost": 1
+      },
+      "read_file": {
+        "arguments": {
+          "path": "exact listed virtual path"
+        },
+        "cost": 1
+      },
+      "search_files": {
+        "arguments": {
+          "text": "literal string, 1\u2013160 characters"
+        },
+        "cost": 2
+      },
+      "session_status": {
+        "arguments": {},
+        "cost": 1
+      },
+      "submit": {
+        "arguments": {
+          "fill": "object",
+          "confidence": "number 0..1",
+          "abstain": "boolean",
+          "evidence": "list of returned event IDs"
+        },
+        "cost": 0
+      }
+    },
+    "max_seconds": 600,
+    "tools_enabled": true,
+    "submission_rule": "One final submission. Grades are evaluator-only; no retry after submission."
+  },
+  "events": [
+    {
+      "event_id": "e0001",
+      "tool": "read_file",
+      "arguments": {
+        "path": "/workspace/operator.masked.json"
+      },
+      "response": {
+        "path": "/workspace/operator.masked.json",
+        "content": "{\"modulus\":101,\"dimension\":8,\"rows\":[{\"offset\":\"[MASK:b_0]\",\"terms\":[{\"column\":\"[MASK:j_0_0]\",\"coefficient\":\"[MASK:a_0_0]\"}]},{\"offset\":\"[MASK:b_1]\",\"terms\":[{\"column\":\"[MASK:j_1_0]\",\"coefficient\":\"[MASK:a_1_0]\"}]},{\"offset\":\"[MASK:b_2]\",\"terms\":[{\"column\":\"[MASK:j_2_0]\",\"coefficient\":\"[MASK:a_2_0]\"}]},{\"offset\":\"[MASK:b_3]\",\"terms\":[{\"column\":\"[MASK:j_3_0]\",\"coefficient\":\"[MASK:a_3_0]\"}]},{\"offset\":\"[MASK:b_4]\",\"terms\":[{\"column\":\"[MASK:j_4_0]\",\"coefficient\":\"[MASK:a_4_0]\"}]},{\"offset\":\"[MASK:b_5]\",\"terms\":[{\"column\":\"[MASK:j_5_0]\",\"coefficient\":\"[MASK:a_5_0]\"}]},{\"offset\":\"[MASK:b_6]\",\"terms\":[{\"column\":\"[MASK:j_6_0]\",\"coefficient\":\"[MASK:a_6_0]\"}]},{\"offset\":\"[MASK:b_7]\",\"terms\":[{\"column\":\"[MASK:j_7_0]\",\"coefficient\":\"[MASK:a_7_0]\"}]}]}",
+        "event_id": "e0001",
+        "cost_used": 1
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "7d59c7b2d6df61ff0a4963929bad020938bf99fc4d0b7784ba84e808f8a58252"
+    },
+    {
+      "event_id": "e0002",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "response": {
+        "output": [
+          76,
+          80,
+          94,
+          42,
+          34,
+          4,
+          35,
+          73
+        ],
+        "modulus": 101,
+        "event_id": "e0002",
+        "cost_used": 2
+      },
+      "previous_hash": "7d59c7b2d6df61ff0a4963929bad020938bf99fc4d0b7784ba84e808f8a58252",
+      "hash": "343aae1fccaa236a219a3223b6f6baa1f8e0291361407c600333adb2e54d7772"
+    },
+    {
+      "event_id": "e0003",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "response": {
+        "output": [
+          76,
+          80,
+          94,
+          42,
+          34,
+          4,
+          43,
+          73
+        ],
+        "modulus": 101,
+        "event_id": "e0003",
+        "cost_used": 3
+      },
+      "previous_hash": "343aae1fccaa236a219a3223b6f6baa1f8e0291361407c600333adb2e54d7772",
+      "hash": "e7c69539ae2e1c5c927f39258f235213850fe40b6e17ab35be16ab2fd58cd326"
+    },
+    {
+      "event_id": "e0004",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "response": {
+        "output": [
+          76,
+          93,
+          94,
+          42,
+          34,
+          4,
+          35,
+          73
+        ],
+        "modulus": 101,
+        "event_id": "e0004",
+        "cost_used": 4
+      },
+      "previous_hash": "e7c69539ae2e1c5c927f39258f235213850fe40b6e17ab35be16ab2fd58cd326",
+      "hash": "0220bda8f67a6e26c43850838f4e28b3729eb14978b2f4e2a46c2760b1864497"
+    },
+    {
+      "event_id": "e0005",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "response": {
+        "output": [
+          76,
+          80,
+          23,
+          42,
+          34,
+          4,
+          35,
+          73
+        ],
+        "modulus": 101,
+        "event_id": "e0005",
+        "cost_used": 5
+      },
+      "previous_hash": "0220bda8f67a6e26c43850838f4e28b3729eb14978b2f4e2a46c2760b1864497",
+      "hash": "1c882fb379cafca7d818c2c44c6a9e9de6ab03df22c2f7808a60efeaa7a156bd"
+    },
+    {
+      "event_id": "e0006",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "response": {
+        "output": [
+          76,
+          80,
+          94,
+          42,
+          34,
+          4,
+          35,
+          89
+        ],
+        "modulus": 101,
+        "event_id": "e0006",
+        "cost_used": 6
+      },
+      "previous_hash": "1c882fb379cafca7d818c2c44c6a9e9de6ab03df22c2f7808a60efeaa7a156bd",
+      "hash": "22107c17665f18365dc64af822e990eb0a6ef06086bd764ed16414c9eb15b0ac"
+    },
+    {
+      "event_id": "e0007",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      "response": {
+        "output": [
+          31,
+          80,
+          94,
+          42,
+          34,
+          4,
+          35,
+          73
+        ],
+        "modulus": 101,
+        "event_id": "e0007",
+        "cost_used": 7
+      },
+      "previous_hash": "22107c17665f18365dc64af822e990eb0a6ef06086bd764ed16414c9eb15b0ac",
+      "hash": "d39cceefebd1d529a207676db69bfabfae5682b294430d5433f287ab3549203c"
+    },
+    {
+      "event_id": "e0008",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0,
+          0
+        ]
+      },
+      "response": {
+        "output": [
+          76,
+          80,
+          94,
+          42,
+          52,
+          4,
+          35,
+          73
+        ],
+        "modulus": 101,
+        "event_id": "e0008",
+        "cost_used": 8
+      },
+      "previous_hash": "d39cceefebd1d529a207676db69bfabfae5682b294430d5433f287ab3549203c",
+      "hash": "90e5e12faefec0f1d72b6e9586aa83f1e735581648b4f686b2d9029bef4f584c"
+    },
+    {
+      "event_id": "e0009",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1,
+          0
+        ]
+      },
+      "response": {
+        "output": [
+          76,
+          80,
+          94,
+          48,
+          34,
+          4,
+          35,
+          73
+        ],
+        "modulus": 101,
+        "event_id": "e0009",
+        "cost_used": 9
+      },
+      "previous_hash": "90e5e12faefec0f1d72b6e9586aa83f1e735581648b4f686b2d9029bef4f584c",
+      "hash": "5821623b8248f4d6f3fe6029ad404b5efbb36682a87f826f4571dee65b294ebc"
+    },
+    {
+      "event_id": "e0010",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          1
+        ]
+      },
+      "response": {
+        "output": [
+          76,
+          80,
+          94,
+          42,
+          34,
+          9,
+          35,
+          73
+        ],
+        "modulus": 101,
+        "event_id": "e0010",
+        "cost_used": 10
+      },
+      "previous_hash": "5821623b8248f4d6f3fe6029ad404b5efbb36682a87f826f4571dee65b294ebc",
+      "hash": "06c545b1f6df2cc170f5e771bc5219932afae9ba4915f1b68b6f0076c6feb23f"
+    },
+    {
+      "event_id": "e0011",
+      "tool": "submit",
+      "arguments": {
+        "fill": {
+          "offset": [
+            76,
+            80,
+            94,
+            42,
+            34,
+            4,
+            35,
+            73
+          ],
+          "rows": [
+            [
+              {
+                "column": 4,
+                "coefficient": 56
+              }
+            ],
+            [
+              {
+                "column": 1,
+                "coefficient": 13
+              }
+            ],
+            [
+              {
+                "column": 2,
+                "coefficient": 30
+              }
+            ],
+            [
+              {
+                "column": 6,
+                "coefficient": 6
+              }
+            ],
+            [
+              {
+                "column": 5,
+                "coefficient": 18
+              }
+            ],
+            [
+              {
+                "column": 7,
+                "coefficient": 5
+              }
+            ],
+            [
+              {
+                "column": 0,
+                "coefficient": 8
+              }
+            ],
+            [
+              {
+                "column": 3,
+                "coefficient": 16
+              }
+            ]
+          ]
+        },
+        "confidence": 1.0,
+        "abstain": false,
+        "evidence": [
+          "e0001",
+          "e0002",
+          "e0003",
+          "e0004",
+          "e0005",
+          "e0006",
+          "e0007",
+          "e0008",
+          "e0009",
+          "e0010"
+        ]
+      },
+      "response": {
+        "accepted": true,
+        "episode_closed": true,
+        "event_id": "e0011",
+        "cost_used": 10
+      },
+      "previous_hash": "06c545b1f6df2cc170f5e771bc5219932afae9ba4915f1b68b6f0076c6feb23f",
+      "hash": "67c6f63fdcb87b9d5eb4796322b7a77320b64f881c5b77b84c67358acfa4d384"
+    }
+  ]
+}

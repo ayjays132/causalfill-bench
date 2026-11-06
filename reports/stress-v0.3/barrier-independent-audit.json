@@ -1,0 +1,149 @@
+{
+  "after_fix": {
+    "alias_retests": [
+      {
+        "canonical_json_equality": false,
+        "case": "public_boolean_numeric_alias",
+        "python_equality": true,
+        "statement_sha256": "52d3644aca887dd7acde7a7924fe772e75f2def718f048b55a5e34cc49df8fe9",
+        "verification": {
+          "reason": "public budgets must be positive bounded integers",
+          "valid": false
+        }
+      },
+      {
+        "canonical_json_equality": false,
+        "case": "camera_boolean_numeric_alias",
+        "python_equality": true,
+        "statement_sha256": "1fed2517ab2098793a96c1a7d4b1ff3758d5a7dc7da30ad5301d61a80b2a8ab0",
+        "verification": {
+          "reason": "paired cameras observations differ before geometry sensing",
+          "valid": false
+        }
+      }
+    ],
+    "initialization_checks": [
+      {
+        "all_camera_readings_canonical_equal": true,
+        "files_canonical_equal": true,
+        "session_public_differing_fields": [
+          "episode_id"
+        ],
+        "split": "train",
+        "task_public_canonical_equal": true
+      },
+      {
+        "all_camera_readings_canonical_equal": true,
+        "files_canonical_equal": true,
+        "session_public_differing_fields": [
+          "episode_id"
+        ],
+        "split": "dev",
+        "task_public_canonical_equal": true
+      },
+      {
+        "all_camera_readings_canonical_equal": true,
+        "files_canonical_equal": true,
+        "session_public_differing_fields": [
+          "episode_id"
+        ],
+        "split": "transfer",
+        "task_public_canonical_equal": true
+      }
+    ],
+    "separator_inside_goal_tolerance_rejected": {
+      "reason": "separator does not strictly separate start from the entire goal region",
+      "valid": false
+    }
+  },
+  "baseline": {
+    "difficulty": 3,
+    "seed": 17,
+    "split": "transfer",
+    "statement_sha256": "5986547aa0f69cbc79191262e29eb158d37080c86246fd005341eafdfef9ad87",
+    "twin": 0,
+    "verification": {
+      "certificate_version": "separating_workspace_section_v1",
+      "constructive_routes_checked": 2,
+      "exact_section_slices_checked": 7,
+      "guarantee": "no common admissible continuous path solves both supplied worlds",
+      "scope": "symbolic geometry; a suitable geometry-dependent observation can distinguish worlds",
+      "separating_section_covered": true,
+      "separator_axis": 0,
+      "separator_coordinate": 5.625,
+      "shared_public_and_camera_observations": true,
+      "single_wall_y_translation": true,
+      "statement_sha256": "5986547aa0f69cbc79191262e29eb158d37080c86246fd005341eafdfef9ad87",
+      "valid": true
+    }
+  },
+  "before_fix": {
+    "camera_boolean_numeric_alias": {
+      "canonical_json_equality": false,
+      "mutation": "world 0 first-camera occlusion_possible = integer 1; world 1 = Boolean true; recompute statement digest",
+      "python_equality": true,
+      "shared_public_and_camera_observations_reported": true,
+      "statement_sha256": "1fed2517ab2098793a96c1a7d4b1ff3758d5a7dc7da30ad5301d61a80b2a8ab0",
+      "verifier_valid": true
+    },
+    "old_source_hash_recorded": false,
+    "provenance": "Direct reproductions observed in this review before the operations owner repaired the equality check; no old source hash was captured.",
+    "public_boolean_numeric_alias": {
+      "canonical_json_equality": false,
+      "mutation": "world 0 public budget = integer 1; world 1 public budget = Boolean true; recompute statement digest",
+      "python_equality": true,
+      "shared_public_and_camera_observations_reported": true,
+      "statement_sha256": "52d3644aca887dd7acde7a7924fe772e75f2def718f048b55a5e34cc49df8fe9",
+      "verifier_valid": true
+    }
+  },
+  "half_success_bound": {
+    "argument": "The sets of successful fixed submissions for the two worlds are disjoint. Under one common submission distribution, their probabilities sum to at most one; the equally weighted average is at most one half.",
+    "valid_scope": "Expected success under equally weighted worlds, identical restricted observation laws, and randomness independent of the hidden world. No guarantee about every finite realized sample, arbitrary priors, timing side channels, external twin labels, or policies using distinguishing path probes/lidar."
+  },
+  "limits": [
+    "The certificate concerns the supplied artifact and its declared symbolic geometry, not host authentication or physical robotics.",
+    "This was a focused source review and concrete regression replay, not a new broad fuzz campaign or a Lean proof."
+  ],
+  "recorded_at_utc": "2026-11-01T15:11:51.694818+00:00",
+  "schema": "causalfill.barrier-independent-audit.v1",
+  "source_review_findings": [
+    "The exact rectangle sweep checks edges and open strips; no remaining coverage defect was found.",
+    "Strict separator placement applies to the entire declared target-tolerance region.",
+    "Constructive routes are checked by independent endpoint/six-face tests, not the production slab predicate.",
+    "Camera reconstruction uses independent exact Gaussian elimination.",
+    "The base initializer seeds random draws without twin and its only twin-specific obstacle is overwritten; no twin identity was found in public files or cameras.",
+    "Session episode identifiers come from uuid4 independently of the task/twin; they are not literal paired identifiers but share a world-independent distribution."
+  ],
+  "source_snapshot_sha256": {
+    "causalfill/domains/robotics.py": "e24e99b9c27f05d239ff7f22e87727870e02682d9e81791be1d89bdf8a97d283",
+    "causalfill/domains/robotics_barrier.py": "4026eca7ed18c50fb88bc2d20b7d26886ff9e06e9cb2df12abd3e2f138c58cdf",
+    "causalfill/session.py": "e9f2225452562d3bb0209eaa47ad5e6b211efa45d53c0f7a0cbcf6ce3ee8f71a",
+    "causalfill/types.py": "b307d7b170c8e5b04dd1565db666c790a35ef17567b6ccc0c3ea83598f42761b",
+    "docs/robotics-barrier.md": "97a91fc6a5b4f1669fcf72434f25ef9fc3337a5ffaad78597ddb3cba4f89b548"
+  },
+  "status": "review_completed_observation_alias_defect_repaired",
+  "uninformative_geometry_probe": {
+    "arguments": {
+      "safe_waypoints": [],
+      "target_world_position": [
+        1,
+        1,
+        1
+      ]
+    },
+    "interpretation": "A suitable geometry-dependent observation can distinguish the worlds; not every individual geometric probe does.",
+    "responses": [
+      {
+        "collision_free": true,
+        "non_destructive": true,
+        "within_workspace": true
+      },
+      {
+        "collision_free": true,
+        "non_destructive": true,
+        "within_workspace": true
+      }
+    ]
+  }
+}

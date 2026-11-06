@@ -1,0 +1,336 @@
+{
+  "public": {
+    "family": "latent_sparse",
+    "difficulty": 1,
+    "prompt": "Recover a masked affine operator f: GF(101)^8 -> GF(101)^8 under a budget of nine cost units. Each output coordinate depends on at most two input coordinates plus an offset. You may choose bounded intervention vectors for the probe tool. Submit offset and sparse rows: output[i] = (offset[i] + sum(term.coefficient * input[term.column] for term in rows[i])) modulo 101. All entries are integers 0..100; columns are indexed from zero. Your map must work on all inputs, not only your probes.",
+    "slots": {
+      "offset": {
+        "type": "integer_vector",
+        "description": "Exactly 8 residues."
+      },
+      "rows": {
+        "type": "sparse_matrix_rows",
+        "description": "Exactly 8 lists of {column: int, coefficient: int}. No duplicate columns within a row; omitted entries mean zero."
+      }
+    },
+    "files": [
+      "/docs/field.txt",
+      "/skill/recovery.md",
+      "/workspace/operator.masked.json"
+    ],
+    "tools": {
+      "probe": {
+        "description": "Evaluate the operator on one intervention vector; no state is changed.",
+        "arguments": {
+          "vector": "list of 8 integers in [0, 100]"
+        },
+        "cost": 1
+      }
+    },
+    "budget": 9,
+    "max_calls": 14,
+    "episode_id": "e74a432c7afd4afea4c31ccbce3c5f22",
+    "common_tools": {
+      "list_files": {
+        "arguments": {},
+        "cost": 1
+      },
+      "read_file": {
+        "arguments": {
+          "path": "exact listed virtual path"
+        },
+        "cost": 1
+      },
+      "search_files": {
+        "arguments": {
+          "text": "literal string, 1\u2013160 characters"
+        },
+        "cost": 2
+      },
+      "session_status": {
+        "arguments": {},
+        "cost": 1
+      },
+      "submit": {
+        "arguments": {
+          "fill": "object",
+          "confidence": "number 0..1",
+          "abstain": "boolean",
+          "evidence": "list of returned event IDs"
+        },
+        "cost": 0
+      }
+    },
+    "max_seconds": 600,
+    "tools_enabled": true,
+    "submission_rule": "One final submission. Grades are evaluator-only; no retry after submission."
+  },
+  "events": [
+    {
+      "event_id": "e0001",
+      "tool": "read_file",
+      "arguments": {
+        "path": "/workspace/operator.masked.json"
+      },
+      "response": {
+        "path": "/workspace/operator.masked.json",
+        "content": "{\"modulus\":101,\"dimension\":8,\"rows\":[{\"offset\":\"[MASK:b_0]\",\"terms\":[{\"column\":\"[MASK:j_0_0]\",\"coefficient\":\"[MASK:a_0_0]\"}]},{\"offset\":\"[MASK:b_1]\",\"terms\":[{\"column\":\"[MASK:j_1_0]\",\"coefficient\":\"[MASK:a_1_0]\"}]},{\"offset\":\"[MASK:b_2]\",\"terms\":[{\"column\":\"[MASK:j_2_0]\",\"coefficient\":\"[MASK:a_2_0]\"}]},{\"offset\":\"[MASK:b_3]\",\"terms\":[{\"column\":\"[MASK:j_3_0]\",\"coefficient\":\"[MASK:a_3_0]\"}]},{\"offset\":\"[MASK:b_4]\",\"terms\":[{\"column\":\"[MASK:j_4_0]\",\"coefficient\":\"[MASK:a_4_0]\"}]},{\"offset\":\"[MASK:b_5]\",\"terms\":[{\"column\":\"[MASK:j_5_0]\",\"coefficient\":\"[MASK:a_5_0]\"}]},{\"offset\":\"[MASK:b_6]\",\"terms\":[{\"column\":\"[MASK:j_6_0]\",\"coefficient\":\"[MASK:a_6_0]\"}]},{\"offset\":\"[MASK:b_7]\",\"terms\":[{\"column\":\"[MASK:j_7_0]\",\"coefficient\":\"[MASK:a_7_0]\"}]}]}",
+        "event_id": "e0001",
+        "cost_used": 1
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "7d59c7b2d6df61ff0a4963929bad020938bf99fc4d0b7784ba84e808f8a58252"
+    },
+    {
+      "event_id": "e0002",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "response": {
+        "output": [
+          90,
+          23,
+          26,
+          26,
+          72,
+          85,
+          48,
+          97
+        ],
+        "modulus": 101,
+        "event_id": "e0002",
+        "cost_used": 2
+      },
+      "previous_hash": "7d59c7b2d6df61ff0a4963929bad020938bf99fc4d0b7784ba84e808f8a58252",
+      "hash": "75b69d3297a99de6abae229e532e24fe99a2140d3b65e6eedd6992a2963f4505"
+    },
+    {
+      "event_id": "e0003",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "response": {
+        "output": [
+          68,
+          50,
+          66,
+          4,
+          22,
+          32,
+          71,
+          59
+        ],
+        "modulus": 101,
+        "event_id": "e0003",
+        "cost_used": 3
+      },
+      "previous_hash": "75b69d3297a99de6abae229e532e24fe99a2140d3b65e6eedd6992a2963f4505",
+      "hash": "6ef7e22435254c937dc969b985e0736d1019a5f62892f0ba340c57c48569a95a"
+    },
+    {
+      "event_id": "e0004",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "response": {
+        "output": [
+          24,
+          30,
+          26,
+          83,
+          24,
+          32,
+          85,
+          33
+        ],
+        "modulus": 101,
+        "event_id": "e0004",
+        "cost_used": 4
+      },
+      "previous_hash": "6ef7e22435254c937dc969b985e0736d1019a5f62892f0ba340c57c48569a95a",
+      "hash": "8feb53722dfe10ebb4ab3c26945979181772e890a8168c4492589100f94bb1e9"
+    },
+    {
+      "event_id": "e0005",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          1,
+          4,
+          9,
+          16,
+          25,
+          36,
+          49
+        ]
+      },
+      "response": {
+        "output": [
+          94,
+          51,
+          26,
+          39,
+          34,
+          32,
+          68,
+          53
+        ],
+        "modulus": 101,
+        "event_id": "e0005",
+        "cost_used": 5
+      },
+      "previous_hash": "8feb53722dfe10ebb4ab3c26945979181772e890a8168c4492589100f94bb1e9",
+      "hash": "4f679c903faf90ca8d0cbf73d04222ca37f41331db744d1c52022811c06f07c2"
+    },
+    {
+      "event_id": "e0006",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          1,
+          8,
+          27,
+          64,
+          24,
+          14,
+          40
+        ]
+      },
+      "response": {
+        "output": [
+          1,
+          34,
+          26,
+          52,
+          84,
+          32,
+          67,
+          92
+        ],
+        "modulus": 101,
+        "event_id": "e0006",
+        "cost_used": 6
+      },
+      "previous_hash": "4f679c903faf90ca8d0cbf73d04222ca37f41331db744d1c52022811c06f07c2",
+      "hash": "ac6cebbb0dc89cc51a0ab75fe3668c6a4f09a20799f5afd75874e297a1444f19"
+    },
+    {
+      "event_id": "e0007",
+      "tool": "submit",
+      "arguments": {
+        "fill": {
+          "offset": [
+            90,
+            23,
+            26,
+            26,
+            72,
+            85,
+            48,
+            97
+          ],
+          "rows": [
+            [
+              {
+                "column": 3,
+                "coefficient": 79
+              }
+            ],
+            [
+              {
+                "column": 4,
+                "coefficient": 27
+              }
+            ],
+            [
+              {
+                "column": 0,
+                "coefficient": 40
+              }
+            ],
+            [
+              {
+                "column": 2,
+                "coefficient": 79
+              }
+            ],
+            [
+              {
+                "column": 5,
+                "coefficient": 51
+              }
+            ],
+            [
+              {
+                "column": 1,
+                "coefficient": 48
+              }
+            ],
+            [
+              {
+                "column": 6,
+                "coefficient": 23
+              }
+            ],
+            [
+              {
+                "column": 7,
+                "coefficient": 63
+              }
+            ]
+          ]
+        },
+        "confidence": 1.0,
+        "abstain": false,
+        "evidence": [
+          "e0001",
+          "e0002",
+          "e0003",
+          "e0004",
+          "e0005",
+          "e0006"
+        ]
+      },
+      "response": {
+        "accepted": true,
+        "episode_closed": true,
+        "event_id": "e0007",
+        "cost_used": 6
+      },
+      "previous_hash": "ac6cebbb0dc89cc51a0ab75fe3668c6a4f09a20799f5afd75874e297a1444f19",
+      "hash": "bc7243fa5450793d7a34180240bf9b797a7f192039d70f5c0a6c65b0578d059b"
+    }
+  ]
+}

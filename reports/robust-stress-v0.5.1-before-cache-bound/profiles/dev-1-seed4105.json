@@ -1,0 +1,541 @@
+{
+  "profile": {
+    "seed": 4105,
+    "split": "dev",
+    "difficulty": 1,
+    "worlds": 2,
+    "experiments": 3,
+    "max_corruptions": 1,
+    "terminal_actions": 2,
+    "cases": 8,
+    "minimum_runtime_cost": 3,
+    "worst_runtime_cost": 4,
+    "certified_operational_budget": 4,
+    "certificate_states": 20
+  },
+  "problem": {
+    "schema": "causalfill.robust-decision.v1",
+    "worlds": [
+      "w00",
+      "w01"
+    ],
+    "max_corruptions": 1,
+    "actions": [
+      {
+        "cost": 1,
+        "success_worlds": [
+          "w01"
+        ],
+        "id": "a00"
+      },
+      {
+        "cost": 1,
+        "success_worlds": [
+          "w00"
+        ],
+        "id": "a01"
+      }
+    ],
+    "experiments": [
+      {
+        "id": "q00",
+        "cost": 1,
+        "responses": {
+          "w00": 0,
+          "w01": 1
+        }
+      },
+      {
+        "id": "q01",
+        "cost": 1,
+        "responses": {
+          "w00": 0,
+          "w01": 1
+        }
+      },
+      {
+        "id": "q02",
+        "cost": 1,
+        "responses": {
+          "w00": 0,
+          "w01": 1
+        }
+      }
+    ]
+  },
+  "certificate": {
+    "schema": "causalfill.robust-certificate.v1",
+    "problem_sha256": "40e62b17fa892641e0c0b3e7053fd224f39f55b65309a55056b24de7fe2ea776",
+    "objective": "action",
+    "root": [
+      [
+        0,
+        0
+      ],
+      7
+    ],
+    "value": 4,
+    "nodes": [
+      [
+        [
+          0,
+          2
+        ],
+        0,
+        1,
+        {
+          "kind": "act",
+          "id": "a01"
+        }
+      ],
+      [
+        [
+          1,
+          2
+        ],
+        0,
+        1,
+        {
+          "kind": "act",
+          "id": "a01"
+        }
+      ],
+      [
+        [
+          2,
+          0
+        ],
+        0,
+        1,
+        {
+          "kind": "act",
+          "id": "a00"
+        }
+      ],
+      [
+        [
+          2,
+          1
+        ],
+        0,
+        1,
+        {
+          "kind": "act",
+          "id": "a00"
+        }
+      ],
+      [
+        [
+          0,
+          2
+        ],
+        1,
+        1,
+        {
+          "kind": "act",
+          "id": "a01"
+        }
+      ],
+      [
+        [
+          0,
+          2
+        ],
+        2,
+        1,
+        {
+          "kind": "act",
+          "id": "a01"
+        }
+      ],
+      [
+        [
+          0,
+          2
+        ],
+        4,
+        1,
+        {
+          "kind": "act",
+          "id": "a01"
+        }
+      ],
+      [
+        [
+          1,
+          1
+        ],
+        1,
+        2,
+        {
+          "kind": "query",
+          "id": "q00"
+        }
+      ],
+      [
+        [
+          1,
+          1
+        ],
+        2,
+        2,
+        {
+          "kind": "query",
+          "id": "q01"
+        }
+      ],
+      [
+        [
+          1,
+          1
+        ],
+        4,
+        2,
+        {
+          "kind": "query",
+          "id": "q02"
+        }
+      ],
+      [
+        [
+          2,
+          0
+        ],
+        1,
+        1,
+        {
+          "kind": "act",
+          "id": "a00"
+        }
+      ],
+      [
+        [
+          2,
+          0
+        ],
+        2,
+        1,
+        {
+          "kind": "act",
+          "id": "a00"
+        }
+      ],
+      [
+        [
+          2,
+          0
+        ],
+        4,
+        1,
+        {
+          "kind": "act",
+          "id": "a00"
+        }
+      ],
+      [
+        [
+          0,
+          1
+        ],
+        3,
+        3,
+        {
+          "kind": "query",
+          "id": "q00"
+        }
+      ],
+      [
+        [
+          0,
+          1
+        ],
+        5,
+        3,
+        {
+          "kind": "query",
+          "id": "q00"
+        }
+      ],
+      [
+        [
+          0,
+          1
+        ],
+        6,
+        3,
+        {
+          "kind": "query",
+          "id": "q01"
+        }
+      ],
+      [
+        [
+          1,
+          0
+        ],
+        3,
+        3,
+        {
+          "kind": "query",
+          "id": "q00"
+        }
+      ],
+      [
+        [
+          1,
+          0
+        ],
+        5,
+        3,
+        {
+          "kind": "query",
+          "id": "q00"
+        }
+      ],
+      [
+        [
+          1,
+          0
+        ],
+        6,
+        3,
+        {
+          "kind": "query",
+          "id": "q01"
+        }
+      ],
+      [
+        [
+          0,
+          0
+        ],
+        7,
+        4,
+        {
+          "kind": "query",
+          "id": "q00"
+        }
+      ]
+    ]
+  },
+  "policy": {
+    "schema": "causalfill.robust-policy.v1",
+    "problem_sha256": "40e62b17fa892641e0c0b3e7053fd224f39f55b65309a55056b24de7fe2ea776",
+    "objective": "action",
+    "budget": 4,
+    "root": 0,
+    "nodes": [
+      {
+        "kind": "query",
+        "id": "q00",
+        "branches": {
+          "0": 1,
+          "1": 6
+        }
+      },
+      {
+        "kind": "query",
+        "id": "q01",
+        "branches": {
+          "0": 2,
+          "1": 3
+        }
+      },
+      {
+        "kind": "act",
+        "id": "a01"
+      },
+      {
+        "kind": "query",
+        "id": "q02",
+        "branches": {
+          "0": 4,
+          "1": 5
+        }
+      },
+      {
+        "kind": "act",
+        "id": "a01"
+      },
+      {
+        "kind": "act",
+        "id": "a00"
+      },
+      {
+        "kind": "query",
+        "id": "q01",
+        "branches": {
+          "0": 3,
+          "1": 7
+        }
+      },
+      {
+        "kind": "act",
+        "id": "a00"
+      }
+    ]
+  },
+  "worst_case": {
+    "world": "w00",
+    "faults": [
+      "q00"
+    ],
+    "trace": [
+      {
+        "event_id": "e0001",
+        "tool": "read_file",
+        "arguments": {
+          "path": "/formal/robust-sensing.json"
+        },
+        "response": {
+          "path": "/formal/robust-sensing.json",
+          "content": "{\"problem\":{\"schema\":\"causalfill.robust-decision.v1\",\"worlds\":[\"w00\",\"w01\"],\"max_corruptions\":1,\"actions\":[{\"cost\":1,\"success_worlds\":[\"w01\"],\"id\":\"a00\"},{\"cost\":1,\"success_worlds\":[\"w00\"],\"id\":\"a01\"}],\"experiments\":[{\"id\":\"q00\",\"cost\":1,\"responses\":{\"w00\":0,\"w01\":1}},{\"id\":\"q01\",\"cost\":1,\"responses\":{\"w00\":0,\"w01\":1}},{\"id\":\"q02\",\"cost\":1,\"responses\":{\"w00\":0,\"w01\":1}}]},\"problem_sha256\":\"40e62b17fa892641e0c0b3e7053fd224f39f55b65309a55056b24de7fe2ea776\",\"operational_budget\":4,\"budget_scope\":\"probe costs plus one terminal action; setup reads excluded\",\"setup_credit_rule\":\"unused setup credits cannot increase the operational budget\",\"query_rule\":\"each listed probe is available once\",\"fault_rule\":\"at most max_corruptions flipped responses in the whole episode\",\"fill_rule\":\"witnesses must refer to distinct observations made before commitment\"}",
+          "event_id": "e0001",
+          "cost_used": 1
+        },
+        "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+        "hash": "b3deb2541550098256fd8d505bb9bb0e54205a9d4da2662799bf155c10715367"
+      },
+      {
+        "event_id": "e0002",
+        "tool": "probe_q00",
+        "arguments": {},
+        "response": {
+          "experiment": "q00",
+          "outcome": 1,
+          "remaining_probes": 2,
+          "event_id": "e0002",
+          "cost_used": 2
+        },
+        "previous_hash": "b3deb2541550098256fd8d505bb9bb0e54205a9d4da2662799bf155c10715367",
+        "hash": "82dd4fde132cc5e6bbc39ad47696bfc409bb5a3a9ac304a264cee48d88cc81ac"
+      },
+      {
+        "event_id": "e0003",
+        "tool": "probe_q01",
+        "arguments": {},
+        "response": {
+          "experiment": "q01",
+          "outcome": 0,
+          "remaining_probes": 1,
+          "event_id": "e0003",
+          "cost_used": 3
+        },
+        "previous_hash": "82dd4fde132cc5e6bbc39ad47696bfc409bb5a3a9ac304a264cee48d88cc81ac",
+        "hash": "89e30d13a9199eab82fff010267f409058916857e10b0b56f395fb5432d79fc7"
+      },
+      {
+        "event_id": "e0004",
+        "tool": "probe_q02",
+        "arguments": {},
+        "response": {
+          "experiment": "q02",
+          "outcome": 0,
+          "remaining_probes": 0,
+          "event_id": "e0004",
+          "cost_used": 4
+        },
+        "previous_hash": "89e30d13a9199eab82fff010267f409058916857e10b0b56f395fb5432d79fc7",
+        "hash": "c541f9357737b335bce50965e9543ded1a1fc9cc76b93dc439d4d2afd6053f87"
+      },
+      {
+        "event_id": "e0005",
+        "tool": "commit_a01",
+        "arguments": {},
+        "response": {
+          "action": "a01",
+          "committed": true,
+          "next_step": "Submit the action and observed exclusion witnesses.",
+          "event_id": "e0005",
+          "cost_used": 5
+        },
+        "previous_hash": "c541f9357737b335bce50965e9543ded1a1fc9cc76b93dc439d4d2afd6053f87",
+        "hash": "638f1decc66596227b13db8de3a1a7898fa82440f30379cb301091f4fd586bac"
+      },
+      {
+        "event_id": "e0006",
+        "tool": "submit",
+        "arguments": {
+          "fill": {
+            "problem_sha256": "40e62b17fa892641e0c0b3e7053fd224f39f55b65309a55056b24de7fe2ea776",
+            "action": "a01",
+            "exclusions": [
+              {
+                "world": "w01",
+                "conflicts": [
+                  "q01",
+                  "q02"
+                ]
+              }
+            ]
+          },
+          "confidence": 1.0,
+          "abstain": false,
+          "evidence": [
+            "e0001",
+            "e0002",
+            "e0003",
+            "e0004",
+            "e0005"
+          ]
+        },
+        "response": {
+          "accepted": true,
+          "episode_closed": true,
+          "event_id": "e0006",
+          "cost_used": 5
+        },
+        "previous_hash": "638f1decc66596227b13db8de3a1a7898fa82440f30379cb301091f4fd586bac",
+        "hash": "43d28ae35ab9e56ed2981ca0e492f60162d98e34e215ddceebc6576a9683abaf"
+      }
+    ],
+    "result": {
+      "episode_id": "ab4554b462724d53b48fc43d8e848c63",
+      "family": "robust_sensing",
+      "split": "dev",
+      "difficulty": 1,
+      "structural_signature": "robust_sensing:repetition-one-bit:v1",
+      "twin_kind": "sensor_corruption",
+      "answerable": true,
+      "success": true,
+      "abstained": false,
+      "decision_correct": true,
+      "confidence": 1.0,
+      "brier_decision": 0.0,
+      "recovery": 1.0,
+      "outcome": 1.0,
+      "safety": 1.0,
+      "tool_cost": 5,
+      "tool_calls": 5,
+      "invalid_calls": 0,
+      "wall_seconds": 0.000177,
+      "condition": {
+        "skill": true,
+        "tools": true
+      },
+      "verdict": {
+        "success": true,
+        "recovery": 1.0,
+        "outcome": 1.0,
+        "safety": 1.0,
+        "details": {
+          "actual_operation_succeeded": true,
+          "action_justified_before_commit": true,
+          "valid_exclusions": 1,
+          "required_exclusions": 1,
+          "compatible_worlds_at_commit": 1,
+          "full_identification_required": false,
+          "assigned_corruptions": 1,
+          "observed_corruptions": 1,
+          "global_corruption_limit": 1,
+          "queries_used": 3,
+          "operational_cost": 4,
+          "certified_operational_budget": 4,
+          "within_operational_budget": true,
+          "scope": "finite symbolic operation with evidence valid under a global bounded corruption model"
+        }
+      },
+      "trace_hash": "43d28ae35ab9e56ed2981ca0e492f60162d98e34e215ddceebc6576a9683abaf"
+    }
+  }
+}

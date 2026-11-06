@@ -1,0 +1,98 @@
+{
+  "problem": {
+    "schema": "causalfill.noisy-decision.v1",
+    "worlds": [
+      "left_dry",
+      "left_wet",
+      "right_dry",
+      "right_wet"
+    ],
+    "actions": [
+      {
+        "id": "left_slow",
+        "cost": 0,
+        "success_worlds": [
+          "left_dry",
+          "left_wet"
+        ]
+      },
+      {
+        "id": "right_slow",
+        "cost": 0,
+        "success_worlds": [
+          "right_dry",
+          "right_wet"
+        ]
+      },
+      {
+        "id": "bypass",
+        "cost": 0,
+        "success_worlds": [
+          "left_dry",
+          "left_wet",
+          "right_dry",
+          "right_wet"
+        ]
+      }
+    ],
+    "experiments": [
+      {
+        "id": "camera",
+        "cost": 1,
+        "supports": {
+          "left_dry": [
+            "left"
+          ],
+          "left_wet": [
+            "left"
+          ],
+          "right_dry": [
+            "right"
+          ],
+          "right_wet": [
+            "right"
+          ]
+        }
+      },
+      {
+        "id": "surface",
+        "cost": 3,
+        "supports": {
+          "left_dry": [
+            "dry"
+          ],
+          "left_wet": [
+            "wet"
+          ],
+          "right_dry": [
+            "dry"
+          ],
+          "right_wet": [
+            "wet"
+          ]
+        }
+      }
+    ]
+  },
+  "certificate": {
+    "schema": "causalfill.decision-sufficiency-certificate.v1",
+    "problem_sha256": "715e092885157fa86b1c4f92fba76912081abdee618b030d987cf6ee05324a40",
+    "objective": "action",
+    "root": [
+      15,
+      3
+    ],
+    "value": 0,
+    "nodes": [
+      [
+        15,
+        3,
+        0,
+        {
+          "kind": "act",
+          "id": "bypass"
+        }
+      ]
+    ]
+  }
+}

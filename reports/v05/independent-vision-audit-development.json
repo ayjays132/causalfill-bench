@@ -1,0 +1,136 @@
+{
+  "checks": 4695,
+  "claims": {
+    "finite_engineering_checks": true,
+    "formal_proof": false,
+    "model_performance": false,
+    "physical_robot_validation": false
+  },
+  "counts": {
+    "alias_replay_compact_states": 1,
+    "alias_replay_cost_extrema": 1,
+    "alias_replay_exact_multiplicity": 1,
+    "alias_replay_optimum": 1,
+    "alias_replay_resource_cap": 1,
+    "bounded_rgb_noise": 32,
+    "calibration_inverse": 4,
+    "decision_certificate_valid": 1377,
+    "decision_forgery_rejection": 8,
+    "decoder_accepts_valid_control": 2,
+    "enumerated_complete_policy_optimum": 1377,
+    "exact_visual_tolerance": 8,
+    "image_client_credential_separation": 4,
+    "image_client_exits_cleanly": 4,
+    "image_client_integrity_metadata": 1,
+    "image_client_invalid_payload": 4,
+    "image_client_invalid_payload_atomicity": 4,
+    "image_client_no_private_annotations": 1,
+    "image_client_opaque_filenames": 1,
+    "image_client_public_png_chunks": 1,
+    "image_client_saved_exact_public_pixels": 1,
+    "image_http_grade_withheld": 1,
+    "image_http_public_contract": 1,
+    "image_http_trace_integrity": 1,
+    "image_http_virtual_files_only": 1,
+    "independent_landmark_calibration": 4,
+    "independent_png_roundtrip": 64,
+    "independent_raster_geometry": 64,
+    "invalid_calibration_rejection": 3,
+    "invalid_decision_model_checker": 5,
+    "invalid_decision_model_rejection": 5,
+    "invalid_visual_call": 5,
+    "invalid_visual_call_atomicity": 5,
+    "invalid_visual_fill": 10,
+    "malformed_envelope_rejection": 7,
+    "malformed_png_rejection": 20,
+    "noise_outside_intervention_unchanged": 32,
+    "occluded_counterfactual_equality": 32,
+    "producer_wire_profile": 64,
+    "repeated_capture_correlation": 32,
+    "selected_policy_attains_bound": 663,
+    "source_stability": 1,
+    "valid_certificate_order_alternative": 1,
+    "visual_budget_replay": 144,
+    "visual_counterfactual_changes_decision": 72,
+    "visual_counterfactual_changes_pixels": 72,
+    "visual_executed_rule_scoring": 144,
+    "visual_occluded_twin_byte_equivalence": 48,
+    "visual_public_pixel_reference": 144,
+    "visual_public_twin_equivalence": 72,
+    "visual_trace_integrity": 144
+  },
+  "created_utc": "2026-11-05T03:31:12.833086+00:00",
+  "elapsed_seconds": 38.47945456499997,
+  "failure_count": 0,
+  "failures": [],
+  "measurements": {
+    "alias_replay": {
+      "count_warning": "The leaf count is an exact multiplicity sum, not billions of individually executed trials.",
+      "exact_cost_range": [
+        1,
+        10
+      ],
+      "executed_replay_states": 76,
+      "experiments": 10,
+      "labels_per_world_sensor": 8,
+      "represented_supported_policy_leaves": 2300875336,
+      "worlds": 11
+    },
+    "decoder": {
+      "independent_valid_controls": 2,
+      "malformed_envelopes": 7,
+      "malformed_png_cases": 20,
+      "maximum_bomb_uncompressed_bytes": 1000000
+    },
+    "image_http_client": {
+      "copied_client_imports_evaluator": false,
+      "inline_observation_response_bytes": 147745,
+      "os_isolation_certified": false,
+      "png_bytes": 110643,
+      "transport": "real authenticated loopback HTTP plus copied standalone public client"
+    },
+    "raster": {
+      "exact_pixel_samples": 36864,
+      "oracle": "Fraction geometry plus independently parsed pixels",
+      "scenes": 64
+    },
+    "small_policy_oracle": {
+      "complete_syntactic_policies_per_model": 74,
+      "independence": "full syntactic tree enumeration and raw world-path execution, no production belief recursion",
+      "model_objective_comparisons": 1377,
+      "observation_support_tables": 81,
+      "scope": "2 worlds, 2 one-use experiments with supports {0}, {1}, {0,1}, 2 actions; all 16 action success-set pairs",
+      "selected_policy_replay_leaves": 1326,
+      "whole_policy_evaluations": 101898
+    },
+    "visual_domain": {
+      "episodes": 144,
+      "maximum_position_error_world": 0.0,
+      "natural_images_or_model_trials": false,
+      "scripted_public_pixel_successes": 144
+    }
+  },
+  "role": "author/evaluator development audit",
+  "schema": "causalfill.independent-vision-audit.v05",
+  "sections": [
+    "pixels",
+    "decision",
+    "visual",
+    "http"
+  ],
+  "source_sha256_after": {
+    "causalfill/decision_sufficiency.py": "2d0cc3e797a69a5dcc2e77199621070b89799fb99c586332a182a5bdbd39e75a",
+    "causalfill/domains/visual.py": "f4d3345354fa8dfc582019c73d44faa82bc82e0c69fa22a6ea5de8441ec68983",
+    "causalfill/vision.py": "8ff1ed8eab0f9294fba832dd3939a3641c8a0a3419b217804de219746a839de1",
+    "clients/image_client.py": "3be50f88d58b43e54e7e312c7b77d2a223bf2fd32b0eaa80e77b13be6f937044",
+    "tools/stress_vision_audit_v05.py": "b64763add05836e8cc40271e5f9b04274bd461a1d6c58bfa1adbc073e81cc887"
+  },
+  "source_sha256_before": {
+    "causalfill/decision_sufficiency.py": "2d0cc3e797a69a5dcc2e77199621070b89799fb99c586332a182a5bdbd39e75a",
+    "causalfill/domains/visual.py": "f4d3345354fa8dfc582019c73d44faa82bc82e0c69fa22a6ea5de8441ec68983",
+    "causalfill/vision.py": "8ff1ed8eab0f9294fba832dd3939a3641c8a0a3419b217804de219746a839de1",
+    "clients/image_client.py": "3be50f88d58b43e54e7e312c7b77d2a223bf2fd32b0eaa80e77b13be6f937044",
+    "tools/stress_vision_audit_v05.py": "b64763add05836e8cc40271e5f9b04274bd461a1d6c58bfa1adbc073e81cc887"
+  },
+  "transcript_sha256": "63c82d0e43770036d2cf3a8010bab6d151bb39d63d18d4bdcdef495860e57294"
+}

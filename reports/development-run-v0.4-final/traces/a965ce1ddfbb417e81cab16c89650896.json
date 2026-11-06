@@ -1,0 +1,131 @@
+{
+  "public": {
+    "family": "workflow",
+    "difficulty": 1,
+    "prompt": "Repair the missing return expression in the ledger procedure. Use the current procedure, unit calibration and visible examples in the virtual workspace. Submitted expressions must work for new inputs AND a later unit-calibration change; use the runtime scale variable. The verifier interprets a small arithmetic language, never arbitrary Python. Strict success requires a checked symbolic identity and conservative totality/resource bounds over the public integer input domain, plus behavioral checks. Read /docs/certification.json for the sufficient proof rules and limits; passing visible examples alone is insufficient.",
+    "slots": {
+      "expression": {
+        "type": "string",
+        "description": "return expression over balance, amount, fee, reserve, ceiling, scale"
+      }
+    },
+    "files": [
+      "/docs/archive.txt",
+      "/docs/certification.json",
+      "/docs/current.txt",
+      "/observations/calibration.json",
+      "/skill/recovery.md",
+      "/tests/visible.json",
+      "/workspace/ledger.py"
+    ],
+    "tools": {
+      "run_candidate": {
+        "description": "Evaluate candidate expression on visible examples only; this is not symbolic certification",
+        "arguments": {
+          "expression": "restricted arithmetic string"
+        },
+        "cost": 3
+      }
+    },
+    "budget": 20,
+    "max_calls": 25,
+    "episode_id": "a965ce1ddfbb417e81cab16c89650896",
+    "common_tools": {
+      "list_files": {
+        "arguments": {},
+        "cost": 1
+      },
+      "read_file": {
+        "arguments": {
+          "path": "exact listed virtual path"
+        },
+        "cost": 1
+      },
+      "search_files": {
+        "arguments": {
+          "text": "literal string, 1\u2013160 characters"
+        },
+        "cost": 2
+      },
+      "session_status": {
+        "arguments": {},
+        "cost": 1
+      },
+      "submit": {
+        "arguments": {
+          "fill": "object",
+          "confidence": "number 0..1",
+          "abstain": "boolean",
+          "evidence": "list of returned event IDs"
+        },
+        "cost": 0
+      }
+    },
+    "max_seconds": 600,
+    "tools_enabled": true,
+    "submission_rule": "One final submission. Grades are evaluator-only; no retry after submission."
+  },
+  "events": [
+    {
+      "event_id": "e0001",
+      "tool": "read_file",
+      "arguments": {
+        "path": "/docs/current.txt"
+      },
+      "response": {
+        "path": "/docs/current.txt",
+        "content": "Deduct amount converted by runtime scale, and deduct fee once, from balance. A reserve is a lower bound on the result. No rounding. New scale values are supplied with future calls; do not freeze current calibration. The five inputs balance, amount, fee, reserve and ceiling are signed integers in [-1000000,1000000]; scale is an integer in [1,1000000]. The symbolic certificate covers this entire domain. Every original intermediate Fraction must have absolute numerator and denominator at most 10**30. Certification supports rational polynomial identities and min/max lattice identities; every division denominator must normalize to a nonzero rational constant. Other equivalent forms can be not_certified. Full public limits are in /docs/certification.json.",
+        "event_id": "e0001",
+        "cost_used": 1
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "5ac8cfcab9c7cd83a650c153ec1ba713bb2645c2e45de1dca35bc96a35fa9637"
+    },
+    {
+      "event_id": "e0002",
+      "tool": "run_candidate",
+      "arguments": {
+        "expression": "max(balance-amount*scale-fee,reserve)"
+      },
+      "response": {
+        "outputs": [
+          "10",
+          "8",
+          "115"
+        ],
+        "visible_pass": [
+          true,
+          true,
+          true
+        ],
+        "event_id": "e0002",
+        "cost_used": 4
+      },
+      "previous_hash": "5ac8cfcab9c7cd83a650c153ec1ba713bb2645c2e45de1dca35bc96a35fa9637",
+      "hash": "a84d3ab77c9b59556b36de2d95134007a31c97a68470cb6566be6b712c06efe9"
+    },
+    {
+      "event_id": "e0003",
+      "tool": "submit",
+      "arguments": {
+        "fill": {
+          "expression": "max(balance-amount*scale-fee,reserve)"
+        },
+        "confidence": 1.0,
+        "abstain": false,
+        "evidence": [
+          "e0001",
+          "e0002"
+        ]
+      },
+      "response": {
+        "accepted": true,
+        "episode_closed": true,
+        "event_id": "e0003",
+        "cost_used": 4
+      },
+      "previous_hash": "a84d3ab77c9b59556b36de2d95134007a31c97a68470cb6566be6b712c06efe9",
+      "hash": "6b9727479a3d3bcd9ee0d896008f30b2ebcd7434957b5e01962402c1150a9bf9"
+    }
+  ]
+}

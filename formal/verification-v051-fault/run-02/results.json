@@ -1,0 +1,706 @@
+{
+  "allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "axioms": {
+    "CausalFill.BoundedFault.badReadings_length": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.BoundedFault.capped_live_iff": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.BoundedFault.capped_state_step": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.BoundedFault.capped_update_exact": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.BoundedFault.excluded_stays_excluded": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.BoundedFault.exclusion_witness_sound": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.BoundedFault.feasible_iff_realizes_within": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.BoundedFault.mismatches_append": [
+      "propext"
+    ],
+    "CausalFill.BoundedFault.mismatches_step": [
+      "propext"
+    ],
+    "CausalFill.BoundedFault.realizes_iff_mismatches": [
+      "propext"
+    ],
+    "CausalFill.BoundedFault.safe_action_sound": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.BoundedFault.true_world_preserved": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.BoundedFault.witness_count_le_mismatches": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.BoundedFault.witnesses_certify_action": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "backend": "embedding",
+  "commands": [
+    {
+      "command": [
+        "cc",
+        "-std=c11",
+        "-D_POSIX_C_SOURCE=200809L",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux/include",
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/sources/embedding/lean_frontend.c",
+        "-L",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux/lib/lean",
+        "-Wl,-rpath,/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux/lib/lean",
+        "-lleanshared",
+        "-o",
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/lean_frontend"
+      ],
+      "cwd": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/sources",
+      "elapsed_seconds": 0.717,
+      "exit_code": 0,
+      "expected_success": true,
+      "lean_path": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/build",
+      "log": "build-host.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "build-host"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "EmbeddingSmoke",
+        "embedding/Smoke.lean",
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/build/EmbeddingSmoke.olean"
+      ],
+      "cwd": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/sources",
+      "elapsed_seconds": 1.218,
+      "exit_code": 0,
+      "expected_success": true,
+      "lean_path": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/build",
+      "log": "smoke.log",
+      "log_sha256": "f8a0f1c84cb70f77e60e3f7cf80a04383fcde96212cf43447aeb03e4b730c24d",
+      "name": "smoke"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "CausalFill.BoundedFault",
+        "CausalFill/BoundedFault.lean",
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/build/CausalFill/BoundedFault.olean"
+      ],
+      "cwd": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/sources",
+      "elapsed_seconds": 0.716,
+      "exit_code": 0,
+      "expected_success": true,
+      "lean_path": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/build",
+      "log": "bounded-fault.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "bounded-fault"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "BoundedFaultAudit",
+        "BoundedFaultAudit.lean",
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/build/BoundedFaultAudit.olean"
+      ],
+      "cwd": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/sources",
+      "elapsed_seconds": 0.415,
+      "exit_code": 0,
+      "expected_success": true,
+      "lean_path": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/build",
+      "log": "audit.log",
+      "log_sha256": "f7812029c3b9657d0e0dbb3338ef4a2a5fb22a2a31bd14dc7cfda0b21efa7af9",
+      "name": "audit"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "PositiveBoundaries",
+        "PositiveBoundaries.lean"
+      ],
+      "cwd": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/controls",
+      "elapsed_seconds": 0.365,
+      "exit_code": 0,
+      "expected_success": true,
+      "lean_path": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/build",
+      "log": "positive-boundaries.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "positive-boundaries"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "FalseTheorem",
+        "FalseTheorem.lean"
+      ],
+      "cwd": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/controls",
+      "elapsed_seconds": 0.365,
+      "exit_code": 1,
+      "expected_success": false,
+      "lean_path": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/build",
+      "log": "negative-FalseTheorem.log",
+      "log_sha256": "cc76b1162036675bb48ef2e19d62de3b30e9f3c283070a23aeb8e6a549ce91b0",
+      "name": "negative-FalseTheorem"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "DuplicateOccurrence",
+        "DuplicateOccurrence.lean"
+      ],
+      "cwd": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/controls",
+      "elapsed_seconds": 0.673,
+      "exit_code": 1,
+      "expected_success": false,
+      "lean_path": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/build",
+      "log": "negative-DuplicateOccurrence.log",
+      "log_sha256": "d3b41727445c34bc3d946ff955884260a99e14c1b6c9e8f65a6cc9eb19f92e68",
+      "name": "negative-DuplicateOccurrence"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "InsufficientContradictions",
+        "InsufficientContradictions.lean"
+      ],
+      "cwd": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/controls",
+      "elapsed_seconds": 0.466,
+      "exit_code": 1,
+      "expected_success": false,
+      "lean_path": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/build",
+      "log": "negative-InsufficientContradictions.log",
+      "log_sha256": "ce9675e78dc0cfff839aa904c48e312ff2f306760ea1af631c681072904ad60c",
+      "name": "negative-InsufficientContradictions"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "DebtResurrection",
+        "DebtResurrection.lean"
+      ],
+      "cwd": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/controls",
+      "elapsed_seconds": 0.365,
+      "exit_code": 1,
+      "expected_success": false,
+      "lean_path": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/build",
+      "log": "negative-DebtResurrection.log",
+      "log_sha256": "a851bc4b45f17e4fe7fd6d3a583a75bdbf7c8a8404d5d5cdc918199215f069eb",
+      "name": "negative-DebtResurrection"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "PerQueryReset",
+        "PerQueryReset.lean"
+      ],
+      "cwd": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/controls",
+      "elapsed_seconds": 0.365,
+      "exit_code": 1,
+      "expected_success": false,
+      "lean_path": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/build",
+      "log": "negative-PerQueryReset.log",
+      "log_sha256": "cebcda051cf2fa492010256966efc030dcfa63e94012ae40f61279ed5377fce7",
+      "name": "negative-PerQueryReset"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "AxiomInjection",
+        "AxiomInjection.lean"
+      ],
+      "cwd": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/controls",
+      "elapsed_seconds": 0.416,
+      "exit_code": 0,
+      "expected_success": true,
+      "lean_path": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/build",
+      "log": "axiom-injection.log",
+      "log_sha256": "f7c9228e731ab02c0b3192cd90bf8f9476fbccf1932adf60d5bbd3bf20a85427",
+      "name": "axiom-injection"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "CausalFill.BoundedFault",
+        "CausalFill/BoundedFault.lean",
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/controls/weakened-capped_live_iff/build/CausalFill/BoundedFault.olean"
+      ],
+      "cwd": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/controls/weakened-capped_live_iff/sources",
+      "elapsed_seconds": 0.767,
+      "exit_code": 0,
+      "expected_success": true,
+      "lean_path": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/controls/weakened-capped_live_iff/build",
+      "log": "weakened-capped_live_iff.log",
+      "log_sha256": "876f4bfd9aa4d35dad09c554685724220c7fd862e152b6d29422db8b2cbfd89a",
+      "name": "weakened-capped_live_iff"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "BoundedFaultAudit",
+        "BoundedFaultAudit.lean"
+      ],
+      "cwd": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/controls/weakened-capped_live_iff/sources",
+      "elapsed_seconds": 0.415,
+      "exit_code": 1,
+      "expected_success": false,
+      "lean_path": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/controls/weakened-capped_live_iff/build",
+      "log": "binding-rejects-capped_live_iff.log",
+      "log_sha256": "dba3129473b9d3c274b49b9876dd609700fb3ceff735d04406c7f199c12f8a92",
+      "name": "binding-rejects-capped_live_iff"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "CausalFill.BoundedFault",
+        "CausalFill/BoundedFault.lean",
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/controls/weakened-safe_action_sound/build/CausalFill/BoundedFault.olean"
+      ],
+      "cwd": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/controls/weakened-safe_action_sound/sources",
+      "elapsed_seconds": 0.666,
+      "exit_code": 0,
+      "expected_success": true,
+      "lean_path": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/controls/weakened-safe_action_sound/build",
+      "log": "weakened-safe_action_sound.log",
+      "log_sha256": "0a6edd99bdcc9b4c52a5b52c554dc9ac398e12d374d6ec71d584aa23351ba363",
+      "name": "weakened-safe_action_sound"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "BoundedFaultAudit",
+        "BoundedFaultAudit.lean"
+      ],
+      "cwd": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/controls/weakened-safe_action_sound/sources",
+      "elapsed_seconds": 0.466,
+      "exit_code": 1,
+      "expected_success": false,
+      "lean_path": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/controls/weakened-safe_action_sound/build",
+      "log": "binding-rejects-safe_action_sound.log",
+      "log_sha256": "54070cd3d0daed966e90f07b8b9ff3e6982d684c39e87210dba11a9d1a768b47",
+      "name": "binding-rejects-safe_action_sound"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "BoundedFaultExport",
+        "BoundedFaultExport.lean"
+      ],
+      "cwd": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/sources",
+      "elapsed_seconds": 99.785,
+      "exit_code": 0,
+      "expected_success": true,
+      "lean_path": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/build",
+      "log": "bounded-fault.ndjson",
+      "log_sha256": "49fde2cfe1f847b30e12b1cd665f1de21fe865c9bc546b5f98c0b1382502169e",
+      "name": "export"
+    }
+  ],
+  "elaboration_async": false,
+  "embedding_host_sha256": "676524e258c5abdcf5dea1192b75f493193aea0d6155e3c946266e0eabeb7b2c",
+  "export": {
+    "axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "bytes": 5055897,
+    "declaration_count": 1426,
+    "metadata": {
+      "meta": {
+        "exporter": {
+          "name": "lean4export",
+          "version": "3.1.0"
+        },
+        "format": {
+          "version": "3.1.0"
+        },
+        "lean": {
+          "githash": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+          "version": "4.35.0"
+        }
+      }
+    },
+    "records": 99095,
+    "selected_declarations": {
+      "CausalFill.BoundedFault.ExclusionWitness": "def",
+      "CausalFill.BoundedFault.Feasible": "def",
+      "CausalFill.BoundedFault.Reading": "def",
+      "CausalFill.BoundedFault.SafeAction": "def",
+      "CausalFill.BoundedFault.badReadings": "def",
+      "CausalFill.BoundedFault.badReadings_length": "thm",
+      "CausalFill.BoundedFault.capped": "def",
+      "CausalFill.BoundedFault.capped_live_iff": "thm",
+      "CausalFill.BoundedFault.capped_live_iff._proof_1": "thm",
+      "CausalFill.BoundedFault.capped_state_step": "thm",
+      "CausalFill.BoundedFault.capped_update_exact": "thm",
+      "CausalFill.BoundedFault.capped_update_exact._proof_2": "thm",
+      "CausalFill.BoundedFault.discrepancy": "def",
+      "CausalFill.BoundedFault.excluded_stays_excluded": "thm",
+      "CausalFill.BoundedFault.excluded_stays_excluded._proof_1": "thm",
+      "CausalFill.BoundedFault.exclusion_witness_sound": "thm",
+      "CausalFill.BoundedFault.exclusion_witness_sound._proof_1": "thm",
+      "CausalFill.BoundedFault.feasible_iff_realizes_within": "thm",
+      "CausalFill.BoundedFault.feasible_iff_realizes_within._proof_1": "thm",
+      "CausalFill.BoundedFault.mismatches": "def",
+      "CausalFill.BoundedFault.mismatches._f": "def",
+      "CausalFill.BoundedFault.mismatches.eq_2": "thm",
+      "CausalFill.BoundedFault.mismatches.match_1": "def",
+      "CausalFill.BoundedFault.mismatches_append": "thm",
+      "CausalFill.BoundedFault.mismatches_step": "thm",
+      "CausalFill.BoundedFault.realizes_iff_mismatches": "thm",
+      "CausalFill.BoundedFault.safe_action_sound": "thm",
+      "CausalFill.BoundedFault.true_world_preserved": "thm",
+      "CausalFill.BoundedFault.witness_count_le_mismatches": "thm",
+      "CausalFill.BoundedFault.witnesses_certify_action": "thm"
+    },
+    "sha256": "49fde2cfe1f847b30e12b1cd665f1de21fe865c9bc546b5f98c0b1382502169e",
+    "unsafe_declarations": []
+  },
+  "finished_at_utc": "2026-11-05T22:56:44.845574+00:00",
+  "kernel_replay": {
+    "commands": [
+      {
+        "binary_sha256": "12c38901cdbfab178f1bf6145dd30012e9a3b2c11ca695292a5884fa3cbaddb6",
+        "checker": "lean_default",
+        "command": [
+          "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux/bin/leanchecker",
+          "--from-export",
+          "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/bounded-fault.ndjson"
+        ],
+        "exit_code": 0,
+        "expected_verdict_met": true,
+        "input_sha256": "49fde2cfe1f847b30e12b1cd665f1de21fe865c9bc546b5f98c0b1382502169e",
+        "intended_type_failure": null,
+        "log": "kernels/lean_default-valid.log",
+        "log_sha256": "b4a5a2119e1d34b46527d63317f417c74261b65eeb93f14026389da2519c2ead",
+        "seconds": 0.67,
+        "variant": "valid"
+      },
+      {
+        "binary_sha256": "12c38901cdbfab178f1bf6145dd30012e9a3b2c11ca695292a5884fa3cbaddb6",
+        "checker": "lean_default",
+        "command": [
+          "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux/bin/leanchecker",
+          "--from-export",
+          "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/corrupted-proof.ndjson"
+        ],
+        "exit_code": 1,
+        "expected_verdict_met": true,
+        "input_sha256": "5560220a8011b96773657070eb55d16a1651a64b45ca5aea83a5d8a186aa7534",
+        "intended_type_failure": true,
+        "log": "kernels/lean_default-corrupted.log",
+        "log_sha256": "3c8a6c743c23d6e9c214bab6cb1932294d609883218c855eacdb1e71cecd54bc",
+        "seconds": 0.646,
+        "variant": "corrupted"
+      },
+      {
+        "binary_sha256": "ca74d1e9a856149ed05acb600d8931a574dd9f465745beeaf93e3de7b7cbe274",
+        "checker": "lean_hardened",
+        "command": [
+          "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux/bin/leanchecker-paranoid",
+          "--from-export",
+          "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/bounded-fault.ndjson"
+        ],
+        "exit_code": 0,
+        "expected_verdict_met": true,
+        "input_sha256": "49fde2cfe1f847b30e12b1cd665f1de21fe865c9bc546b5f98c0b1382502169e",
+        "intended_type_failure": null,
+        "log": "kernels/lean_hardened-valid.log",
+        "log_sha256": "b4a5a2119e1d34b46527d63317f417c74261b65eeb93f14026389da2519c2ead",
+        "seconds": 0.744,
+        "variant": "valid"
+      },
+      {
+        "binary_sha256": "ca74d1e9a856149ed05acb600d8931a574dd9f465745beeaf93e3de7b7cbe274",
+        "checker": "lean_hardened",
+        "command": [
+          "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux/bin/leanchecker-paranoid",
+          "--from-export",
+          "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/corrupted-proof.ndjson"
+        ],
+        "exit_code": 1,
+        "expected_verdict_met": true,
+        "input_sha256": "5560220a8011b96773657070eb55d16a1651a64b45ca5aea83a5d8a186aa7534",
+        "intended_type_failure": true,
+        "log": "kernels/lean_hardened-corrupted.log",
+        "log_sha256": "91fef3ef97ae6a2504821e765a720ad8c2ab8b6701289b7f86980c8d79c2ff6f",
+        "seconds": 0.799,
+        "variant": "corrupted"
+      },
+      {
+        "binary_sha256": "baaec030a70c78562ced2c75866ab0d2410e81ce680b835179ed16570ad5ef97",
+        "checker": "lean4lean",
+        "command": [
+          "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux/bin/lean4lean",
+          "--import",
+          "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/bounded-fault.ndjson"
+        ],
+        "exit_code": 0,
+        "expected_verdict_met": true,
+        "input_sha256": "49fde2cfe1f847b30e12b1cd665f1de21fe865c9bc546b5f98c0b1382502169e",
+        "intended_type_failure": null,
+        "log": "kernels/lean4lean-valid.log",
+        "log_sha256": "ef4819b740f0d8d015ed7df1e5bb8e33ed9c610f106458c7732d6479c876cf6e",
+        "seconds": 0.697,
+        "variant": "valid"
+      },
+      {
+        "binary_sha256": "baaec030a70c78562ced2c75866ab0d2410e81ce680b835179ed16570ad5ef97",
+        "checker": "lean4lean",
+        "command": [
+          "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux/bin/lean4lean",
+          "--import",
+          "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/corrupted-proof.ndjson"
+        ],
+        "exit_code": 1,
+        "expected_verdict_met": true,
+        "input_sha256": "5560220a8011b96773657070eb55d16a1651a64b45ca5aea83a5d8a186aa7534",
+        "intended_type_failure": true,
+        "log": "kernels/lean4lean-corrupted.log",
+        "log_sha256": "fc7017050d3fb776be8b0e7e3a130406d5f27960ccb6d73119922f122d8a8387",
+        "seconds": 0.786,
+        "variant": "corrupted"
+      },
+      {
+        "binary_sha256": "cbf13950fc4a48f635a0beceeb5ed32dd82568b870cfd081b6391c1f2cf02ba5",
+        "checker": "nanoda",
+        "command": [
+          "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux/bin/nanoda_bin",
+          "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/kernels/nanoda-valid.json"
+        ],
+        "exit_code": 0,
+        "expected_verdict_met": true,
+        "input_sha256": "49fde2cfe1f847b30e12b1cd665f1de21fe865c9bc546b5f98c0b1382502169e",
+        "intended_type_failure": null,
+        "log": "kernels/nanoda-valid.log",
+        "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "seconds": 0.173,
+        "variant": "valid"
+      },
+      {
+        "binary_sha256": "cbf13950fc4a48f635a0beceeb5ed32dd82568b870cfd081b6391c1f2cf02ba5",
+        "checker": "nanoda",
+        "command": [
+          "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux/bin/nanoda_bin",
+          "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/kernels/nanoda-corrupted.json"
+        ],
+        "exit_code": 101,
+        "expected_verdict_met": true,
+        "input_sha256": "5560220a8011b96773657070eb55d16a1651a64b45ca5aea83a5d8a186aa7534",
+        "intended_type_failure": true,
+        "log": "kernels/nanoda-corrupted.log",
+        "log_sha256": "9604d6ffc2aeab2f1890afe92d2b4483ec6a249f05b2463a84705c5a74d1d8ad",
+        "seconds": 0.202,
+        "variant": "corrupted"
+      },
+      {
+        "binary_sha256": "60f4ca9fb9436c323789fa49aae33af6dcd1b9b54b43a66b461779ce79fd8eec",
+        "checker": "con_ron",
+        "command": [
+          "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux/bin/con-ron",
+          "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/bounded-fault.ndjson"
+        ],
+        "exit_code": 0,
+        "expected_verdict_met": true,
+        "input_sha256": "49fde2cfe1f847b30e12b1cd665f1de21fe865c9bc546b5f98c0b1382502169e",
+        "intended_type_failure": null,
+        "log": "kernels/con_ron-valid.log",
+        "log_sha256": "de57933cbbd036d2105a253cf7602e208191268f2ca94ccad421c4e6e5a3ee7a",
+        "seconds": 0.422,
+        "variant": "valid"
+      },
+      {
+        "binary_sha256": "60f4ca9fb9436c323789fa49aae33af6dcd1b9b54b43a66b461779ce79fd8eec",
+        "checker": "con_ron",
+        "command": [
+          "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux/bin/con-ron",
+          "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/corrupted-proof.ndjson"
+        ],
+        "exit_code": 1,
+        "expected_verdict_met": true,
+        "input_sha256": "5560220a8011b96773657070eb55d16a1651a64b45ca5aea83a5d8a186aa7534",
+        "intended_type_failure": true,
+        "log": "kernels/con_ron-corrupted.log",
+        "log_sha256": "d45fb9da50fd7fd8d269c3d646f70e65ebb97ab25ba57ac15805d2d8092cddfa",
+        "seconds": 0.454,
+        "variant": "corrupted"
+      },
+      {
+        "binary_sha256": "23a32522ea2c79f4ec8b48916272b37a423bda171e57cd83cfcf142eec50e621",
+        "checker": "con_leche",
+        "command": [
+          "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux/bin/con-leche",
+          "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/bounded-fault.ndjson"
+        ],
+        "exit_code": 0,
+        "expected_verdict_met": true,
+        "input_sha256": "49fde2cfe1f847b30e12b1cd665f1de21fe865c9bc546b5f98c0b1382502169e",
+        "intended_type_failure": null,
+        "log": "kernels/con_leche-valid.log",
+        "log_sha256": "aeed857f44be9feccf41c481f8579cdb43acc3e0f6898a1da741f3ddcd076dd2",
+        "seconds": 0.856,
+        "variant": "valid"
+      },
+      {
+        "binary_sha256": "23a32522ea2c79f4ec8b48916272b37a423bda171e57cd83cfcf142eec50e621",
+        "checker": "con_leche",
+        "command": [
+          "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux/bin/con-leche",
+          "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-02/corrupted-proof.ndjson"
+        ],
+        "exit_code": 1,
+        "expected_verdict_met": true,
+        "input_sha256": "5560220a8011b96773657070eb55d16a1651a64b45ca5aea83a5d8a186aa7534",
+        "intended_type_failure": true,
+        "log": "kernels/con_leche-corrupted.log",
+        "log_sha256": "7f768a60b0fda91321db88f0f57a5b580848fb8ea4e3aa334218fa29b8fbe6c0",
+        "seconds": 0.885,
+        "variant": "corrupted"
+      }
+    ],
+    "corrupted_export_sha256": "5560220a8011b96773657070eb55d16a1651a64b45ca5aea83a5d8a186aa7534",
+    "intended_corruption_rejections": 6,
+    "proof_mutation": "replace target proof term by closed Sort 0",
+    "proof_mutation_target": "CausalFill.BoundedFault.safe_action_sound",
+    "valid_acceptances": 6
+  },
+  "limitations": [
+    "Claims concern a fixed world, a truthful binary table, and a single global flip cap.",
+    "Runtime one-use query IDs must correspond to distinct accepted transcript occurrences; that representation refinement is not proved here.",
+    "The optimizer's Bellman costs, Python/runtime equivalence, physical sensing, and model performance are outside these theorem statements.",
+    "Six checker configurations include Lean's checker, its hardened variant, and four bundled external implementations; they are not six wholly independent stacks.",
+    "Checkers run directly on a data export; this does not assert that Lake's full paranoid build sandbox ran."
+  ],
+  "negative_controls": {
+    "DebtResurrection": {
+      "intended_diagnostic": true,
+      "rejected": true,
+      "source_sha256": "efe837c8d2088c49da923a08a911e3f3779ae4d9dae36227586f2de58ca787a3"
+    },
+    "DuplicateOccurrence": {
+      "intended_diagnostic": true,
+      "rejected": true,
+      "source_sha256": "819ea9ecc6bad773c0b7509538f5b274666ff214d2095e691365442a7b22e010"
+    },
+    "FalseTheorem": {
+      "intended_diagnostic": true,
+      "rejected": true,
+      "source_sha256": "4c36c945af506fae5f2533d37c27dcdb1381c945715cce34171c5ec3fb840649"
+    },
+    "InsufficientContradictions": {
+      "intended_diagnostic": true,
+      "rejected": true,
+      "source_sha256": "33d0cda097b3893e692ac7b7da7a4f1f139eab2886795fd6a901a2e0afe096a8"
+    },
+    "PerQueryReset": {
+      "intended_diagnostic": true,
+      "rejected": true,
+      "source_sha256": "c0e648bf66ef883408716963cd0498f2d5f30618b4a6194c1eae44c32a69c013"
+    },
+    "custom_axiom_inventory": {
+      "compiled": true,
+      "diagnostic": "unapproved axioms for CausalFill.BoundedFault.UnapprovedClaim: ['UnapprovedAssumption']",
+      "whitelist_rejected": true
+    },
+    "omitted_required_export_root": {
+      "rejected": true
+    }
+  },
+  "required_roots": [
+    "CausalFill.BoundedFault.mismatches_append",
+    "CausalFill.BoundedFault.mismatches_step",
+    "CausalFill.BoundedFault.realizes_iff_mismatches",
+    "CausalFill.BoundedFault.feasible_iff_realizes_within",
+    "CausalFill.BoundedFault.capped_update_exact",
+    "CausalFill.BoundedFault.capped_live_iff",
+    "CausalFill.BoundedFault.capped_state_step",
+    "CausalFill.BoundedFault.true_world_preserved",
+    "CausalFill.BoundedFault.excluded_stays_excluded",
+    "CausalFill.BoundedFault.badReadings_length",
+    "CausalFill.BoundedFault.witness_count_le_mismatches",
+    "CausalFill.BoundedFault.exclusion_witness_sound",
+    "CausalFill.BoundedFault.witnesses_certify_action",
+    "CausalFill.BoundedFault.safe_action_sound"
+  ],
+  "schema": "causalfill.bounded-fault-verification.v1",
+  "smoke_axioms": {
+    "embedding_smoke": []
+  },
+  "source_sha256": {
+    "BoundedFaultAudit.lean": "969525acc26ab860f8d3058ec2be40fa2cbd709b839cd266ef8bbc2c55993886",
+    "BoundedFaultExport.lean": "1216871fedb3bedfedfb09560262a1c070c088d2e8787643d22b78296cd6b6af",
+    "CausalFill/BoundedFault.lean": "67b4b1bdae52597b783e2816639845d12139f12b5252d479d826aa775067651d",
+    "bounded-fault-roots.json": "73df85fc60bd3a87c82f973d1fd945a772382ee9d273dae4c86985f431200562",
+    "embedding/Smoke.lean": "9e68618384d73e51b28301fdc52003bfb76be0e3d66491461d7dca4f67989913",
+    "embedding/lean_frontend.c": "c3ca22596fbd699f7a5f2a99a9fc028c157a79235a781ac798e52d1346e89dc0",
+    "lean-toolchain": "ca5f1f601d34c49079e38d7e7041eb0f2a9c227fbc1df0f404820069a052330c",
+    "verify_bounded_fault.py": "9e5d84b4e73e4e054d144cecf283bf47fb376cd06b4e8017b539f32dc6e86a44"
+  },
+  "started_at_utc": "2026-11-05T22:54:51.416102+00:00",
+  "statement_bindings": {
+    "all_root_types_checked": true,
+    "capped_live_iff": {
+      "mutant_source_sha256": "fb7c518edfd2cb20dec5fb529f157987072eafeb2a8f40b08b9920433c8b7663",
+      "mutation": "retain name and parameters; replace conclusion/proof by True",
+      "unchanged_audit_sha256": "969525acc26ab860f8d3058ec2be40fa2cbd709b839cd266ef8bbc2c55993886",
+      "unchanged_expected_type_audit_rejects": true,
+      "weakened_statement_compiles": true
+    },
+    "safe_action_sound": {
+      "mutant_source_sha256": "dd01f72dcab13b4ecb57038a7e1cc2eba42d48339f6c2c52134d151bb6d6ad58",
+      "mutation": "retain name and parameters; replace conclusion/proof by True",
+      "unchanged_audit_sha256": "969525acc26ab860f8d3058ec2be40fa2cbd709b839cd266ef8bbc2c55993886",
+      "unchanged_expected_type_audit_rejects": true,
+      "weakened_statement_compiles": true
+    }
+  },
+  "status": "passed",
+  "toolchain_files_sha256": {
+    "include/lean/version.h": "9907fbdb242103decf5c1a1541d6ddc701c8f9b94126b5af7d8a6dfc69200fdf",
+    "lib/lean/libleanshared.so": "efef27df56f2197139afe12f1a2b63913a05f1aba81ce88824c44100431ed8c4"
+  },
+  "toolchain_version": "4.35.0",
+  "trust_level": 0,
+  "verified_toolchain_archive_sha256": "7289597a44543246c9227b8cae501767e095ce17f6d448b95fc4a8dc97268f6d"
+}

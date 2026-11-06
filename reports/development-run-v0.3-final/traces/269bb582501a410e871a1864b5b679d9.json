@@ -1,0 +1,537 @@
+{
+  "public": {
+    "family": "robotics_barrier",
+    "difficulty": 2,
+    "prompt": "Complete the masked manipulation plan in robotics_barrier_v1: target_world_position=<MASK>, safe_waypoints=<MASK>, grasp_precondition=<MASK>. Recover the target from calibrated numeric camera evidence and sense the full-height wall to choose an open passage. Read the workspace, robotics manual and barrier profile. The final route is checked in a symbolic 3D simulator; any behaviorally valid plan is accepted.",
+    "slots": {
+      "target_world_position": {
+        "type": "array[number,number,number]",
+        "description": "Recovered target location in world metres."
+      },
+      "safe_waypoints": {
+        "type": "array[array[number,number,number]]",
+        "description": "0-16 intermediate world points; straight segments connect them."
+      },
+      "grasp_precondition": {
+        "type": "object",
+        "description": "Exactly gripper='open' and force_limit_n within the observed material's valid range."
+      }
+    },
+    "files": [
+      "/docs/barrier-profile.txt",
+      "/docs/robotics-manual.txt",
+      "/scene/workspace.json",
+      "/skill/recovery.md"
+    ],
+    "tools": {
+      "camera": {
+        "description": "Observe calibrated fiducials and visible object projections; coordinates only, not images.",
+        "arguments": {
+          "view": "xy | xz | yz"
+        },
+        "cost": 3
+      },
+      "lidar": {
+        "description": "Observe obstacle boxes in the calibrated world frame.",
+        "arguments": {},
+        "cost": 3
+      },
+      "probe_path": {
+        "description": "Non-destructively check a proposed path for collision/bounds; no target correctness feedback.",
+        "arguments": {
+          "target_world_position": "three finite numbers",
+          "safe_waypoints": "0-16 three-number points"
+        },
+        "cost": 4
+      }
+    },
+    "budget": 40,
+    "max_calls": 60,
+    "episode_id": "269bb582501a410e871a1864b5b679d9",
+    "common_tools": {
+      "list_files": {
+        "arguments": {},
+        "cost": 1
+      },
+      "read_file": {
+        "arguments": {
+          "path": "exact listed virtual path"
+        },
+        "cost": 1
+      },
+      "search_files": {
+        "arguments": {
+          "text": "literal string, 1\u2013160 characters"
+        },
+        "cost": 2
+      },
+      "session_status": {
+        "arguments": {},
+        "cost": 1
+      },
+      "submit": {
+        "arguments": {
+          "fill": "object",
+          "confidence": "number 0..1",
+          "abstain": "boolean",
+          "evidence": "list of returned event IDs"
+        },
+        "cost": 0
+      }
+    },
+    "max_seconds": 600,
+    "tools_enabled": true,
+    "submission_rule": "One final submission. Grades are evaluator-only; no retry after submission."
+  },
+  "events": [
+    {
+      "event_id": "e0001",
+      "tool": "read_file",
+      "arguments": {
+        "path": "/scene/workspace.json"
+      },
+      "response": {
+        "path": "/scene/workspace.json",
+        "content": "{\n  \"target_id\": \"parcel-CFKJV\",\n  \"start\": [\n    1.0,\n    1.0,\n    1.0\n  ],\n  \"bounds\": [\n    [\n      0.0,\n      0.0,\n      0.0\n    ],\n    [\n      12.0,\n      12.0,\n      12.0\n    ]\n  ],\n  \"gripper_clearance\": 0.15,\n  \"camera_views\": [\n    \"xy\",\n    \"xz\",\n    \"yz\"\n  ],\n  \"material_force_limits_n\": {\n    \"glass\": 2.0,\n    \"foam\": 1.0,\n    \"steel\": 8.0\n  },\n  \"minimum_lifting_force_n\": 0.5,\n  \"goal_tolerance_m\": 1e-05,\n  \"profile_version\": \"robotics_barrier_v1\"\n}",
+        "event_id": "e0001",
+        "cost_used": 1
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "bcff6ace3f6bca1ab241a19e61b31b091e97f32a48728742ec4bf57a483c2899"
+    },
+    {
+      "event_id": "e0002",
+      "tool": "camera",
+      "arguments": {
+        "view": "xy"
+      },
+      "response": {
+        "view": "xy",
+        "kind": "symbolic_orthographic_coordinates",
+        "projection_axes": [
+          0,
+          1
+        ],
+        "fiducials": [
+          {
+            "id": "origin",
+            "world": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "image": [
+              78.0,
+              102.0
+            ]
+          },
+          {
+            "id": "u-anchor",
+            "world": [
+              10.0,
+              0.0,
+              0.0
+            ],
+            "image": [
+              118.0,
+              102.0
+            ]
+          },
+          {
+            "id": "v-anchor",
+            "world": [
+              0.0,
+              10.0,
+              0.0
+            ],
+            "image": [
+              78.0,
+              72.0
+            ]
+          }
+        ],
+        "objects": [
+          {
+            "id": "decoy-02",
+            "image": [
+              103.0,
+              70.5
+            ],
+            "material": "glass"
+          },
+          {
+            "id": "decoy-03",
+            "image": [
+              116.0,
+              95.25
+            ],
+            "material": "glass"
+          },
+          {
+            "id": "decoy-05",
+            "image": [
+              91.0,
+              79.5
+            ],
+            "material": "foam"
+          },
+          {
+            "id": "decoy-04",
+            "image": [
+              97.0,
+              96.0
+            ],
+            "material": "foam"
+          },
+          {
+            "id": "decoy-01",
+            "image": [
+              96.0,
+              96.75
+            ],
+            "material": "foam"
+          },
+          {
+            "id": "decoy-00",
+            "image": [
+              112.0,
+              86.25
+            ],
+            "material": "glass"
+          },
+          {
+            "id": "parcel-CFKJV",
+            "image": [
+              115.0,
+              78.75
+            ],
+            "material": "foam"
+          }
+        ],
+        "occlusion_possible": true,
+        "units": {
+          "world": "m",
+          "image": "arbitrary_sensor_units"
+        },
+        "event_id": "e0002",
+        "cost_used": 4
+      },
+      "previous_hash": "bcff6ace3f6bca1ab241a19e61b31b091e97f32a48728742ec4bf57a483c2899",
+      "hash": "e59b648e65d2457086e8293a715d4ec0b143b1b8fdfc74a71b58f59862ab5243"
+    },
+    {
+      "event_id": "e0003",
+      "tool": "camera",
+      "arguments": {
+        "view": "xz"
+      },
+      "response": {
+        "view": "xz",
+        "kind": "symbolic_orthographic_coordinates",
+        "projection_axes": [
+          0,
+          2
+        ],
+        "fiducials": [
+          {
+            "id": "origin",
+            "world": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "image": [
+              146.0,
+              116.0
+            ]
+          },
+          {
+            "id": "u-anchor",
+            "world": [
+              10.0,
+              0.0,
+              0.0
+            ],
+            "image": [
+              96.0,
+              116.0
+            ]
+          },
+          {
+            "id": "v-anchor",
+            "world": [
+              0.0,
+              0.0,
+              10.0
+            ],
+            "image": [
+              146.0,
+              56.0
+            ]
+          }
+        ],
+        "objects": [
+          {
+            "id": "decoy-05",
+            "image": [
+              129.75,
+              90.5
+            ],
+            "material": "foam"
+          },
+          {
+            "id": "decoy-04",
+            "image": [
+              122.25,
+              59.0
+            ],
+            "material": "foam"
+          },
+          {
+            "id": "decoy-03",
+            "image": [
+              98.5,
+              53.0
+            ],
+            "material": "glass"
+          },
+          {
+            "id": "decoy-02",
+            "image": [
+              114.75,
+              107.0
+            ],
+            "material": "glass"
+          },
+          {
+            "id": "decoy-01",
+            "image": [
+              123.5,
+              63.5
+            ],
+            "material": "foam"
+          },
+          {
+            "id": "decoy-00",
+            "image": [
+              103.5,
+              74.0
+            ],
+            "material": "glass"
+          },
+          {
+            "id": "parcel-CFKJV",
+            "image": [
+              99.75,
+              101.0
+            ],
+            "material": "foam"
+          }
+        ],
+        "occlusion_possible": true,
+        "units": {
+          "world": "m",
+          "image": "arbitrary_sensor_units"
+        },
+        "event_id": "e0003",
+        "cost_used": 7
+      },
+      "previous_hash": "e59b648e65d2457086e8293a715d4ec0b143b1b8fdfc74a71b58f59862ab5243",
+      "hash": "5d8c14d12343981a1fe0e51941914a6f8fc8b9a1bab29e34dc04a5b172691244"
+    },
+    {
+      "event_id": "e0004",
+      "tool": "camera",
+      "arguments": {
+        "view": "yz"
+      },
+      "response": {
+        "view": "yz",
+        "kind": "symbolic_orthographic_coordinates",
+        "projection_axes": [
+          1,
+          2
+        ],
+        "fiducials": [
+          {
+            "id": "origin",
+            "world": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "image": [
+              149.0,
+              135.0
+            ]
+          },
+          {
+            "id": "u-anchor",
+            "world": [
+              0.0,
+              10.0,
+              0.0
+            ],
+            "image": [
+              79.0,
+              135.0
+            ]
+          },
+          {
+            "id": "v-anchor",
+            "world": [
+              0.0,
+              0.0,
+              10.0
+            ],
+            "image": [
+              149.0,
+              165.0
+            ]
+          }
+        ],
+        "objects": [
+          {
+            "id": "decoy-03",
+            "image": [
+              133.25,
+              166.5
+            ],
+            "material": "glass"
+          },
+          {
+            "id": "parcel-CFKJV",
+            "image": [
+              94.75,
+              142.5
+            ],
+            "material": "foam"
+          },
+          {
+            "id": "decoy-05",
+            "image": [
+              96.5,
+              147.75
+            ],
+            "material": "foam"
+          },
+          {
+            "id": "decoy-04",
+            "image": [
+              135.0,
+              163.5
+            ],
+            "material": "foam"
+          },
+          {
+            "id": "decoy-01",
+            "image": [
+              136.75,
+              161.25
+            ],
+            "material": "foam"
+          },
+          {
+            "id": "decoy-02",
+            "image": [
+              75.5,
+              139.5
+            ],
+            "material": "glass"
+          },
+          {
+            "id": "decoy-00",
+            "image": [
+              112.25,
+              156.0
+            ],
+            "material": "glass"
+          }
+        ],
+        "occlusion_possible": true,
+        "units": {
+          "world": "m",
+          "image": "arbitrary_sensor_units"
+        },
+        "event_id": "e0004",
+        "cost_used": 10
+      },
+      "previous_hash": "5d8c14d12343981a1fe0e51941914a6f8fc8b9a1bab29e34dc04a5b172691244",
+      "hash": "95e31a2702df43c47abf937a85cbeb350f0dc2fdbdb13be41211aeb87c0a1054"
+    },
+    {
+      "event_id": "e0005",
+      "tool": "lidar",
+      "arguments": {},
+      "response": {
+        "occupied_boxes": [
+          {
+            "id": "barrier-a",
+            "lower": [
+              5.25,
+              0.0,
+              0.0
+            ],
+            "upper": [
+              6.5,
+              8.0,
+              12.0
+            ]
+          }
+        ],
+        "frame": "world",
+        "units": "m",
+        "event_id": "e0005",
+        "cost_used": 13
+      },
+      "previous_hash": "95e31a2702df43c47abf937a85cbeb350f0dc2fdbdb13be41211aeb87c0a1054",
+      "hash": "d6144dc79f97c4ca9ed904938ce5e22edfb3ea2532dba6a4685bc31b45ac04c4"
+    },
+    {
+      "event_id": "e0006",
+      "tool": "submit",
+      "arguments": {
+        "fill": {
+          "target_world_position": [
+            9.25,
+            7.75,
+            2.5
+          ],
+          "safe_waypoints": [
+            [
+              1.0,
+              10.0,
+              1.0
+            ],
+            [
+              9.25,
+              10.0,
+              2.5
+            ]
+          ],
+          "grasp_precondition": {
+            "gripper": "open",
+            "force_limit_n": 1.0
+          }
+        },
+        "confidence": 1.0,
+        "abstain": false,
+        "evidence": [
+          "e0001",
+          "e0002",
+          "e0003",
+          "e0004",
+          "e0005"
+        ]
+      },
+      "response": {
+        "accepted": true,
+        "episode_closed": true,
+        "event_id": "e0006",
+        "cost_used": 13
+      },
+      "previous_hash": "d6144dc79f97c4ca9ed904938ce5e22edfb3ea2532dba6a4685bc31b45ac04c4",
+      "hash": "4df828c2e1d1c0c5c7fd1a86dfcb92a8a20faf70cb11b4fe4dec16fb3babc8e4"
+    }
+  ]
+}

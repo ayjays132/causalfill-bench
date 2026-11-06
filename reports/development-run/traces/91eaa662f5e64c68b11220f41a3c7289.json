@@ -1,0 +1,872 @@
+{
+  "public": {
+    "family": "latent_sparse",
+    "difficulty": 2,
+    "prompt": "Recover a masked affine operator f: GF(101)^32 -> GF(101)^32 under a budget of nine cost units. Each output coordinate depends on at most two input coordinates plus an offset. You may choose bounded intervention vectors for the probe tool. Submit offset and sparse rows: output[i] = (offset[i] + sum(term.coefficient * input[term.column] for term in rows[i])) modulo 101. All entries are integers 0..100; columns are indexed from zero. Your map must work on all inputs, not only your probes.",
+    "slots": {
+      "offset": {
+        "type": "integer_vector",
+        "description": "Exactly 32 residues."
+      },
+      "rows": {
+        "type": "sparse_matrix_rows",
+        "description": "Exactly 32 lists of {column: int, coefficient: int}. No duplicate columns within a row; omitted entries mean zero."
+      }
+    },
+    "files": [
+      "/docs/field.txt",
+      "/skill/recovery.md",
+      "/workspace/operator.masked.json"
+    ],
+    "tools": {
+      "probe": {
+        "description": "Evaluate the operator on one intervention vector; no state is changed.",
+        "arguments": {
+          "vector": "list of 32 integers in [0, 100]"
+        },
+        "cost": 1
+      }
+    },
+    "budget": 9,
+    "max_calls": 14,
+    "episode_id": "91eaa662f5e64c68b11220f41a3c7289",
+    "common_tools": {
+      "list_files": {
+        "arguments": {},
+        "cost": 1
+      },
+      "read_file": {
+        "arguments": {
+          "path": "exact listed virtual path"
+        },
+        "cost": 1
+      },
+      "search_files": {
+        "arguments": {
+          "text": "literal string, 1\u2013160 characters"
+        },
+        "cost": 2
+      },
+      "session_status": {
+        "arguments": {},
+        "cost": 1
+      },
+      "submit": {
+        "arguments": {
+          "fill": "object",
+          "confidence": "number 0..1",
+          "abstain": "boolean",
+          "evidence": "list of returned event IDs"
+        },
+        "cost": 0
+      }
+    },
+    "max_seconds": 600,
+    "tools_enabled": true,
+    "submission_rule": "One final submission. Grades are evaluator-only; no retry after submission."
+  },
+  "events": [
+    {
+      "event_id": "e0001",
+      "tool": "read_file",
+      "arguments": {
+        "path": "/workspace/operator.masked.json"
+      },
+      "response": {
+        "path": "/workspace/operator.masked.json",
+        "content": "{\"modulus\":101,\"dimension\":32,\"rows\":[{\"offset\":\"[MASK:b_0]\",\"terms\":[{\"column\":\"[MASK:j_0_0]\",\"coefficient\":\"[MASK:a_0_0]\"},{\"column\":\"[MASK:j_0_1]\",\"coefficient\":\"[MASK:a_0_1]\"}]},{\"offset\":\"[MASK:b_1]\",\"terms\":[{\"column\":\"[MASK:j_1_0]\",\"coefficient\":\"[MASK:a_1_0]\"},{\"column\":\"[MASK:j_1_1]\",\"coefficient\":\"[MASK:a_1_1]\"}]},{\"offset\":\"[MASK:b_2]\",\"terms\":[{\"column\":\"[MASK:j_2_0]\",\"coefficient\":\"[MASK:a_2_0]\"},{\"column\":\"[MASK:j_2_1]\",\"coefficient\":\"[MASK:a_2_1]\"}]},{\"offset\":\"[MASK:b_3]\",\"terms\":[{\"column\":\"[MASK:j_3_0]\",\"coefficient\":\"[MASK:a_3_0]\"},{\"column\":\"[MASK:j_3_1]\",\"coefficient\":\"[MASK:a_3_1]\"}]},{\"offset\":\"[MASK:b_4]\",\"terms\":[{\"column\":\"[MASK:j_4_0]\",\"coefficient\":\"[MASK:a_4_0]\"},{\"column\":\"[MASK:j_4_1]\",\"coefficient\":\"[MASK:a_4_1]\"}]},{\"offset\":\"[MASK:b_5]\",\"terms\":[{\"column\":\"[MASK:j_5_0]\",\"coefficient\":\"[MASK:a_5_0]\"},{\"column\":\"[MASK:j_5_1]\",\"coefficient\":\"[MASK:a_5_1]\"}]},{\"offset\":\"[MASK:b_6]\",\"terms\":[{\"column\":\"[MASK:j_6_0]\",\"coefficient\":\"[MASK:a_6_0]\"},{\"column\":\"[MASK:j_6_1]\",\"coefficient\":\"[MASK:a_6_1]\"}]},{\"offset\":\"[MASK:b_7]\",\"terms\":[{\"column\":\"[MASK:j_7_0]\",\"coefficient\":\"[MASK:a_7_0]\"},{\"column\":\"[MASK:j_7_1]\",\"coefficient\":\"[MASK:a_7_1]\"}]},{\"offset\":\"[MASK:b_8]\",\"terms\":[{\"column\":\"[MASK:j_8_0]\",\"coefficient\":\"[MASK:a_8_0]\"},{\"column\":\"[MASK:j_8_1]\",\"coefficient\":\"[MASK:a_8_1]\"}]},{\"offset\":\"[MASK:b_9]\",\"terms\":[{\"column\":\"[MASK:j_9_0]\",\"coefficient\":\"[MASK:a_9_0]\"},{\"column\":\"[MASK:j_9_1]\",\"coefficient\":\"[MASK:a_9_1]\"}]},{\"offset\":\"[MASK:b_10]\",\"terms\":[{\"column\":\"[MASK:j_10_0]\",\"coefficient\":\"[MASK:a_10_0]\"},{\"column\":\"[MASK:j_10_1]\",\"coefficient\":\"[MASK:a_10_1]\"}]},{\"offset\":\"[MASK:b_11]\",\"terms\":[{\"column\":\"[MASK:j_11_0]\",\"coefficient\":\"[MASK:a_11_0]\"},{\"column\":\"[MASK:j_11_1]\",\"coefficient\":\"[MASK:a_11_1]\"}]},{\"offset\":\"[MASK:b_12]\",\"terms\":[{\"column\":\"[MASK:j_12_0]\",\"coefficient\":\"[MASK:a_12_0]\"},{\"column\":\"[MASK:j_12_1]\",\"coefficient\":\"[MASK:a_12_1]\"}]},{\"offset\":\"[MASK:b_13]\",\"terms\":[{\"column\":\"[MASK:j_13_0]\",\"coefficient\":\"[MASK:a_13_0]\"},{\"column\":\"[MASK:j_13_1]\",\"coefficient\":\"[MASK:a_13_1]\"}]},{\"offset\":\"[MASK:b_14]\",\"terms\":[{\"column\":\"[MASK:j_14_0]\",\"coefficient\":\"[MASK:a_14_0]\"},{\"column\":\"[MASK:j_14_1]\",\"coefficient\":\"[MASK:a_14_1]\"}]},{\"offset\":\"[MASK:b_15]\",\"terms\":[{\"column\":\"[MASK:j_15_0]\",\"coefficient\":\"[MASK:a_15_0]\"},{\"column\":\"[MASK:j_15_1]\",\"coefficient\":\"[MASK:a_15_1]\"}]},{\"offset\":\"[MASK:b_16]\",\"terms\":[{\"column\":\"[MASK:j_16_0]\",\"coefficient\":\"[MASK:a_16_0]\"},{\"column\":\"[MASK:j_16_1]\",\"coefficient\":\"[MASK:a_16_1]\"}]},{\"offset\":\"[MASK:b_17]\",\"terms\":[{\"column\":\"[MASK:j_17_0]\",\"coefficient\":\"[MASK:a_17_0]\"},{\"column\":\"[MASK:j_17_1]\",\"coefficient\":\"[MASK:a_17_1]\"}]},{\"offset\":\"[MASK:b_18]\",\"terms\":[{\"column\":\"[MASK:j_18_0]\",\"coefficient\":\"[MASK:a_18_0]\"},{\"column\":\"[MASK:j_18_1]\",\"coefficient\":\"[MASK:a_18_1]\"}]},{\"offset\":\"[MASK:b_19]\",\"terms\":[{\"column\":\"[MASK:j_19_0]\",\"coefficient\":\"[MASK:a_19_0]\"},{\"column\":\"[MASK:j_19_1]\",\"coefficient\":\"[MASK:a_19_1]\"}]},{\"offset\":\"[MASK:b_20]\",\"terms\":[{\"column\":\"[MASK:j_20_0]\",\"coefficient\":\"[MASK:a_20_0]\"},{\"column\":\"[MASK:j_20_1]\",\"coefficient\":\"[MASK:a_20_1]\"}]},{\"offset\":\"[MASK:b_21]\",\"terms\":[{\"column\":\"[MASK:j_21_0]\",\"coefficient\":\"[MASK:a_21_0]\"},{\"column\":\"[MASK:j_21_1]\",\"coefficient\":\"[MASK:a_21_1]\"}]},{\"offset\":\"[MASK:b_22]\",\"terms\":[{\"column\":\"[MASK:j_22_0]\",\"coefficient\":\"[MASK:a_22_0]\"},{\"column\":\"[MASK:j_22_1]\",\"coefficient\":\"[MASK:a_22_1]\"}]},{\"offset\":\"[MASK:b_23]\",\"terms\":[{\"column\":\"[MASK:j_23_0]\",\"coefficient\":\"[MASK:a_23_0]\"},{\"column\":\"[MASK:j_23_1]\",\"coefficient\":\"[MASK:a_23_1]\"}]},{\"offset\":\"[MASK:b_24]\",\"terms\":[{\"column\":\"[MASK:j_24_0]\",\"coefficient\":\"[MASK:a_24_0]\"},{\"column\":\"[MASK:j_24_1]\",\"coefficient\":\"[MASK:a_24_1]\"}]},{\"offset\":\"[MASK:b_25]\",\"terms\":[{\"column\":\"[MASK:j_25_0]\",\"coefficient\":\"[MASK:a_25_0]\"},{\"column\":\"[MASK:j_25_1]\",\"coefficient\":\"[MASK:a_25_1]\"}]},{\"offset\":\"[MASK:b_26]\",\"terms\":[{\"column\":\"[MASK:j_26_0]\",\"coefficient\":\"[MASK:a_26_0]\"},{\"column\":\"[MASK:j_26_1]\",\"coefficient\":\"[MASK:a_26_1]\"}]},{\"offset\":\"[MASK:b_27]\",\"terms\":[{\"column\":\"[MASK:j_27_0]\",\"coefficient\":\"[MASK:a_27_0]\"},{\"column\":\"[MASK:j_27_1]\",\"coefficient\":\"[MASK:a_27_1]\"}]},{\"offset\":\"[MASK:b_28]\",\"terms\":[{\"column\":\"[MASK:j_28_0]\",\"coefficient\":\"[MASK:a_28_0]\"},{\"column\":\"[MASK:j_28_1]\",\"coefficient\":\"[MASK:a_28_1]\"}]},{\"offset\":\"[MASK:b_29]\",\"terms\":[{\"column\":\"[MASK:j_29_0]\",\"coefficient\":\"[MASK:a_29_0]\"},{\"column\":\"[MASK:j_29_1]\",\"coefficient\":\"[MASK:a_29_1]\"}]},{\"offset\":\"[MASK:b_30]\",\"terms\":[{\"column\":\"[MASK:j_30_0]\",\"coefficient\":\"[MASK:a_30_0]\"},{\"column\":\"[MASK:j_30_1]\",\"coefficient\":\"[MASK:a_30_1]\"}]},{\"offset\":\"[MASK:b_31]\",\"terms\":[{\"column\":\"[MASK:j_31_0]\",\"coefficient\":\"[MASK:a_31_0]\"},{\"column\":\"[MASK:j_31_1]\",\"coefficient\":\"[MASK:a_31_1]\"}]}]}",
+        "event_id": "e0001",
+        "cost_used": 1
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "5cf3ec360b66297768be9b2c471266357abe1f8adfece6c2712c328ad7937d25"
+    },
+    {
+      "event_id": "e0002",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "response": {
+        "output": [
+          84,
+          32,
+          90,
+          35,
+          64,
+          49,
+          13,
+          82,
+          31,
+          48,
+          55,
+          17,
+          68,
+          39,
+          75,
+          76,
+          96,
+          66,
+          81,
+          90,
+          14,
+          51,
+          68,
+          81,
+          75,
+          35,
+          68,
+          85,
+          62,
+          15,
+          44,
+          1
+        ],
+        "modulus": 101,
+        "event_id": "e0002",
+        "cost_used": 2
+      },
+      "previous_hash": "5cf3ec360b66297768be9b2c471266357abe1f8adfece6c2712c328ad7937d25",
+      "hash": "541a8df78a2232df9c42d856efe0c9376d64f77f63f3e6cfebf0ae0acfafc02c"
+    },
+    {
+      "event_id": "e0003",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "response": {
+        "output": [
+          82,
+          33,
+          23,
+          14,
+          36,
+          13,
+          11,
+          70,
+          61,
+          62,
+          33,
+          70,
+          71,
+          89,
+          90,
+          51,
+          62,
+          38,
+          98,
+          66,
+          69,
+          19,
+          66,
+          37,
+          13,
+          31,
+          38,
+          51,
+          88,
+          25,
+          3,
+          76
+        ],
+        "modulus": 101,
+        "event_id": "e0003",
+        "cost_used": 3
+      },
+      "previous_hash": "541a8df78a2232df9c42d856efe0c9376d64f77f63f3e6cfebf0ae0acfafc02c",
+      "hash": "76303e1df9c93484334e6308815a09094f8f2d33168d874b30dd5c8e332e3722"
+    },
+    {
+      "event_id": "e0004",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31
+        ]
+      },
+      "response": {
+        "output": [
+          67,
+          18,
+          68,
+          15,
+          67,
+          88,
+          66,
+          0,
+          69,
+          83,
+          58,
+          35,
+          52,
+          62,
+          99,
+          17,
+          0,
+          40,
+          56,
+          25,
+          98,
+          5,
+          64,
+          81,
+          20,
+          42,
+          83,
+          12,
+          30,
+          6,
+          81,
+          11
+        ],
+        "modulus": 101,
+        "event_id": "e0004",
+        "cost_used": 4
+      },
+      "previous_hash": "76303e1df9c93484334e6308815a09094f8f2d33168d874b30dd5c8e332e3722",
+      "hash": "8e275869dc75af7378e45086448f4732708d5e6dbb4698f3cd023002fbfe1e04"
+    },
+    {
+      "event_id": "e0005",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          1,
+          4,
+          9,
+          16,
+          25,
+          36,
+          49,
+          64,
+          81,
+          100,
+          20,
+          43,
+          68,
+          95,
+          23,
+          54,
+          87,
+          21,
+          58,
+          97,
+          37,
+          80,
+          24,
+          71,
+          19,
+          70,
+          22,
+          77,
+          33,
+          92,
+          52
+        ]
+      },
+      "response": {
+        "output": [
+          39,
+          55,
+          96,
+          60,
+          2,
+          52,
+          82,
+          39,
+          24,
+          19,
+          0,
+          56,
+          0,
+          75,
+          87,
+          65,
+          64,
+          23,
+          11,
+          30,
+          58,
+          36,
+          89,
+          59,
+          72,
+          91,
+          42,
+          0,
+          8,
+          79,
+          29,
+          88
+        ],
+        "modulus": 101,
+        "event_id": "e0005",
+        "cost_used": 5
+      },
+      "previous_hash": "8e275869dc75af7378e45086448f4732708d5e6dbb4698f3cd023002fbfe1e04",
+      "hash": "d82d624e99f289f01de42cc69cfdc63291d1beb3c697ab7e379ca24543749cf3"
+    },
+    {
+      "event_id": "e0006",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          1,
+          8,
+          27,
+          64,
+          24,
+          14,
+          40,
+          7,
+          22,
+          91,
+          18,
+          11,
+          76,
+          17,
+          42,
+          56,
+          65,
+          75,
+          92,
+          21,
+          70,
+          43,
+          47,
+          88,
+          71,
+          2,
+          89,
+          35,
+          48,
+          33,
+          97
+        ]
+      },
+      "response": {
+        "output": [
+          78,
+          7,
+          67,
+          89,
+          30,
+          84,
+          38,
+          18,
+          12,
+          89,
+          77,
+          18,
+          20,
+          58,
+          8,
+          23,
+          82,
+          67,
+          65,
+          0,
+          33,
+          2,
+          44,
+          84,
+          46,
+          62,
+          39,
+          22,
+          78,
+          64,
+          19,
+          79
+        ],
+        "modulus": 101,
+        "event_id": "e0006",
+        "cost_used": 6
+      },
+      "previous_hash": "d82d624e99f289f01de42cc69cfdc63291d1beb3c697ab7e379ca24543749cf3",
+      "hash": "5c270055ec14cd7b843c6301e6cb4697baf8e7fb9513ba5ff44d64d91cc97583"
+    },
+    {
+      "event_id": "e0007",
+      "tool": "submit",
+      "arguments": {
+        "fill": {
+          "offset": [
+            84,
+            32,
+            90,
+            35,
+            64,
+            49,
+            13,
+            82,
+            31,
+            48,
+            55,
+            17,
+            68,
+            39,
+            75,
+            76,
+            96,
+            66,
+            81,
+            90,
+            14,
+            51,
+            68,
+            81,
+            75,
+            35,
+            68,
+            85,
+            62,
+            15,
+            44,
+            1
+          ],
+          "rows": [
+            [
+              {
+                "column": 24,
+                "coefficient": 66
+              },
+              {
+                "column": 28,
+                "coefficient": 33
+              }
+            ],
+            [
+              {
+                "column": 28,
+                "coefficient": 15
+              },
+              {
+                "column": 31,
+                "coefficient": 87
+              }
+            ],
+            [
+              {
+                "column": 11,
+                "coefficient": 74
+              },
+              {
+                "column": 31,
+                "coefficient": 61
+              }
+            ],
+            [
+              {
+                "column": 11,
+                "coefficient": 58
+              },
+              {
+                "column": 16,
+                "coefficient": 22
+              }
+            ],
+            [
+              {
+                "column": 16,
+                "coefficient": 26
+              },
+              {
+                "column": 17,
+                "coefficient": 47
+              }
+            ],
+            [
+              {
+                "column": 17,
+                "coefficient": 93
+              },
+              {
+                "column": 19,
+                "coefficient": 73
+              }
+            ],
+            [
+              {
+                "column": 13,
+                "coefficient": 69
+              },
+              {
+                "column": 19,
+                "coefficient": 30
+              }
+            ],
+            [
+              {
+                "column": 7,
+                "coefficient": 55
+              },
+              {
+                "column": 13,
+                "coefficient": 34
+              }
+            ],
+            [
+              {
+                "column": 1,
+                "coefficient": 96
+              },
+              {
+                "column": 7,
+                "coefficient": 35
+              }
+            ],
+            [
+              {
+                "column": 1,
+                "coefficient": 18
+              },
+              {
+                "column": 21,
+                "coefficient": 97
+              }
+            ],
+            [
+              {
+                "column": 8,
+                "coefficient": 73
+              },
+              {
+                "column": 21,
+                "coefficient": 6
+              }
+            ],
+            [
+              {
+                "column": 2,
+                "coefficient": 34
+              },
+              {
+                "column": 8,
+                "coefficient": 19
+              }
+            ],
+            [
+              {
+                "column": 2,
+                "coefficient": 94
+              },
+              {
+                "column": 20,
+                "coefficient": 10
+              }
+            ],
+            [
+              {
+                "column": 20,
+                "coefficient": 77
+              },
+              {
+                "column": 30,
+                "coefficient": 74
+              }
+            ],
+            [
+              {
+                "column": 23,
+                "coefficient": 32
+              },
+              {
+                "column": 30,
+                "coefficient": 84
+              }
+            ],
+            [
+              {
+                "column": 3,
+                "coefficient": 55
+              },
+              {
+                "column": 23,
+                "coefficient": 21
+              }
+            ],
+            [
+              {
+                "column": 3,
+                "coefficient": 66
+              },
+              {
+                "column": 9,
+                "coefficient": 1
+              }
+            ],
+            [
+              {
+                "column": 9,
+                "coefficient": 92
+              },
+              {
+                "column": 29,
+                "coefficient": 82
+              }
+            ],
+            [
+              {
+                "column": 4,
+                "coefficient": 49
+              },
+              {
+                "column": 29,
+                "coefficient": 69
+              }
+            ],
+            [
+              {
+                "column": 4,
+                "coefficient": 71
+              },
+              {
+                "column": 26,
+                "coefficient": 6
+              }
+            ],
+            [
+              {
+                "column": 22,
+                "coefficient": 84
+              },
+              {
+                "column": 26,
+                "coefficient": 72
+              }
+            ],
+            [
+              {
+                "column": 22,
+                "coefficient": 18
+              },
+              {
+                "column": 25,
+                "coefficient": 51
+              }
+            ],
+            [
+              {
+                "column": 18,
+                "coefficient": 80
+              },
+              {
+                "column": 25,
+                "coefficient": 19
+              }
+            ],
+            [
+              {
+                "column": 14,
+                "coefficient": 4
+              },
+              {
+                "column": 18,
+                "coefficient": 53
+              }
+            ],
+            [
+              {
+                "column": 12,
+                "coefficient": 48
+              },
+              {
+                "column": 14,
+                "coefficient": 92
+              }
+            ],
+            [
+              {
+                "column": 5,
+                "coefficient": 21
+              },
+              {
+                "column": 12,
+                "coefficient": 76
+              }
+            ],
+            [
+              {
+                "column": 0,
+                "coefficient": 68
+              },
+              {
+                "column": 5,
+                "coefficient": 3
+              }
+            ],
+            [
+              {
+                "column": 0,
+                "coefficient": 18
+              },
+              {
+                "column": 15,
+                "coefficient": 49
+              }
+            ],
+            [
+              {
+                "column": 10,
+                "coefficient": 44
+              },
+              {
+                "column": 15,
+                "coefficient": 83
+              }
+            ],
+            [
+              {
+                "column": 6,
+                "coefficient": 2
+              },
+              {
+                "column": 10,
+                "coefficient": 8
+              }
+            ],
+            [
+              {
+                "column": 6,
+                "coefficient": 85
+              },
+              {
+                "column": 27,
+                "coefficient": 76
+              }
+            ],
+            [
+              {
+                "column": 24,
+                "coefficient": 32
+              },
+              {
+                "column": 27,
+                "coefficient": 43
+              }
+            ]
+          ]
+        },
+        "confidence": 1.0,
+        "abstain": false,
+        "evidence": [
+          "e0001",
+          "e0002",
+          "e0003",
+          "e0004",
+          "e0005",
+          "e0006"
+        ]
+      },
+      "response": {
+        "accepted": true,
+        "episode_closed": true,
+        "event_id": "e0007",
+        "cost_used": 6
+      },
+      "previous_hash": "5c270055ec14cd7b843c6301e6cb4697baf8e7fb9513ba5ff44d64d91cc97583",
+      "hash": "6eb90eba5aa9ef3367e803210611c79d97f35c4b2df1a0b25790f4bdd5a4ad70"
+    }
+  ]
+}

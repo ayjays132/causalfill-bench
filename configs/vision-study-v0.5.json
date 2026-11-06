@@ -1,0 +1,61 @@
+{
+  "schema": "causalfill.preregisterable-study.v1",
+  "status": "development protocol; no model experiment preregistered or completed",
+  "version": "0.5.0",
+  "primary_question": "Does selecting observations improve successful action under equal available sensors and a common resource cap?",
+  "tracks": ["visual", "robotics_vision"],
+  "development_splits": ["train", "dev", "transfer"],
+  "split_warning": "These are public, authored configuration groups. Fresh seeds are not an independently held-out mechanism or a secret test set.",
+  "controlled_factors": [
+    "geometry intervention under fixed nuisance variables",
+    "camera orientation, translation and affine calibration",
+    "bounded fixed-pattern RGB sensor noise",
+    "visible and deliberately occluded observations",
+    "image palette permutations",
+    "costly observation versus robust terminal action",
+    "friction/contact state and simulated irreversible outcomes"
+  ],
+  "policy_conditions": {
+    "adaptive": "Select subsequent sensing using currently available observations.",
+    "fixed_sensing": "Commit to a sensor sequence before receiving episode observations; terminal action may use all those observations.",
+    "query_free": "Use the public task contract and operational feedback without buying perception.",
+    "robust": "Choose a legal conservative alternative without requiring complete hidden-state recovery.",
+    "privileged_diagnostic": "Evaluator-state diagnostic only, never a model score."
+  },
+  "resource_contract": {
+    "same_available_tools": true,
+    "same_tool_budget_per_episode": true,
+    "physical_time_accounting": "Report simulated time separately from tool costs and wall-clock inference.",
+    "observation_bandwidth": "Report delivered PNG bytes, RGB dimensions, query counts and serialized response bytes.",
+    "repeat_noise": "Fixed-pattern images repeat exactly; no independent noise-reduction credit from repeated capture.",
+    "inference_budget": "Must be frozen and reported for each external model study."
+  },
+  "required_metrics": [
+    "strict success on answerable episodes",
+    "both members of a complete intervention pair succeed",
+    "component recovery and downstream outcome separately",
+    "simulated collisions, slips, damage and deadline failures",
+    "cost and number of observations",
+    "coverage and justified abstention separately",
+    "confidence Brier score",
+    "protocol-invalid calls",
+    "source-bound trace integrity",
+    "per-structure results and mechanism-level uncertainty"
+  ],
+  "failure_controls": [
+    "replace observations with a scene-independent blank image",
+    "swap images across paired causal interventions",
+    "remove or corrupt a calibration landmark",
+    "suppress the useful view while retaining irrelevant observations",
+    "try legal robust alternatives and unsafe probes",
+    "test invalid actions for state atomicity",
+    "compare complete public payloads under observation-equivalent worlds"
+  ],
+  "external_model_release_gates": [
+    "Freeze source, task mechanism roster and inference budgets before model access.",
+    "Keep evaluator source, private state, labels and traces out of the solver's OS environment.",
+    "Run at least one independently authored future mechanism group.",
+    "Use source-bound verifier versions, preserving all discovered failures separately.",
+    "Obtain external replication before broad scientific or robotics-transfer claims."
+  ]
+}

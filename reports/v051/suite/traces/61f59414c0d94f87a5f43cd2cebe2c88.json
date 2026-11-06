@@ -1,0 +1,135 @@
+{
+  "public": {
+    "family": "words",
+    "difficulty": 2,
+    "prompt": "Complete the missing route word from permitted evidence. The sensor privacy notice describes the entire observation interface. You may abstain if incompatible completions cannot be distinguished. Do not invent an arbitrary hidden literal.",
+    "slots": {
+      "route_word": {
+        "type": "string",
+        "description": "the hidden route literal"
+      }
+    },
+    "files": [
+      "/docs/archive.txt",
+      "/docs/grammar.json",
+      "/docs/sensor-notice.txt",
+      "/skill/recovery.md",
+      "/skill/routing.txt"
+    ],
+    "tools": {
+      "experiment": {
+        "description": "Run one chosen input against the surviving service",
+        "arguments": {
+          "inputs": "exactly 2 booleans"
+        },
+        "cost": 1
+      }
+    },
+    "budget": 46,
+    "max_calls": 55,
+    "episode_id": "61f59414c0d94f87a5f43cd2cebe2c88",
+    "common_tools": {
+      "list_files": {
+        "arguments": {},
+        "cost": 1
+      },
+      "read_file": {
+        "arguments": {
+          "path": "exact listed virtual path"
+        },
+        "cost": 1
+      },
+      "search_files": {
+        "arguments": {
+          "text": "literal string, 1\u2013160 characters"
+        },
+        "cost": 2
+      },
+      "session_status": {
+        "arguments": {},
+        "cost": 1
+      },
+      "submit": {
+        "arguments": {
+          "fill": "object",
+          "confidence": "number 0..1",
+          "abstain": "boolean",
+          "evidence": "list of returned event IDs"
+        },
+        "cost": 0
+      }
+    },
+    "max_seconds": 600,
+    "tools_enabled": true,
+    "submission_rule": "One final submission. Grades are evaluator-only; no retry after submission."
+  },
+  "events": [
+    {
+      "event_id": "e0001",
+      "tool": "read_file",
+      "arguments": {
+        "path": "/docs/grammar.json"
+      },
+      "response": {
+        "path": "/docs/grammar.json",
+        "content": "{\"input_count\": 2, \"gate_words\": [\"all\", \"any\", \"majority\", \"exactly_one\"], \"majority\": \"strictly more than half\", \"required_state\": [\"true\", \"false\"], \"route_vocabulary\": [\"CEDAR\", \"AMBER\", \"CORAL\", \"MAPLE\", \"LILAC\", \"ONYX\", \"BIRCH\"], \"comment_word\": \"stable\", \"identification\": \"You may enumerate all inputs within the budget.\"}",
+        "event_id": "e0001",
+        "cost_used": 1
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "943ffc6c5bf03c129ab34baa953968b68b003579d5191fccf163e53b1c176eea"
+    },
+    {
+      "event_id": "e0002",
+      "tool": "read_file",
+      "arguments": {
+        "path": "/skill/routing.txt"
+      },
+      "response": {
+        "path": "/skill/routing.txt",
+        "content": "IF all(inputs) == false THEN send <MASK:route_word> ELSE send HOLD.\nComment: stable.",
+        "event_id": "e0002",
+        "cost_used": 2
+      },
+      "previous_hash": "943ffc6c5bf03c129ab34baa953968b68b003579d5191fccf163e53b1c176eea",
+      "hash": "30277d79050cb8bbb5650c9f1796057ab88c6a82868058ddca22d0986b07a39e"
+    },
+    {
+      "event_id": "e0003",
+      "tool": "read_file",
+      "arguments": {
+        "path": "/docs/sensor-notice.txt"
+      },
+      "response": {
+        "path": "/docs/sensor-notice.txt",
+        "content": "Privacy mode is enabled. The sensor shows only HOLD or ROUTED and never the route name. No other permitted observation reveals that literal. Every listed route name remains possible. Use the protocol's abstention if the missing literal cannot be identified from permitted evidence.",
+        "event_id": "e0003",
+        "cost_used": 3
+      },
+      "previous_hash": "30277d79050cb8bbb5650c9f1796057ab88c6a82868058ddca22d0986b07a39e",
+      "hash": "47b6fb603c2ef02e4ab1ab9b4f9ba634c5188275d45f64cf7c0fdb45bed21f18"
+    },
+    {
+      "event_id": "e0004",
+      "tool": "submit",
+      "arguments": {
+        "fill": {},
+        "confidence": 1.0,
+        "abstain": true,
+        "evidence": [
+          "e0001",
+          "e0002",
+          "e0003"
+        ]
+      },
+      "response": {
+        "accepted": true,
+        "episode_closed": true,
+        "event_id": "e0004",
+        "cost_used": 3
+      },
+      "previous_hash": "47b6fb603c2ef02e4ab1ab9b4f9ba634c5188275d45f64cf7c0fdb45bed21f18",
+      "hash": "1b7665b63a8596e3b8ef6c9925dc71ecc2878faf74a16a93a6d592a4dbc78626"
+    }
+  ]
+}

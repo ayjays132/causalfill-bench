@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "causalfill.release-cards.v1",
+  "title": "CausalFill-Bench release card specification",
+  "type": "object",
+  "required": ["schema", "release", "metrics"],
+  "properties": {
+    "schema": {"const": "causalfill.release-cards.v1"},
+    "release": {
+      "type": "object",
+      "required": ["version"],
+      "properties": {"version": {"type": "string", "minLength": 1}}
+    },
+    "metrics": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/metric"}
+    },
+    "benchmark_card": {
+      "type": "object",
+      "required": ["title", "subtitle", "fields"],
+      "properties": {
+        "title": {"type": "string", "minLength": 1},
+        "subtitle": {"type": "string", "minLength": 1},
+        "source_label": {"type": "string"},
+        "fields": {
+          "type": "array", "minItems": 6, "maxItems": 6,
+          "items": {
+            "type": "object", "required": ["label", "body"],
+            "properties": {
+              "label": {"type": "string", "minLength": 1},
+              "body": {"type": "string", "minLength": 1}
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "metric": {
+      "type": "object",
+      "required": ["id", "kind", "label", "scope"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z][a-z0-9-]{0,60}$"},
+        "kind": {"enum": ["measured", "formal", "proposed"]},
+        "label": {"type": "string", "minLength": 1},
+        "scope": {"type": "string", "minLength": 1},
+        "record_label": {"type": "string", "maxLength": 29},
+        "source": {"type": "string", "minLength": 1},
+        "expected_source_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "pointers": {
+          "type": "array", "minItems": 1, "maxItems": 2,
+          "items": {"type": "string", "pattern": "^(/.*)?$"}
+        },
+        "format": {"enum": ["integer", "decimal", "text"]},
+        "value": {"type": "string", "minLength": 1, "maxLength": 24}
+      },
+      "allOf": [{
+        "if": {"properties": {"kind": {"const": "proposed"}}},
+        "then": {"required": ["value"]},
+        "else": {"required": ["source", "pointers"]}
+      }]
+    }
+  }
+}

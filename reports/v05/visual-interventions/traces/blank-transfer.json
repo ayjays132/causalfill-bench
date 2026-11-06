@@ -1,0 +1,165 @@
+{
+  "public": {
+    "family": "visual",
+    "difficulty": 1,
+    "prompt": "Recover missing visual components from actual RGB PNG observations. Use the advertised color legend and three world landmarks to calibrate the camera. Report the target's world position, count token objects strictly to its west (smaller world x), and complete the dispatch rule. Image-left may differ from world-west. Some overview images contain an opaque inspection shutter; the inspection view exposes the scene. A color label is a public convention, not an embedded object annotation. Read /scene/visual.json.",
+    "slots": {
+      "target_world": {
+        "type": "array[number,number]",
+        "description": "Target center in world x,y; each coordinate within the declared 0.6 world-unit tolerance."
+      },
+      "tokens_left_of_target": {
+        "type": "integer",
+        "description": "Count token-color objects with world x strictly less than target world x."
+      },
+      "dispatch": {
+        "type": "enum[WEST,EAST]",
+        "description": "WEST iff target world x < 48; EAST otherwise."
+      }
+    },
+    "files": [
+      "/docs/visual.txt",
+      "/scene/visual.json",
+      "/skill/recovery.md"
+    ],
+    "tools": {
+      "capture": {
+        "description": "Return a PNG-only image envelope from the named view; a fixed-pattern noise realization repeats exactly. The inspection view uncovers the shutter; this is a declared 2D mask change.",
+        "arguments": {
+          "view": "overview or inspection"
+        },
+        "cost": 3
+      }
+    },
+    "budget": 12,
+    "max_calls": 16,
+    "episode_id": "d32521a6240b43689904da5266e58d64",
+    "common_tools": {
+      "list_files": {
+        "arguments": {},
+        "cost": 1
+      },
+      "read_file": {
+        "arguments": {
+          "path": "exact listed virtual path"
+        },
+        "cost": 1
+      },
+      "search_files": {
+        "arguments": {
+          "text": "literal string, 1\u2013160 characters"
+        },
+        "cost": 2
+      },
+      "session_status": {
+        "arguments": {},
+        "cost": 1
+      },
+      "submit": {
+        "arguments": {
+          "fill": "object",
+          "confidence": "number 0..1",
+          "abstain": "boolean",
+          "evidence": "list of returned event IDs"
+        },
+        "cost": 0
+      }
+    },
+    "max_seconds": 600,
+    "tools_enabled": true,
+    "submission_rule": "One final submission. Grades are evaluator-only; no retry after submission."
+  },
+  "trace": [
+    {
+      "event_id": "e0001",
+      "tool": "read_file",
+      "arguments": {
+        "path": "/scene/visual.json"
+      },
+      "response": {
+        "path": "/scene/visual.json",
+        "content": "{\"version\":\"visual_v1\",\"world_bounds\":[[0,0],[96,96]],\"landmarks\":[{\"world\":[8,8],\"rgb\":[220,73,49]},{\"world\":[88,8],\"rgb\":[149,91,218]},{\"world\":[8,88],\"rgb\":[231,174,42]}],\"palette\":{\"target\":[39,180,194],\"token\":[45,151,84],\"distractor\":[221,66,145]},\"sensor\":{\"encoding\":\"PNG RGB8 noninterlaced\",\"width\":240,\"height\":240,\"rgb_noise_bound\":2,\"noise_model\":\"fixed-pattern additive integer per-channel noise in [-bound,+bound], clipped to [0,255]; independent of the target intervention\",\"camera_model\":\"unknown invertible affine, including subpixel translation in transfer; recover from three visible landmarks\",\"landmark_radius_world\":2.5,\"object_center_tolerance_world\":0.6},\"views\":{\"overview\":\"opaque shutter in dev/transfer; clear in train\",\"inspection\":\"same camera, palette and noise; shutter absent\"},\"dispatch_divider_world_x\":48,\"relation_minimum_margin_world\":4,\"target_count\":1,\"token_count_range\":[3,5],\"task_domain\":\"controlled 2D raster scenes\",\"interpretation\":\"Return world-relative geometry, not screen-relative geometry. All inspection objects and landmarks are fully visible, separated, and in frame.\"}",
+        "event_id": "e0001",
+        "cost_used": 1
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "9bd799e715968b80905829a1969faf27fa064e02b35fdd5dad57e073a4b55469"
+    },
+    {
+      "event_id": "e0002",
+      "tool": "capture",
+      "arguments": {
+        "view": "inspection"
+      },
+      "response": {
+        "view": "inspection",
+        "image": {
+          "mime_type": "image/png",
+          "width": 240,
+          "height": 240,
+          "png_base64": "iVBORw0KGgoAAAANSUhEUgAAAPAAAADwCAIAAACxN37FAAAB10lEQVR42u3SMQ0AAAgEsfdvlYEFAfiAJlVwuVQPnBEJMDQYGgwNhsbQYGgwNBgaDI2hwdBgaDA0GBpDg6HB0GBoMDSGBkODocHQYGgMDYYGQ4OhwdAYGgwNhgZDg6ExNBgaDA2GxtBgaDA0GBoMjaHB0GBoMDQYGkODocHQYGgwNIYGQ4OhwdBgaAwNhgZDg6HB0BgaDA2GBkODoTE0GBoMDYYGQ2NoMDQYGgyNocHQYGgwNBgaQ4OhwdBgaDA0hgZDg6HB0GBoDA2GBkODocHQGBoMDYYGQ4OhMTQYGgwNhgZDY2gwNBgaDI2hVcDQYGgwNBgaQ4OhwdBgaDA0hgZDg6HB0GBoDA2GBkODocHQGBoMDYYGQ4OhMTQYGgwNhgZDY2gwNBgaDA2GxtBgaDA0GBpDg6HB0GBoMDSGBkODocHQYGgMDYYGQ4OhwdAYGgwNhgZDg6ExNBgaDA2GBkNjaDA0GBoMDYbG0GBoMDQYGkOrgKHB0GBoMDSGBkODocHQYGgMDYYGQ4OhwdAYGgwNhgZDg6ExNBgaDA2GBkNjaDA0GBoMDYbG0GBoMDQYGgyNocHQYGgwNIYGQ4OhwdBgaAwNhgZDg6HB0BgaDA2GBkODofliAdZvMvrtpRP7AAAAAElFTkSuQmCC",
+          "sha256": "f8bf6abff48a55e3b195815b155dfb5a21cdc56d41ca6bc0cea9e910de7318b7"
+        },
+        "event_id": "e0002",
+        "cost_used": 4
+      },
+      "previous_hash": "9bd799e715968b80905829a1969faf27fa064e02b35fdd5dad57e073a4b55469",
+      "hash": "cf70779f44fb5955ad4f226c4de8aef785bd16d1f9324f3e26a6e91f54d2cad2"
+    },
+    {
+      "event_id": "e0003",
+      "tool": "__termination__",
+      "arguments": {},
+      "response": {
+        "reason": "pixel_reference_could_not_recover",
+        "episode_closed": true,
+        "event_id": "e0003",
+        "cost_used": 4
+      },
+      "previous_hash": "cf70779f44fb5955ad4f226c4de8aef785bd16d1f9324f3e26a6e91f54d2cad2",
+      "hash": "413f198eae2d0a5e85a52e293cdd424757b04a8ed547a4a37bbf5f52226b4ea8"
+    }
+  ],
+  "record": {
+    "episode_id": "d32521a6240b43689904da5266e58d64",
+    "family": "visual",
+    "split": "transfer",
+    "difficulty": 1,
+    "structural_signature": "visual:occluded-shear-palette-permutation:visual_v1",
+    "twin_kind": "target_horizontal_translation",
+    "answerable": true,
+    "success": false,
+    "abstained": false,
+    "decision_correct": false,
+    "confidence": 0.0,
+    "brier_decision": 0.0,
+    "recovery": 0.0,
+    "outcome": 0.0,
+    "safety": 1.0,
+    "tool_cost": 4,
+    "tool_calls": 2,
+    "invalid_calls": 0,
+    "wall_seconds": 0.139883,
+    "condition": {
+      "skill": true,
+      "tools": true
+    },
+    "verdict": {
+      "success": false,
+      "recovery": 0.0,
+      "outcome": 0.0,
+      "safety": 1.0,
+      "details": {
+        "failure": "pixel_reference_could_not_recover"
+      }
+    },
+    "trace_hash": "413f198eae2d0a5e85a52e293cdd424757b04a8ed547a4a37bbf5f52226b4ea8",
+    "seed": 50000,
+    "twin": 0,
+    "intervention": "blank",
+    "policy": "task-aware pixel reference",
+    "reference_error": "landmark is absent or ambiguous",
+    "trace_integrity": true,
+    "response_bytes": 2287
+  }
+}

@@ -1,0 +1,147 @@
+name: formal-assurance
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'formal/**'
+      - 'reports/certificates/**'
+      - 'artifacts/v04/finite-games/**'
+      - 'causalfill/belief_games.py'
+      - 'causalfill/belief_certificates.py'
+      - 'docs/formal-*.md'
+      - '.github/workflows/formal.yml'
+  pull_request:
+    paths:
+      - 'formal/**'
+      - 'reports/certificates/**'
+      - 'artifacts/v04/finite-games/**'
+      - 'causalfill/belief_games.py'
+      - 'causalfill/belief_certificates.py'
+      - 'docs/formal-*.md'
+      - '.github/workflows/formal.yml'
+permissions:
+  contents: read
+jobs:
+  lean:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: '3.12'
+      - name: Install pinned official Lean toolchain
+        run: |
+          curl --fail --location --retry 3 --output "$RUNNER_TEMP/lean.tar.zst" https://github.com/leanprover/lean4/releases/download/v4.35.0/lean-4.35.0-linux.tar.zst
+          printf '%s  %s\n' 7289597a44543246c9227b8cae501767e095ce17f6d448b95fc4a8dc97268f6d "$RUNNER_TEMP/lean.tar.zst" | sha256sum --check
+          tar --zstd -xf "$RUNNER_TEMP/lean.tar.zst" -C "$RUNNER_TEMP"
+      - name: Check generic theorems, four profiles and retained resolution proofs
+        run: |
+          python formal/verify_information.py \
+            --toolchain "$RUNNER_TEMP/lean-4.35.0-linux" \
+            --toolchain-archive "$RUNNER_TEMP/lean.tar.zst" \
+            --backend embedding \
+            --output formal/verification-ci-source \
+            --arena-manifest formal/CausalFill/ReleaseAdaptiveMarket.manifest.json \
+            --arena-manifest formal/CausalFill/ReleaseNoObserveMarket.manifest.json \
+            --arena-manifest formal/CausalFill/ReleaseOpenLoopMarket.manifest.json \
+            --arena-manifest formal/CausalFill/ReleaseOpenLoopNoObserveMarket.manifest.json
+      - name: Reject mislabeled manifest metadata
+        run: |
+          python - <<'PY'
+          import hashlib
+          import json
+          from pathlib import Path
+          import sys
+          import tempfile
+
+          sys.path.insert(0, "formal")
+          from verify_information import compare_arena
+
+          source = Path("formal/CausalFill/ReleaseAdaptiveMarket.manifest.json")
+          source_hash = hashlib.sha256(source.read_bytes()).hexdigest()
+          manifest = json.loads(source.read_text())
+          baseline = compare_arena(source)
+          mutations = {
+              "mode": "open_loop",
+              "node_count": manifest["node_count"] + 1,
+              "root": manifest["root"] + 1,
+              "root_value": manifest["root_value"] + 1,
+          }
+          checks = []
+          with tempfile.TemporaryDirectory(prefix="causalfill-metadata-") as temporary:
+              for field, value in mutations.items():
+                  copied = Path(temporary) / f"{field}.json"
+                  copied.write_text(json.dumps(dict(manifest, **{field: value})))
+                  try:
+                      compare_arena(copied)
+                  except RuntimeError as error:
+                      if f"manifest {field} differs from checked arena" not in str(error):
+                          raise
+                      checks.append({"field": field, "rejected": True, "diagnostic": str(error)})
+                  else:
+                      raise RuntimeError(f"Altered manifest {field} was accepted")
+          if hashlib.sha256(source.read_bytes()).hexdigest() != source_hash:
+              raise RuntimeError("Original manifest changed during metadata checks")
+          output = Path("formal/verification-ci-metadata")
+          output.mkdir(parents=True, exist_ok=True)
+          report = {"status": "passed", "baseline": baseline, "checks": checks,
+                    "original_manifest_sha256": source_hash}
+          (output / "results.json").write_text(json.dumps(report, indent=2) + "\n")
+          print(json.dumps(report, indent=2))
+          PY
+      - name: Bind all four imported arenas to independently rendered statements
+        run: |
+          python formal/verify_arena_binding.py \
+            --toolchain "$RUNNER_TEMP/lean-4.35.0-linux" \
+            --compiler-host formal/verification-ci-source/lean_frontend \
+            --output formal/verification-ci-binding \
+            --manifest formal/CausalFill/ReleaseAdaptiveMarket.manifest.json \
+            --manifest formal/CausalFill/ReleaseNoObserveMarket.manifest.json \
+            --manifest formal/CausalFill/ReleaseOpenLoopMarket.manifest.json \
+            --manifest formal/CausalFill/ReleaseOpenLoopNoObserveMarket.manifest.json
+      - name: Reject invalid certificates and forged statement correspondence
+        run: |
+          python formal/stress_information.py \
+            --toolchain "$RUNNER_TEMP/lean-4.35.0-linux" \
+            --compiler-host formal/verification-ci-source/lean_frontend \
+            --output formal/verification-ci-stress
+      - name: Export all 29 theorem roots and their dependency closure
+        working-directory: formal
+        run: |
+          mkdir verification-ci-kernels
+          LEAN_PATH="$PWD/.lake/build/lib/lean" \
+            ./verification-ci-source/lean_frontend \
+            "$RUNNER_TEMP/lean-4.35.0-linux" KernelExport KernelExport.lean \
+            > verification-ci-kernels/release-theorems.ndjson \
+            2> verification-ci-kernels/export-stderr.txt
+          sha256sum KernelExport.lean expected-export-roots.json \
+            verification-ci-kernels/release-theorems.ndjson \
+            > verification-ci-kernels/export.sha256
+      - name: Replay the complete export with six checker configurations
+        run: |
+          python formal/check_export_kernels.py \
+            --toolchain "$RUNNER_TEMP/lean-4.35.0-linux" \
+            --export formal/verification-ci-kernels/release-theorems.ndjson \
+            --roots formal/expected-export-roots.json \
+            --out formal/verification-ci-kernels/replay \
+            --timeout 300
+      - name: Retain formal evidence and failure diagnostics
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: formal-assurance-${{ github.run_id }}-${{ github.run_attempt }}
+          if-no-files-found: warn
+          retention-days: 14
+          path: |
+            formal/verification-ci-source/
+            formal/verification-ci-metadata/
+            formal/verification-ci-binding/
+            formal/verification-ci-stress/
+            formal/verification-ci-kernels/
+            formal/CausalFill/*.roundtrip.json
+            formal/CausalFill/Binding*.lean
+            formal/CausalFill/Binding*.expected.json

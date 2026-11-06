@@ -1,0 +1,85 @@
+{
+  "problem": {
+    "schema": "causalfill.noisy-decision.v1",
+    "worlds": [
+      "left_only",
+      "shared",
+      "right_only"
+    ],
+    "actions": [
+      {
+        "id": "left",
+        "cost": 0,
+        "success_worlds": [
+          "left_only",
+          "shared"
+        ]
+      },
+      {
+        "id": "right",
+        "cost": 0,
+        "success_worlds": [
+          "shared",
+          "right_only"
+        ]
+      }
+    ],
+    "experiments": [
+      {
+        "id": "camera",
+        "cost": 1,
+        "supports": {
+          "left_only": [
+            "L"
+          ],
+          "shared": [
+            "L",
+            "R"
+          ],
+          "right_only": [
+            "R"
+          ]
+        }
+      }
+    ]
+  },
+  "certificate": {
+    "schema": "causalfill.decision-sufficiency-certificate.v1",
+    "problem_sha256": "f296900ae8000885d48aaa6b15fc2ac8c58b7aeb8a43464b20bdb78980b74622",
+    "objective": "action",
+    "root": [
+      7,
+      1
+    ],
+    "value": 1,
+    "nodes": [
+      [
+        3,
+        0,
+        0,
+        {
+          "kind": "act",
+          "id": "left"
+        }
+      ],
+      [
+        6,
+        0,
+        0,
+        {
+          "kind": "act",
+          "id": "right"
+        }
+      ],
+      [
+        7,
+        1,
+        1,
+        {
+          "kind": "query",
+          "id": "camera"
+        }
+      ]
+    ]
+  }
+}

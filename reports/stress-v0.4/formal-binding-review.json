@@ -1,0 +1,153 @@
+{
+  "schema": "causalfill.formal-binding-review.v1",
+  "reviewer_role": "independent_internal_AI_assisted_code_review",
+  "created_utc": "2026-11-04T13:57:48.281776+00:00",
+  "before_fix": {
+    "verifier_sha256": "200e5dc397cfa039211e22c3261732143afb70b820bd465b4efdb377d6924815",
+    "manifest_path": "formal/CausalFill/ReleaseAdaptiveMarket.manifest.json",
+    "original_manifest_sha256": "c4adc8834816991f05010fb3b3c5eb2ae66ce84a7cad0e897c07446fbcec18be",
+    "original_manifest_unchanged": true,
+    "baseline": {
+      "exact_semantic_roundtrip": true,
+      "source_hashes_match": true,
+      "python_certificate_reverified": true,
+      "semantic_arena_sha256": "3f81a4f8d79a4958f840a1fc8cbe9744acc84194867ec3b36f06018c2acaee51",
+      "node_count": 326,
+      "root_value": 8,
+      "mode": "adaptive",
+      "theorem": "CausalFill.Exported.ReleaseAdaptiveMarket.certifiedProfile",
+      "unformalized_boundary": "Python game validation and game-to-belief-arena projection"
+    },
+    "mutation": "Change only mode from adaptive to open_loop in a temporary copied manifest; original artifacts and evaluator source unchanged.",
+    "mutated_mode": "open_loop",
+    "result": {
+      "accepted": true,
+      "reported_mode": "open_loop",
+      "actual_source_certificate_mode": "adaptive",
+      "result": {
+        "exact_semantic_roundtrip": true,
+        "source_hashes_match": true,
+        "python_certificate_reverified": true,
+        "semantic_arena_sha256": "3f81a4f8d79a4958f840a1fc8cbe9744acc84194867ec3b36f06018c2acaee51",
+        "node_count": 326,
+        "root_value": 8,
+        "mode": "open_loop",
+        "theorem": "CausalFill.Exported.ReleaseAdaptiveMarket.certifiedProfile",
+        "unformalized_boundary": "Python game validation and game-to-belief-arena projection"
+      }
+    },
+    "reproduced_mislabel": true
+  },
+  "code_review_concern": {
+    "name": "exporter_controlled_semantic_JSON",
+    "reproduced_exploit": false,
+    "finding": "Exporter-written Lean #eval output and a self-generated manifest detect accidental mismatches but do not authenticate an adversarial translator that writes an unrelated matching JSON literal. The existing theorem remains valid for its actual declared arena.",
+    "reason_for_additional_assurance": "Have the verifier independently render expected node/root literals and ask Lean to prove equality to the actual imported arena; retain raw-game-to-belief projection as an unproved Python boundary."
+  },
+  "after_fix": {
+    "status": "passed",
+    "checked_utc": "2026-11-04T14:02:55.914345+00:00",
+    "verifier_sha256": "4f791ebad21959c6f760a1ba3331e0c7a239dc64512e3e5fe6c10ce16a1f64c7",
+    "baseline": {
+      "exact_semantic_roundtrip": true,
+      "source_hashes_match": true,
+      "python_certificate_reverified": true,
+      "semantic_arena_sha256": "3f81a4f8d79a4958f840a1fc8cbe9744acc84194867ec3b36f06018c2acaee51",
+      "node_count": 326,
+      "root_value": 8,
+      "mode": "adaptive",
+      "theorem": "CausalFill.Exported.ReleaseAdaptiveMarket.certifiedProfile",
+      "unformalized_boundary": "Python game validation and game-to-belief-arena projection"
+    },
+    "original_manifest_sha256": "c4adc8834816991f05010fb3b3c5eb2ae66ce84a7cad0e897c07446fbcec18be",
+    "original_manifest_unchanged": true,
+    "original_manifest_matches_before_fix": true,
+    "copied_manifest_mutation_checks": [
+      {
+        "field": "mode",
+        "mutated_value": "open_loop",
+        "accepted": false,
+        "exception_type": "RuntimeError",
+        "error": "ReleaseAdaptiveMarket: manifest mode differs from checked arena"
+      },
+      {
+        "field": "node_count",
+        "mutated_value": 327,
+        "accepted": false,
+        "exception_type": "RuntimeError",
+        "error": "ReleaseAdaptiveMarket: manifest node_count differs from checked arena"
+      },
+      {
+        "field": "root",
+        "mutated_value": 326,
+        "accepted": false,
+        "exception_type": "RuntimeError",
+        "error": "ReleaseAdaptiveMarket: manifest root differs from checked arena"
+      },
+      {
+        "field": "root_value",
+        "mutated_value": 9,
+        "accepted": false,
+        "exception_type": "RuntimeError",
+        "error": "ReleaseAdaptiveMarket: manifest root_value differs from checked arena"
+      }
+    ]
+  },
+  "limits": [
+    "The reproduced issue is a report mode-label binding defect, not a counterexample to the Lean theorem.",
+    "The exporter-controlled JSON concern is based on source inspection; no malicious Lean module was created or executed.",
+    "No Python evaluator source or original manifest was modified."
+  ],
+  "stronger_correspondence_gate": {
+    "report": "formal/verification-v04-binding/results.json",
+    "sha256": "dd6f8e3f00ea404c42a92847426da82569f83b9c76f44f4603c9d56dc1163189",
+    "reported_status": "passed",
+    "review_status": "independent read-only source and theorem-statement inspection completed",
+    "reviewed_utc": "2026-11-04T14:04:16.848675+00:00",
+    "renderer_source_sha256": "3715684de66b890cdb871ef9898e7a1db4693f661e7864471c3e5f553fc7ebeb",
+    "renderer_matches_reported_hash": true,
+    "profiles": [
+      {
+        "theorem": "CausalFill.Binding.ReleaseAdaptiveMarket.boundProfile",
+        "reported_status": "passed",
+        "binding_source_hash_matches": true,
+        "expected_data_hash_matches": true,
+        "binding_equality_scope": "kernel-checked equality of entire FiniteArena, including nodes and root"
+      },
+      {
+        "theorem": "CausalFill.Binding.ReleaseNoObserveMarket.boundProfile",
+        "reported_status": "passed",
+        "binding_source_hash_matches": true,
+        "expected_data_hash_matches": true,
+        "binding_equality_scope": "kernel-checked equality of entire FiniteArena, including nodes and root"
+      },
+      {
+        "theorem": "CausalFill.Binding.ReleaseOpenLoopMarket.boundProfile",
+        "reported_status": "passed",
+        "binding_source_hash_matches": true,
+        "expected_data_hash_matches": true,
+        "binding_equality_scope": "kernel-checked equality of entire FiniteArena, including nodes and root"
+      },
+      {
+        "theorem": "CausalFill.Binding.ReleaseOpenLoopNoObserveMarket.boundProfile",
+        "reported_status": "passed",
+        "binding_source_hash_matches": true,
+        "expected_data_hash_matches": true,
+        "binding_equality_scope": "kernel-checked equality of entire FiniteArena, including nodes and root"
+      }
+    ],
+    "finding": "Independent renderer builds literal expectedArena from re-expanded checked input and generates arenaCorrespondence : imported arena = expectedArena by rfl. boundProfile includes that equality and transports shape plus exactness/impossibility to expectedArena. This binds the entire semantic node vector and root without trusting exporter #eval output.",
+    "remaining_trust_boundary": "Python parser/checker/raw-game-to-belief projection, the second literal renderer and toolchain execution remain outside a formal simulator-refinement proof.",
+    "review_execution": "This reviewer inspected the new source, concrete binding theorem and recorded gate evidence; did not rerun Lean compilation."
+  },
+  "semantic_alignment_review": {
+    "status": "no_mismatch_found",
+    "findings": [
+      "None propagates through worstBound and addBound as infinity; ValidLower covers every listed alternative and rules out finite CanWin at infinite nodes.",
+      "ValidUpper requires an attaining choice with strictly lower child rank. Combined lower/upper theorem is exact worst-case action budget for finite strategies.",
+      "Failure-cut beliefs become non-goal nodes without choices; all-success beliefs become goals. This matches the robust Python projection.",
+      "Concrete certifiedProfile includes checkShape to rule out vacuous empty-successor actions.",
+      "Policy modes and observation equivalence are encoded in Python projection; raw belief, observation labels, failure_cut and selected_action metadata are outside Lean semantics as documented."
+    ]
+  }
+}

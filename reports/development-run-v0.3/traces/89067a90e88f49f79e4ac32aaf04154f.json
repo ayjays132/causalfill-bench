@@ -1,0 +1,2009 @@
+{
+  "public": {
+    "family": "vending",
+    "difficulty": 2,
+    "prompt": "Repair the five holes in Cedar's procurement skill AND operate the business through the full horizon. Gather quotes and receipts, place and price orders, and advance time. Submit the five repaired fields once. The business opens on day 0 with 15000 cents and no stock. Finish day 20 with cash at least 17500 cents, serve at least 60% of all price-dependent purchase requests, make at least one sale on at least 12 distinct days, and leave no unpaid operating fees. Inventory has no terminal liquidation value. Both repair correctness and actual business outcomes are required for strict success. Read /skills/procurement.txt and /docs/accounting.txt for rules. This is an original symbolic simulation.",
+    "slots": {
+      "lead_base_days": {
+        "type": "integer",
+        "description": "Base transit days, independent of case count."
+      },
+      "weekend_extra_days": {
+        "type": "integer",
+        "description": "Extra transit days when order_day modulo 7 is 5 or 6."
+      },
+      "fixed_fee_cents": {
+        "type": "integer",
+        "description": "Fixed shipping charge per order, in integer cents."
+      },
+      "case_fee_cents": {
+        "type": "integer",
+        "description": "Additional shipping charge per ordered case, in cents."
+      },
+      "receipt_event": {
+        "type": "string",
+        "description": "The event that adds stock: order, invoice, or delivery."
+      }
+    },
+    "files": [
+      "/docs/accounting.txt",
+      "/skill/recovery.md",
+      "/skills/procurement.txt"
+    ],
+    "tools": {
+      "quote": {
+        "description": "Ask a supplier for an itemized quote, including promised arrival. Quotes do not place orders.",
+        "arguments": {
+          "supplier": "cedar or express",
+          "cases": "integer 1..30",
+          "order_day": "integer 0..horizon-1"
+        },
+        "cost": 2
+      },
+      "order": {
+        "description": "Pay now for cases; stock arrives later. No overdrafts or warehouse overbooking.",
+        "arguments": {
+          "supplier": "cedar or express",
+          "cases": "integer 1..30"
+        },
+        "cost": 3
+      },
+      "set_price": {
+        "description": "Set the next simulated days' unit selling price in cents.",
+        "arguments": {
+          "price_cents": "integer 100..550"
+        },
+        "cost": 1
+      },
+      "advance": {
+        "description": "Advance 1..7 days. Each day receives due deliveries, expires old stock, makes sales, and pays operating fees.",
+        "arguments": {
+          "days": "integer 1..7, without passing the horizon"
+        },
+        "cost": 1
+      },
+      "status": {
+        "description": "Observe current cash, available stock, paid pending deliveries, and cumulative outcomes.",
+        "arguments": {},
+        "cost": 1
+      },
+      "market": {
+        "description": "Read the recurring demand forecast and price response; actual daily demand can differ by one.",
+        "arguments": {},
+        "cost": 1
+      },
+      "ledger": {
+        "description": "Read actual past purchases, receipts, expiry, sales, and operating charges.",
+        "arguments": {
+          "last_n": "integer 1..100"
+        },
+        "cost": 1
+      }
+    },
+    "budget": 138,
+    "max_calls": 75,
+    "episode_id": "89067a90e88f49f79e4ac32aaf04154f",
+    "common_tools": {
+      "list_files": {
+        "arguments": {},
+        "cost": 1
+      },
+      "read_file": {
+        "arguments": {
+          "path": "exact listed virtual path"
+        },
+        "cost": 1
+      },
+      "search_files": {
+        "arguments": {
+          "text": "literal string, 1\u2013160 characters"
+        },
+        "cost": 2
+      },
+      "session_status": {
+        "arguments": {},
+        "cost": 1
+      },
+      "submit": {
+        "arguments": {
+          "fill": "object",
+          "confidence": "number 0..1",
+          "abstain": "boolean",
+          "evidence": "list of returned event IDs"
+        },
+        "cost": 0
+      }
+    },
+    "max_seconds": 600,
+    "tools_enabled": true,
+    "submission_rule": "One final submission. Grades are evaluator-only; no retry after submission."
+  },
+  "events": [
+    {
+      "event_id": "e0001",
+      "tool": "read_file",
+      "arguments": {
+        "path": "/docs/accounting.txt"
+      },
+      "response": {
+        "path": "/docs/accounting.txt",
+        "content": "Case size: 6. Warehouse capacity: 180 units, including pending orders.\nOperating fee: 35 cents per simulated day. Shelf life: 6 days after arrival.\nPayment and invoice occur when an order is placed; the warehouse records a separate physical receipt on delivery.\nAn invoice is a claim on goods in transit and does not make goods available for sale.\nA batch is sellable on its arrival day through arrival_day + shelf_life, inclusive.\nFor each newly advanced day: receive deliveries, remove expired stock, sell FIFO, then pay the operating fee.\nDemand depends on the currently set selling price. Missed demand is lost, never backlogged.\nOrders debit all item and shipping costs immediately. Invalid operations never change world state.\nNo terminal inventory valuation, refunds, loans, or liquidation. Remaining stock and orders are worth zero for scoring.\nA cash shortage pays the available balance and records unpaid operating fees; any unpaid fee fails strict success.\n",
+        "event_id": "e0001",
+        "cost_used": 1
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "f9f0dae772e7fd5d84c44e273b145865cea5deaf3622fa004726b8125573d447"
+    },
+    {
+      "event_id": "e0002",
+      "tool": "read_file",
+      "arguments": {
+        "path": "/skills/procurement.txt"
+      },
+      "response": {
+        "path": "/skills/procurement.txt",
+        "content": "CEDAR PROCUREMENT \u2014 five missing fields\nAll values are integer days or integer cents. Day 0 is Monday.\narrival_day = order_day + [[lead_base_days]]\n  + ([[weekend_extra_days]] if order_day % 7 in (5, 6) else 0)\nshipping = [[fixed_fee_cents]] + [[case_fee_cents]] * cases\nstock becomes available at [[receipt_event]] (order, invoice, or delivery).\nCoefficients do not change during an episode. Quoted arrival dates are honored.\nYou may request hypothetical quotes for future order days without placing an order.\nCompare at least two case counts and a weekday versus weekend if you need to identify coefficients.\nExpress is a different supplier with a fully specified one-day transit and higher costs.\n",
+        "event_id": "e0002",
+        "cost_used": 2
+      },
+      "previous_hash": "f9f0dae772e7fd5d84c44e273b145865cea5deaf3622fa004726b8125573d447",
+      "hash": "911ca5fec2abf56d3fc7bee84212e348822defed28a505c2b6b90ad26a456079"
+    },
+    {
+      "event_id": "e0003",
+      "tool": "market",
+      "arguments": {},
+      "response": {
+        "day_zero_weekday": "Monday",
+        "base_demand_by_weekday": [
+          12,
+          8,
+          12,
+          12,
+          10,
+          8,
+          11
+        ],
+        "noise": "Each day adds -1, 0, or +1 demand; exact future noise is not observable.",
+        "price_bands_cents": [
+          {
+            "from": 100,
+            "to": 179,
+            "demand_offset": 5
+          },
+          {
+            "from": 180,
+            "to": 239,
+            "demand_offset": 2
+          },
+          {
+            "from": 240,
+            "to": 299,
+            "demand_offset": 0
+          },
+          {
+            "from": 300,
+            "to": 359,
+            "demand_offset": -3
+          },
+          {
+            "from": 360,
+            "to": 449,
+            "demand_offset": -7
+          },
+          {
+            "from": 450,
+            "to": 550,
+            "demand": 0
+          }
+        ],
+        "event_id": "e0003",
+        "cost_used": 3
+      },
+      "previous_hash": "911ca5fec2abf56d3fc7bee84212e348822defed28a505c2b6b90ad26a456079",
+      "hash": "04f4c1e256e87d9708accdcdb93cc4c6ac903b557be654469a12faf53593828f"
+    },
+    {
+      "event_id": "e0004",
+      "tool": "status",
+      "arguments": {},
+      "response": {
+        "day": 0,
+        "horizon_days": 20,
+        "cash_cents": 15000,
+        "cash_target_cents": 17500,
+        "price_cents": 280,
+        "available_units": 0,
+        "pending_units": 0,
+        "batches": [],
+        "pending_deliveries": [],
+        "units_sold": 0,
+        "units_expired": 0,
+        "selling_days": 0,
+        "selling_days_target": 12,
+        "purchase_requests": 0,
+        "unpaid_fees_cents": 0,
+        "service_rate": 0.0,
+        "event_id": "e0004",
+        "cost_used": 4
+      },
+      "previous_hash": "04f4c1e256e87d9708accdcdb93cc4c6ac903b557be654469a12faf53593828f",
+      "hash": "e4ce90ae2691092de5a8f438ca00516b92360da836697fe3bf08024adf051e1b"
+    },
+    {
+      "event_id": "e0005",
+      "tool": "quote",
+      "arguments": {
+        "supplier": "cedar",
+        "cases": 1,
+        "order_day": 0
+      },
+      "response": {
+        "supplier": "cedar",
+        "order_day": 0,
+        "cases": 1,
+        "units_per_case": 6,
+        "quantity": 6,
+        "unit_cost_cents": 77,
+        "shipping_cents": 169,
+        "total_cents": 631,
+        "arrival_day": 2,
+        "event_id": "e0005",
+        "cost_used": 6
+      },
+      "previous_hash": "e4ce90ae2691092de5a8f438ca00516b92360da836697fe3bf08024adf051e1b",
+      "hash": "7d241679918b46b95a3582b09e45593a20843da633b02ba8c3ff88255e7a83bb"
+    },
+    {
+      "event_id": "e0006",
+      "tool": "quote",
+      "arguments": {
+        "supplier": "cedar",
+        "cases": 2,
+        "order_day": 0
+      },
+      "response": {
+        "supplier": "cedar",
+        "order_day": 0,
+        "cases": 2,
+        "units_per_case": 6,
+        "quantity": 12,
+        "unit_cost_cents": 77,
+        "shipping_cents": 194,
+        "total_cents": 1118,
+        "arrival_day": 2,
+        "event_id": "e0006",
+        "cost_used": 8
+      },
+      "previous_hash": "7d241679918b46b95a3582b09e45593a20843da633b02ba8c3ff88255e7a83bb",
+      "hash": "83e28d809f6a2a360d93db10e46603f0c241471810e5ac92f0ff8c599eb4a59f"
+    },
+    {
+      "event_id": "e0007",
+      "tool": "quote",
+      "arguments": {
+        "supplier": "cedar",
+        "cases": 1,
+        "order_day": 5
+      },
+      "response": {
+        "supplier": "cedar",
+        "order_day": 5,
+        "cases": 1,
+        "units_per_case": 6,
+        "quantity": 6,
+        "unit_cost_cents": 77,
+        "shipping_cents": 169,
+        "total_cents": 631,
+        "arrival_day": 7,
+        "event_id": "e0007",
+        "cost_used": 10
+      },
+      "previous_hash": "83e28d809f6a2a360d93db10e46603f0c241471810e5ac92f0ff8c599eb4a59f",
+      "hash": "f65a3ef12fe9884c1fcf26fc9e98981ff60516b3e45cdef409f2e576bcaaa11f"
+    },
+    {
+      "event_id": "e0008",
+      "tool": "set_price",
+      "arguments": {
+        "price_cents": 280
+      },
+      "response": {
+        "price_cents": 280,
+        "takes_effect_on_next_advanced_day": true,
+        "event_id": "e0008",
+        "cost_used": 11
+      },
+      "previous_hash": "f65a3ef12fe9884c1fcf26fc9e98981ff60516b3e45cdef409f2e576bcaaa11f",
+      "hash": "bef60d126d8a5468f5f430fc2add8bdb9fc2472463b617702802aec55dd9766b"
+    },
+    {
+      "event_id": "e0009",
+      "tool": "order",
+      "arguments": {
+        "supplier": "cedar",
+        "cases": 8
+      },
+      "response": {
+        "invoice": {
+          "supplier": "cedar",
+          "order_day": 0,
+          "cases": 8,
+          "units_per_case": 6,
+          "quantity": 48,
+          "unit_cost_cents": 77,
+          "shipping_cents": 344,
+          "total_cents": 4040,
+          "arrival_day": 2
+        },
+        "order_id": 1,
+        "available_units": 0,
+        "cash_cents": 10960,
+        "event_id": "e0009",
+        "cost_used": 14
+      },
+      "previous_hash": "bef60d126d8a5468f5f430fc2add8bdb9fc2472463b617702802aec55dd9766b",
+      "hash": "9cb22ade8892271dd947e14ca0a604f98c84750fae6acfe7ac239227f31ae63b"
+    },
+    {
+      "event_id": "e0010",
+      "tool": "advance",
+      "arguments": {
+        "days": 1
+      },
+      "response": {
+        "days": [
+          {
+            "event": "day_close",
+            "day": 1,
+            "demand": 9,
+            "sold": 0,
+            "expired": 0,
+            "revenue_cents": 0,
+            "operating_fee_paid_cents": 35,
+            "cash_cents": 10925
+          }
+        ],
+        "status": {
+          "day": 1,
+          "horizon_days": 20,
+          "cash_cents": 10925,
+          "cash_target_cents": 17500,
+          "price_cents": 280,
+          "available_units": 0,
+          "pending_units": 48,
+          "batches": [],
+          "pending_deliveries": [
+            {
+              "order_id": 1,
+              "arrival_day": 2,
+              "quantity": 48
+            }
+          ],
+          "units_sold": 0,
+          "units_expired": 0,
+          "selling_days": 0,
+          "selling_days_target": 12,
+          "purchase_requests": 9,
+          "unpaid_fees_cents": 0,
+          "service_rate": 0.0
+        },
+        "event_id": "e0010",
+        "cost_used": 15
+      },
+      "previous_hash": "9cb22ade8892271dd947e14ca0a604f98c84750fae6acfe7ac239227f31ae63b",
+      "hash": "850f4fff6fc8c851b192ac4a08c09cb59a735f22a363c5110a3c4bc4fbecb849"
+    },
+    {
+      "event_id": "e0011",
+      "tool": "advance",
+      "arguments": {
+        "days": 1
+      },
+      "response": {
+        "days": [
+          {
+            "event": "day_close",
+            "day": 2,
+            "demand": 12,
+            "sold": 12,
+            "expired": 0,
+            "revenue_cents": 3360,
+            "operating_fee_paid_cents": 35,
+            "cash_cents": 14250
+          }
+        ],
+        "status": {
+          "day": 2,
+          "horizon_days": 20,
+          "cash_cents": 14250,
+          "cash_target_cents": 17500,
+          "price_cents": 280,
+          "available_units": 36,
+          "pending_units": 0,
+          "batches": [
+            {
+              "quantity": 36,
+              "expiry_day": 8
+            }
+          ],
+          "pending_deliveries": [],
+          "units_sold": 12,
+          "units_expired": 0,
+          "selling_days": 1,
+          "selling_days_target": 12,
+          "purchase_requests": 21,
+          "unpaid_fees_cents": 0,
+          "service_rate": 0.5714285714285714
+        },
+        "event_id": "e0011",
+        "cost_used": 16
+      },
+      "previous_hash": "850f4fff6fc8c851b192ac4a08c09cb59a735f22a363c5110a3c4bc4fbecb849",
+      "hash": "26a9d0db027d314ec394a7258384e1c210e0134b1f14f8e4b8985fc41a9a43ff"
+    },
+    {
+      "event_id": "e0012",
+      "tool": "order",
+      "arguments": {
+        "supplier": "cedar",
+        "cases": 2
+      },
+      "response": {
+        "invoice": {
+          "supplier": "cedar",
+          "order_day": 2,
+          "cases": 2,
+          "units_per_case": 6,
+          "quantity": 12,
+          "unit_cost_cents": 77,
+          "shipping_cents": 194,
+          "total_cents": 1118,
+          "arrival_day": 4
+        },
+        "order_id": 2,
+        "available_units": 36,
+        "cash_cents": 13132,
+        "event_id": "e0012",
+        "cost_used": 19
+      },
+      "previous_hash": "26a9d0db027d314ec394a7258384e1c210e0134b1f14f8e4b8985fc41a9a43ff",
+      "hash": "c2a4b43c2a27e649d128c8f64009ddaa921a50ff05601830e7a29fb40a63b364"
+    },
+    {
+      "event_id": "e0013",
+      "tool": "advance",
+      "arguments": {
+        "days": 1
+      },
+      "response": {
+        "days": [
+          {
+            "event": "day_close",
+            "day": 3,
+            "demand": 12,
+            "sold": 12,
+            "expired": 0,
+            "revenue_cents": 3360,
+            "operating_fee_paid_cents": 35,
+            "cash_cents": 16457
+          }
+        ],
+        "status": {
+          "day": 3,
+          "horizon_days": 20,
+          "cash_cents": 16457,
+          "cash_target_cents": 17500,
+          "price_cents": 280,
+          "available_units": 24,
+          "pending_units": 12,
+          "batches": [
+            {
+              "quantity": 24,
+              "expiry_day": 8
+            }
+          ],
+          "pending_deliveries": [
+            {
+              "order_id": 2,
+              "arrival_day": 4,
+              "quantity": 12
+            }
+          ],
+          "units_sold": 24,
+          "units_expired": 0,
+          "selling_days": 2,
+          "selling_days_target": 12,
+          "purchase_requests": 33,
+          "unpaid_fees_cents": 0,
+          "service_rate": 0.7272727272727273
+        },
+        "event_id": "e0013",
+        "cost_used": 20
+      },
+      "previous_hash": "c2a4b43c2a27e649d128c8f64009ddaa921a50ff05601830e7a29fb40a63b364",
+      "hash": "4f5e0d1e05ca62ab0fc04d5f707f866e41a16fbdafb54975cb40b1dc02c5f33f"
+    },
+    {
+      "event_id": "e0014",
+      "tool": "order",
+      "arguments": {
+        "supplier": "cedar",
+        "cases": 2
+      },
+      "response": {
+        "invoice": {
+          "supplier": "cedar",
+          "order_day": 3,
+          "cases": 2,
+          "units_per_case": 6,
+          "quantity": 12,
+          "unit_cost_cents": 77,
+          "shipping_cents": 194,
+          "total_cents": 1118,
+          "arrival_day": 5
+        },
+        "order_id": 3,
+        "available_units": 24,
+        "cash_cents": 15339,
+        "event_id": "e0014",
+        "cost_used": 23
+      },
+      "previous_hash": "4f5e0d1e05ca62ab0fc04d5f707f866e41a16fbdafb54975cb40b1dc02c5f33f",
+      "hash": "f09b215d09b375562dbed6aeda10208b0e1c3247908e8ce658701631f79444a4"
+    },
+    {
+      "event_id": "e0015",
+      "tool": "advance",
+      "arguments": {
+        "days": 1
+      },
+      "response": {
+        "days": [
+          {
+            "event": "day_close",
+            "day": 4,
+            "demand": 9,
+            "sold": 9,
+            "expired": 0,
+            "revenue_cents": 2520,
+            "operating_fee_paid_cents": 35,
+            "cash_cents": 17824
+          }
+        ],
+        "status": {
+          "day": 4,
+          "horizon_days": 20,
+          "cash_cents": 17824,
+          "cash_target_cents": 17500,
+          "price_cents": 280,
+          "available_units": 27,
+          "pending_units": 12,
+          "batches": [
+            {
+              "quantity": 15,
+              "expiry_day": 8
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 10
+            }
+          ],
+          "pending_deliveries": [
+            {
+              "order_id": 3,
+              "arrival_day": 5,
+              "quantity": 12
+            }
+          ],
+          "units_sold": 33,
+          "units_expired": 0,
+          "selling_days": 3,
+          "selling_days_target": 12,
+          "purchase_requests": 42,
+          "unpaid_fees_cents": 0,
+          "service_rate": 0.7857142857142857
+        },
+        "event_id": "e0015",
+        "cost_used": 24
+      },
+      "previous_hash": "f09b215d09b375562dbed6aeda10208b0e1c3247908e8ce658701631f79444a4",
+      "hash": "6da17ec8a330cabf41329fbec510d6352cb1f9b56867557f10cecadc1c1fa4ab"
+    },
+    {
+      "event_id": "e0016",
+      "tool": "order",
+      "arguments": {
+        "supplier": "cedar",
+        "cases": 1
+      },
+      "response": {
+        "invoice": {
+          "supplier": "cedar",
+          "order_day": 4,
+          "cases": 1,
+          "units_per_case": 6,
+          "quantity": 6,
+          "unit_cost_cents": 77,
+          "shipping_cents": 169,
+          "total_cents": 631,
+          "arrival_day": 6
+        },
+        "order_id": 4,
+        "available_units": 27,
+        "cash_cents": 17193,
+        "event_id": "e0016",
+        "cost_used": 27
+      },
+      "previous_hash": "6da17ec8a330cabf41329fbec510d6352cb1f9b56867557f10cecadc1c1fa4ab",
+      "hash": "358ed75420dd33ad5da6b8009a8119d7b835fd3d2d72f94802d45c1f1ba0cb72"
+    },
+    {
+      "event_id": "e0017",
+      "tool": "advance",
+      "arguments": {
+        "days": 1
+      },
+      "response": {
+        "days": [
+          {
+            "event": "day_close",
+            "day": 5,
+            "demand": 7,
+            "sold": 7,
+            "expired": 0,
+            "revenue_cents": 1960,
+            "operating_fee_paid_cents": 35,
+            "cash_cents": 19118
+          }
+        ],
+        "status": {
+          "day": 5,
+          "horizon_days": 20,
+          "cash_cents": 19118,
+          "cash_target_cents": 17500,
+          "price_cents": 280,
+          "available_units": 32,
+          "pending_units": 6,
+          "batches": [
+            {
+              "quantity": 8,
+              "expiry_day": 8
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 10
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 11
+            }
+          ],
+          "pending_deliveries": [
+            {
+              "order_id": 4,
+              "arrival_day": 6,
+              "quantity": 6
+            }
+          ],
+          "units_sold": 40,
+          "units_expired": 0,
+          "selling_days": 4,
+          "selling_days_target": 12,
+          "purchase_requests": 49,
+          "unpaid_fees_cents": 0,
+          "service_rate": 0.8163265306122449
+        },
+        "event_id": "e0017",
+        "cost_used": 28
+      },
+      "previous_hash": "358ed75420dd33ad5da6b8009a8119d7b835fd3d2d72f94802d45c1f1ba0cb72",
+      "hash": "f7b80643051fa45c32495259603d9a3cfbf1bf440dc3f9a6c40b7ce0873427b6"
+    },
+    {
+      "event_id": "e0018",
+      "tool": "order",
+      "arguments": {
+        "supplier": "cedar",
+        "cases": 2
+      },
+      "response": {
+        "invoice": {
+          "supplier": "cedar",
+          "order_day": 5,
+          "cases": 2,
+          "units_per_case": 6,
+          "quantity": 12,
+          "unit_cost_cents": 77,
+          "shipping_cents": 194,
+          "total_cents": 1118,
+          "arrival_day": 7
+        },
+        "order_id": 5,
+        "available_units": 32,
+        "cash_cents": 18000,
+        "event_id": "e0018",
+        "cost_used": 31
+      },
+      "previous_hash": "f7b80643051fa45c32495259603d9a3cfbf1bf440dc3f9a6c40b7ce0873427b6",
+      "hash": "b3392eeadce33f579ea6653bd1e4c1b24295cb381a52ecda10669a77a8fe1e16"
+    },
+    {
+      "event_id": "e0019",
+      "tool": "advance",
+      "arguments": {
+        "days": 1
+      },
+      "response": {
+        "days": [
+          {
+            "event": "day_close",
+            "day": 6,
+            "demand": 12,
+            "sold": 12,
+            "expired": 0,
+            "revenue_cents": 3360,
+            "operating_fee_paid_cents": 35,
+            "cash_cents": 21325
+          }
+        ],
+        "status": {
+          "day": 6,
+          "horizon_days": 20,
+          "cash_cents": 21325,
+          "cash_target_cents": 17500,
+          "price_cents": 280,
+          "available_units": 26,
+          "pending_units": 12,
+          "batches": [
+            {
+              "quantity": 8,
+              "expiry_day": 10
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 11
+            },
+            {
+              "quantity": 6,
+              "expiry_day": 12
+            }
+          ],
+          "pending_deliveries": [
+            {
+              "order_id": 5,
+              "arrival_day": 7,
+              "quantity": 12
+            }
+          ],
+          "units_sold": 52,
+          "units_expired": 0,
+          "selling_days": 5,
+          "selling_days_target": 12,
+          "purchase_requests": 61,
+          "unpaid_fees_cents": 0,
+          "service_rate": 0.8524590163934426
+        },
+        "event_id": "e0019",
+        "cost_used": 32
+      },
+      "previous_hash": "b3392eeadce33f579ea6653bd1e4c1b24295cb381a52ecda10669a77a8fe1e16",
+      "hash": "ec364b7ec448a1c73a1860842a3e9dc354132bfe39c6bad169ad1a24befa1bbf"
+    },
+    {
+      "event_id": "e0020",
+      "tool": "order",
+      "arguments": {
+        "supplier": "cedar",
+        "cases": 2
+      },
+      "response": {
+        "invoice": {
+          "supplier": "cedar",
+          "order_day": 6,
+          "cases": 2,
+          "units_per_case": 6,
+          "quantity": 12,
+          "unit_cost_cents": 77,
+          "shipping_cents": 194,
+          "total_cents": 1118,
+          "arrival_day": 8
+        },
+        "order_id": 6,
+        "available_units": 26,
+        "cash_cents": 20207,
+        "event_id": "e0020",
+        "cost_used": 35
+      },
+      "previous_hash": "ec364b7ec448a1c73a1860842a3e9dc354132bfe39c6bad169ad1a24befa1bbf",
+      "hash": "dcf585cdb31fcfa9635c4e4f872a10115422b41db4eec80e3c57fb721de4c044"
+    },
+    {
+      "event_id": "e0021",
+      "tool": "advance",
+      "arguments": {
+        "days": 1
+      },
+      "response": {
+        "days": [
+          {
+            "event": "day_close",
+            "day": 7,
+            "demand": 13,
+            "sold": 13,
+            "expired": 0,
+            "revenue_cents": 3640,
+            "operating_fee_paid_cents": 35,
+            "cash_cents": 23812
+          }
+        ],
+        "status": {
+          "day": 7,
+          "horizon_days": 20,
+          "cash_cents": 23812,
+          "cash_target_cents": 17500,
+          "price_cents": 280,
+          "available_units": 25,
+          "pending_units": 12,
+          "batches": [
+            {
+              "quantity": 7,
+              "expiry_day": 11
+            },
+            {
+              "quantity": 6,
+              "expiry_day": 12
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 13
+            }
+          ],
+          "pending_deliveries": [
+            {
+              "order_id": 6,
+              "arrival_day": 8,
+              "quantity": 12
+            }
+          ],
+          "units_sold": 65,
+          "units_expired": 0,
+          "selling_days": 6,
+          "selling_days_target": 12,
+          "purchase_requests": 74,
+          "unpaid_fees_cents": 0,
+          "service_rate": 0.8783783783783784
+        },
+        "event_id": "e0021",
+        "cost_used": 36
+      },
+      "previous_hash": "dcf585cdb31fcfa9635c4e4f872a10115422b41db4eec80e3c57fb721de4c044",
+      "hash": "ff18b060a3862150ba006893c8f8d7626fff5f730ffb899264467397eb1e5a96"
+    },
+    {
+      "event_id": "e0022",
+      "tool": "order",
+      "arguments": {
+        "supplier": "cedar",
+        "cases": 2
+      },
+      "response": {
+        "invoice": {
+          "supplier": "cedar",
+          "order_day": 7,
+          "cases": 2,
+          "units_per_case": 6,
+          "quantity": 12,
+          "unit_cost_cents": 77,
+          "shipping_cents": 194,
+          "total_cents": 1118,
+          "arrival_day": 9
+        },
+        "order_id": 7,
+        "available_units": 25,
+        "cash_cents": 22694,
+        "event_id": "e0022",
+        "cost_used": 39
+      },
+      "previous_hash": "ff18b060a3862150ba006893c8f8d7626fff5f730ffb899264467397eb1e5a96",
+      "hash": "a2458f9a59e3fbf6ca535a9dcd9d22ec3f2bc9c83fe382082c55c2e0322e14ea"
+    },
+    {
+      "event_id": "e0023",
+      "tool": "advance",
+      "arguments": {
+        "days": 1
+      },
+      "response": {
+        "days": [
+          {
+            "event": "day_close",
+            "day": 8,
+            "demand": 8,
+            "sold": 8,
+            "expired": 0,
+            "revenue_cents": 2240,
+            "operating_fee_paid_cents": 35,
+            "cash_cents": 24899
+          }
+        ],
+        "status": {
+          "day": 8,
+          "horizon_days": 20,
+          "cash_cents": 24899,
+          "cash_target_cents": 17500,
+          "price_cents": 280,
+          "available_units": 29,
+          "pending_units": 12,
+          "batches": [
+            {
+              "quantity": 5,
+              "expiry_day": 12
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 13
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 14
+            }
+          ],
+          "pending_deliveries": [
+            {
+              "order_id": 7,
+              "arrival_day": 9,
+              "quantity": 12
+            }
+          ],
+          "units_sold": 73,
+          "units_expired": 0,
+          "selling_days": 7,
+          "selling_days_target": 12,
+          "purchase_requests": 82,
+          "unpaid_fees_cents": 0,
+          "service_rate": 0.8902439024390244
+        },
+        "event_id": "e0023",
+        "cost_used": 40
+      },
+      "previous_hash": "a2458f9a59e3fbf6ca535a9dcd9d22ec3f2bc9c83fe382082c55c2e0322e14ea",
+      "hash": "8870d3b891a6733ec3ecea4f6dff703ee48fccdde59668095d15ead88cffa879"
+    },
+    {
+      "event_id": "e0024",
+      "tool": "order",
+      "arguments": {
+        "supplier": "cedar",
+        "cases": 1
+      },
+      "response": {
+        "invoice": {
+          "supplier": "cedar",
+          "order_day": 8,
+          "cases": 1,
+          "units_per_case": 6,
+          "quantity": 6,
+          "unit_cost_cents": 77,
+          "shipping_cents": 169,
+          "total_cents": 631,
+          "arrival_day": 10
+        },
+        "order_id": 8,
+        "available_units": 29,
+        "cash_cents": 24268,
+        "event_id": "e0024",
+        "cost_used": 43
+      },
+      "previous_hash": "8870d3b891a6733ec3ecea4f6dff703ee48fccdde59668095d15ead88cffa879",
+      "hash": "80d704119f85d8c4186537455f017fbdee9734900d9215978fe1541f7ab2dc2c"
+    },
+    {
+      "event_id": "e0025",
+      "tool": "advance",
+      "arguments": {
+        "days": 1
+      },
+      "response": {
+        "days": [
+          {
+            "event": "day_close",
+            "day": 9,
+            "demand": 11,
+            "sold": 11,
+            "expired": 0,
+            "revenue_cents": 3080,
+            "operating_fee_paid_cents": 35,
+            "cash_cents": 27313
+          }
+        ],
+        "status": {
+          "day": 9,
+          "horizon_days": 20,
+          "cash_cents": 27313,
+          "cash_target_cents": 17500,
+          "price_cents": 280,
+          "available_units": 30,
+          "pending_units": 6,
+          "batches": [
+            {
+              "quantity": 6,
+              "expiry_day": 13
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 14
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 15
+            }
+          ],
+          "pending_deliveries": [
+            {
+              "order_id": 8,
+              "arrival_day": 10,
+              "quantity": 6
+            }
+          ],
+          "units_sold": 84,
+          "units_expired": 0,
+          "selling_days": 8,
+          "selling_days_target": 12,
+          "purchase_requests": 93,
+          "unpaid_fees_cents": 0,
+          "service_rate": 0.9032258064516129
+        },
+        "event_id": "e0025",
+        "cost_used": 44
+      },
+      "previous_hash": "80d704119f85d8c4186537455f017fbdee9734900d9215978fe1541f7ab2dc2c",
+      "hash": "a1966c1570511958ed91e77f4081c25c972fae8b47b39ef1ac4eb9e2295bbbee"
+    },
+    {
+      "event_id": "e0026",
+      "tool": "order",
+      "arguments": {
+        "supplier": "cedar",
+        "cases": 2
+      },
+      "response": {
+        "invoice": {
+          "supplier": "cedar",
+          "order_day": 9,
+          "cases": 2,
+          "units_per_case": 6,
+          "quantity": 12,
+          "unit_cost_cents": 77,
+          "shipping_cents": 194,
+          "total_cents": 1118,
+          "arrival_day": 11
+        },
+        "order_id": 9,
+        "available_units": 30,
+        "cash_cents": 26195,
+        "event_id": "e0026",
+        "cost_used": 47
+      },
+      "previous_hash": "a1966c1570511958ed91e77f4081c25c972fae8b47b39ef1ac4eb9e2295bbbee",
+      "hash": "af394705f27558bd86b41044069142cbc9a14e33a6518c32f261a76ad93cf35d"
+    },
+    {
+      "event_id": "e0027",
+      "tool": "advance",
+      "arguments": {
+        "days": 1
+      },
+      "response": {
+        "days": [
+          {
+            "event": "day_close",
+            "day": 10,
+            "demand": 12,
+            "sold": 12,
+            "expired": 0,
+            "revenue_cents": 3360,
+            "operating_fee_paid_cents": 35,
+            "cash_cents": 29520
+          }
+        ],
+        "status": {
+          "day": 10,
+          "horizon_days": 20,
+          "cash_cents": 29520,
+          "cash_target_cents": 17500,
+          "price_cents": 280,
+          "available_units": 24,
+          "pending_units": 12,
+          "batches": [
+            {
+              "quantity": 6,
+              "expiry_day": 14
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 15
+            },
+            {
+              "quantity": 6,
+              "expiry_day": 16
+            }
+          ],
+          "pending_deliveries": [
+            {
+              "order_id": 9,
+              "arrival_day": 11,
+              "quantity": 12
+            }
+          ],
+          "units_sold": 96,
+          "units_expired": 0,
+          "selling_days": 9,
+          "selling_days_target": 12,
+          "purchase_requests": 105,
+          "unpaid_fees_cents": 0,
+          "service_rate": 0.9142857142857143
+        },
+        "event_id": "e0027",
+        "cost_used": 48
+      },
+      "previous_hash": "af394705f27558bd86b41044069142cbc9a14e33a6518c32f261a76ad93cf35d",
+      "hash": "eff5e0eb87f5d3f8faf8cfae8fcbb424d680b290727b4e28e8dddd3ca3d7a52c"
+    },
+    {
+      "event_id": "e0028",
+      "tool": "order",
+      "arguments": {
+        "supplier": "cedar",
+        "cases": 2
+      },
+      "response": {
+        "invoice": {
+          "supplier": "cedar",
+          "order_day": 10,
+          "cases": 2,
+          "units_per_case": 6,
+          "quantity": 12,
+          "unit_cost_cents": 77,
+          "shipping_cents": 194,
+          "total_cents": 1118,
+          "arrival_day": 12
+        },
+        "order_id": 10,
+        "available_units": 24,
+        "cash_cents": 28402,
+        "event_id": "e0028",
+        "cost_used": 51
+      },
+      "previous_hash": "eff5e0eb87f5d3f8faf8cfae8fcbb424d680b290727b4e28e8dddd3ca3d7a52c",
+      "hash": "11d2735bd2e4a540aaa56d2494ce182f74eeca35d6df93e1ef3347b462b3ef50"
+    },
+    {
+      "event_id": "e0029",
+      "tool": "advance",
+      "arguments": {
+        "days": 1
+      },
+      "response": {
+        "days": [
+          {
+            "event": "day_close",
+            "day": 11,
+            "demand": 11,
+            "sold": 11,
+            "expired": 0,
+            "revenue_cents": 3080,
+            "operating_fee_paid_cents": 35,
+            "cash_cents": 31447
+          }
+        ],
+        "status": {
+          "day": 11,
+          "horizon_days": 20,
+          "cash_cents": 31447,
+          "cash_target_cents": 17500,
+          "price_cents": 280,
+          "available_units": 25,
+          "pending_units": 12,
+          "batches": [
+            {
+              "quantity": 7,
+              "expiry_day": 15
+            },
+            {
+              "quantity": 6,
+              "expiry_day": 16
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 17
+            }
+          ],
+          "pending_deliveries": [
+            {
+              "order_id": 10,
+              "arrival_day": 12,
+              "quantity": 12
+            }
+          ],
+          "units_sold": 107,
+          "units_expired": 0,
+          "selling_days": 10,
+          "selling_days_target": 12,
+          "purchase_requests": 116,
+          "unpaid_fees_cents": 0,
+          "service_rate": 0.9224137931034483
+        },
+        "event_id": "e0029",
+        "cost_used": 52
+      },
+      "previous_hash": "11d2735bd2e4a540aaa56d2494ce182f74eeca35d6df93e1ef3347b462b3ef50",
+      "hash": "48f7fd43a010884b78d86c40bd16a06aa03b72a1027033ceac0c608d1b1bdcbb"
+    },
+    {
+      "event_id": "e0030",
+      "tool": "order",
+      "arguments": {
+        "supplier": "cedar",
+        "cases": 1
+      },
+      "response": {
+        "invoice": {
+          "supplier": "cedar",
+          "order_day": 11,
+          "cases": 1,
+          "units_per_case": 6,
+          "quantity": 6,
+          "unit_cost_cents": 77,
+          "shipping_cents": 169,
+          "total_cents": 631,
+          "arrival_day": 13
+        },
+        "order_id": 11,
+        "available_units": 25,
+        "cash_cents": 30816,
+        "event_id": "e0030",
+        "cost_used": 55
+      },
+      "previous_hash": "48f7fd43a010884b78d86c40bd16a06aa03b72a1027033ceac0c608d1b1bdcbb",
+      "hash": "582c82674339ae6a83fa514635354fcd76df9324c322740829d1dfa3bcbbf679"
+    },
+    {
+      "event_id": "e0031",
+      "tool": "advance",
+      "arguments": {
+        "days": 1
+      },
+      "response": {
+        "days": [
+          {
+            "event": "day_close",
+            "day": 12,
+            "demand": 8,
+            "sold": 8,
+            "expired": 0,
+            "revenue_cents": 2240,
+            "operating_fee_paid_cents": 35,
+            "cash_cents": 33021
+          }
+        ],
+        "status": {
+          "day": 12,
+          "horizon_days": 20,
+          "cash_cents": 33021,
+          "cash_target_cents": 17500,
+          "price_cents": 280,
+          "available_units": 29,
+          "pending_units": 6,
+          "batches": [
+            {
+              "quantity": 5,
+              "expiry_day": 16
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 17
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 18
+            }
+          ],
+          "pending_deliveries": [
+            {
+              "order_id": 11,
+              "arrival_day": 13,
+              "quantity": 6
+            }
+          ],
+          "units_sold": 115,
+          "units_expired": 0,
+          "selling_days": 11,
+          "selling_days_target": 12,
+          "purchase_requests": 124,
+          "unpaid_fees_cents": 0,
+          "service_rate": 0.9274193548387096
+        },
+        "event_id": "e0031",
+        "cost_used": 56
+      },
+      "previous_hash": "582c82674339ae6a83fa514635354fcd76df9324c322740829d1dfa3bcbbf679",
+      "hash": "88fdc7d32bede7eee737642273ca59195e46ec017dc722a7547c2abfd0e62fef"
+    },
+    {
+      "event_id": "e0032",
+      "tool": "order",
+      "arguments": {
+        "supplier": "cedar",
+        "cases": 2
+      },
+      "response": {
+        "invoice": {
+          "supplier": "cedar",
+          "order_day": 12,
+          "cases": 2,
+          "units_per_case": 6,
+          "quantity": 12,
+          "unit_cost_cents": 77,
+          "shipping_cents": 194,
+          "total_cents": 1118,
+          "arrival_day": 14
+        },
+        "order_id": 12,
+        "available_units": 29,
+        "cash_cents": 31903,
+        "event_id": "e0032",
+        "cost_used": 59
+      },
+      "previous_hash": "88fdc7d32bede7eee737642273ca59195e46ec017dc722a7547c2abfd0e62fef",
+      "hash": "6ae3430400b116b18a372c60e7ac83cf75d3a5645546e910b43aa837efb5de50"
+    },
+    {
+      "event_id": "e0033",
+      "tool": "advance",
+      "arguments": {
+        "days": 1
+      },
+      "response": {
+        "days": [
+          {
+            "event": "day_close",
+            "day": 13,
+            "demand": 11,
+            "sold": 11,
+            "expired": 0,
+            "revenue_cents": 3080,
+            "operating_fee_paid_cents": 35,
+            "cash_cents": 34948
+          }
+        ],
+        "status": {
+          "day": 13,
+          "horizon_days": 20,
+          "cash_cents": 34948,
+          "cash_target_cents": 17500,
+          "price_cents": 280,
+          "available_units": 24,
+          "pending_units": 12,
+          "batches": [
+            {
+              "quantity": 6,
+              "expiry_day": 17
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 18
+            },
+            {
+              "quantity": 6,
+              "expiry_day": 19
+            }
+          ],
+          "pending_deliveries": [
+            {
+              "order_id": 12,
+              "arrival_day": 14,
+              "quantity": 12
+            }
+          ],
+          "units_sold": 126,
+          "units_expired": 0,
+          "selling_days": 12,
+          "selling_days_target": 12,
+          "purchase_requests": 135,
+          "unpaid_fees_cents": 0,
+          "service_rate": 0.9333333333333333
+        },
+        "event_id": "e0033",
+        "cost_used": 60
+      },
+      "previous_hash": "6ae3430400b116b18a372c60e7ac83cf75d3a5645546e910b43aa837efb5de50",
+      "hash": "4e54db5b5200754c99b1c9ab72e05c0e518771a7af5d3408411d7026b42c35ba"
+    },
+    {
+      "event_id": "e0034",
+      "tool": "order",
+      "arguments": {
+        "supplier": "cedar",
+        "cases": 2
+      },
+      "response": {
+        "invoice": {
+          "supplier": "cedar",
+          "order_day": 13,
+          "cases": 2,
+          "units_per_case": 6,
+          "quantity": 12,
+          "unit_cost_cents": 77,
+          "shipping_cents": 194,
+          "total_cents": 1118,
+          "arrival_day": 15
+        },
+        "order_id": 13,
+        "available_units": 24,
+        "cash_cents": 33830,
+        "event_id": "e0034",
+        "cost_used": 63
+      },
+      "previous_hash": "4e54db5b5200754c99b1c9ab72e05c0e518771a7af5d3408411d7026b42c35ba",
+      "hash": "d9f0575edd2d5676112e6bf3d5745087af200f470b2ef6ee0dee97c4a737fc61"
+    },
+    {
+      "event_id": "e0035",
+      "tool": "advance",
+      "arguments": {
+        "days": 1
+      },
+      "response": {
+        "days": [
+          {
+            "event": "day_close",
+            "day": 14,
+            "demand": 12,
+            "sold": 12,
+            "expired": 0,
+            "revenue_cents": 3360,
+            "operating_fee_paid_cents": 35,
+            "cash_cents": 37155
+          }
+        ],
+        "status": {
+          "day": 14,
+          "horizon_days": 20,
+          "cash_cents": 37155,
+          "cash_target_cents": 17500,
+          "price_cents": 280,
+          "available_units": 24,
+          "pending_units": 12,
+          "batches": [
+            {
+              "quantity": 6,
+              "expiry_day": 18
+            },
+            {
+              "quantity": 6,
+              "expiry_day": 19
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 20
+            }
+          ],
+          "pending_deliveries": [
+            {
+              "order_id": 13,
+              "arrival_day": 15,
+              "quantity": 12
+            }
+          ],
+          "units_sold": 138,
+          "units_expired": 0,
+          "selling_days": 13,
+          "selling_days_target": 12,
+          "purchase_requests": 147,
+          "unpaid_fees_cents": 0,
+          "service_rate": 0.9387755102040817
+        },
+        "event_id": "e0035",
+        "cost_used": 64
+      },
+      "previous_hash": "d9f0575edd2d5676112e6bf3d5745087af200f470b2ef6ee0dee97c4a737fc61",
+      "hash": "5fcdc5d16f836f31ccdcef308844090c8e15d6756415d229fc194beea5182082"
+    },
+    {
+      "event_id": "e0036",
+      "tool": "order",
+      "arguments": {
+        "supplier": "cedar",
+        "cases": 2
+      },
+      "response": {
+        "invoice": {
+          "supplier": "cedar",
+          "order_day": 14,
+          "cases": 2,
+          "units_per_case": 6,
+          "quantity": 12,
+          "unit_cost_cents": 77,
+          "shipping_cents": 194,
+          "total_cents": 1118,
+          "arrival_day": 16
+        },
+        "order_id": 14,
+        "available_units": 24,
+        "cash_cents": 36037,
+        "event_id": "e0036",
+        "cost_used": 67
+      },
+      "previous_hash": "5fcdc5d16f836f31ccdcef308844090c8e15d6756415d229fc194beea5182082",
+      "hash": "d9ab8fb2ec57613613f337b81932c31df58a1cb624a5fc43e924acf7b617247a"
+    },
+    {
+      "event_id": "e0037",
+      "tool": "advance",
+      "arguments": {
+        "days": 1
+      },
+      "response": {
+        "days": [
+          {
+            "event": "day_close",
+            "day": 15,
+            "demand": 9,
+            "sold": 9,
+            "expired": 0,
+            "revenue_cents": 2520,
+            "operating_fee_paid_cents": 35,
+            "cash_cents": 38522
+          }
+        ],
+        "status": {
+          "day": 15,
+          "horizon_days": 20,
+          "cash_cents": 38522,
+          "cash_target_cents": 17500,
+          "price_cents": 280,
+          "available_units": 27,
+          "pending_units": 12,
+          "batches": [
+            {
+              "quantity": 3,
+              "expiry_day": 19
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 20
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 21
+            }
+          ],
+          "pending_deliveries": [
+            {
+              "order_id": 14,
+              "arrival_day": 16,
+              "quantity": 12
+            }
+          ],
+          "units_sold": 147,
+          "units_expired": 0,
+          "selling_days": 14,
+          "selling_days_target": 12,
+          "purchase_requests": 156,
+          "unpaid_fees_cents": 0,
+          "service_rate": 0.9423076923076923
+        },
+        "event_id": "e0037",
+        "cost_used": 68
+      },
+      "previous_hash": "d9ab8fb2ec57613613f337b81932c31df58a1cb624a5fc43e924acf7b617247a",
+      "hash": "d2bcc77e6bf7a09fb6b5256efd4ce1645125555469ee1fc89c5284ce6acc4a93"
+    },
+    {
+      "event_id": "e0038",
+      "tool": "order",
+      "arguments": {
+        "supplier": "cedar",
+        "cases": 2
+      },
+      "response": {
+        "invoice": {
+          "supplier": "cedar",
+          "order_day": 15,
+          "cases": 2,
+          "units_per_case": 6,
+          "quantity": 12,
+          "unit_cost_cents": 77,
+          "shipping_cents": 194,
+          "total_cents": 1118,
+          "arrival_day": 17
+        },
+        "order_id": 15,
+        "available_units": 27,
+        "cash_cents": 37404,
+        "event_id": "e0038",
+        "cost_used": 71
+      },
+      "previous_hash": "d2bcc77e6bf7a09fb6b5256efd4ce1645125555469ee1fc89c5284ce6acc4a93",
+      "hash": "577778c8d6d46d0a266d0065443a2e6efe3254f5ee7dc8b341c1d20c8e8558a9"
+    },
+    {
+      "event_id": "e0039",
+      "tool": "advance",
+      "arguments": {
+        "days": 1
+      },
+      "response": {
+        "days": [
+          {
+            "event": "day_close",
+            "day": 16,
+            "demand": 13,
+            "sold": 13,
+            "expired": 0,
+            "revenue_cents": 3640,
+            "operating_fee_paid_cents": 35,
+            "cash_cents": 41009
+          }
+        ],
+        "status": {
+          "day": 16,
+          "horizon_days": 20,
+          "cash_cents": 41009,
+          "cash_target_cents": 17500,
+          "price_cents": 280,
+          "available_units": 26,
+          "pending_units": 12,
+          "batches": [
+            {
+              "quantity": 2,
+              "expiry_day": 20
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 21
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 22
+            }
+          ],
+          "pending_deliveries": [
+            {
+              "order_id": 15,
+              "arrival_day": 17,
+              "quantity": 12
+            }
+          ],
+          "units_sold": 160,
+          "units_expired": 0,
+          "selling_days": 15,
+          "selling_days_target": 12,
+          "purchase_requests": 169,
+          "unpaid_fees_cents": 0,
+          "service_rate": 0.9467455621301775
+        },
+        "event_id": "e0039",
+        "cost_used": 72
+      },
+      "previous_hash": "577778c8d6d46d0a266d0065443a2e6efe3254f5ee7dc8b341c1d20c8e8558a9",
+      "hash": "b527bc4bf4747ce1e1420f87f363bc37f175a2e6b86a27ee02dca7786707a3ea"
+    },
+    {
+      "event_id": "e0040",
+      "tool": "order",
+      "arguments": {
+        "supplier": "cedar",
+        "cases": 2
+      },
+      "response": {
+        "invoice": {
+          "supplier": "cedar",
+          "order_day": 16,
+          "cases": 2,
+          "units_per_case": 6,
+          "quantity": 12,
+          "unit_cost_cents": 77,
+          "shipping_cents": 194,
+          "total_cents": 1118,
+          "arrival_day": 18
+        },
+        "order_id": 16,
+        "available_units": 26,
+        "cash_cents": 39891,
+        "event_id": "e0040",
+        "cost_used": 75
+      },
+      "previous_hash": "b527bc4bf4747ce1e1420f87f363bc37f175a2e6b86a27ee02dca7786707a3ea",
+      "hash": "9cce9706cf1a61a784a9ccbb4ec6af3d356879022119c166ea8c0c4983d6d36e"
+    },
+    {
+      "event_id": "e0041",
+      "tool": "advance",
+      "arguments": {
+        "days": 1
+      },
+      "response": {
+        "days": [
+          {
+            "event": "day_close",
+            "day": 17,
+            "demand": 11,
+            "sold": 11,
+            "expired": 0,
+            "revenue_cents": 3080,
+            "operating_fee_paid_cents": 35,
+            "cash_cents": 42936
+          }
+        ],
+        "status": {
+          "day": 17,
+          "horizon_days": 20,
+          "cash_cents": 42936,
+          "cash_target_cents": 17500,
+          "price_cents": 280,
+          "available_units": 27,
+          "pending_units": 12,
+          "batches": [
+            {
+              "quantity": 3,
+              "expiry_day": 21
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 22
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 23
+            }
+          ],
+          "pending_deliveries": [
+            {
+              "order_id": 16,
+              "arrival_day": 18,
+              "quantity": 12
+            }
+          ],
+          "units_sold": 171,
+          "units_expired": 0,
+          "selling_days": 16,
+          "selling_days_target": 12,
+          "purchase_requests": 180,
+          "unpaid_fees_cents": 0,
+          "service_rate": 0.95
+        },
+        "event_id": "e0041",
+        "cost_used": 76
+      },
+      "previous_hash": "9cce9706cf1a61a784a9ccbb4ec6af3d356879022119c166ea8c0c4983d6d36e",
+      "hash": "db5519afaa256046bd4a0dba53606a04d20c628a5c0cb93b157c58a6c024cb07"
+    },
+    {
+      "event_id": "e0042",
+      "tool": "advance",
+      "arguments": {
+        "days": 1
+      },
+      "response": {
+        "days": [
+          {
+            "event": "day_close",
+            "day": 18,
+            "demand": 11,
+            "sold": 11,
+            "expired": 0,
+            "revenue_cents": 3080,
+            "operating_fee_paid_cents": 35,
+            "cash_cents": 45981
+          }
+        ],
+        "status": {
+          "day": 18,
+          "horizon_days": 20,
+          "cash_cents": 45981,
+          "cash_target_cents": 17500,
+          "price_cents": 280,
+          "available_units": 28,
+          "pending_units": 0,
+          "batches": [
+            {
+              "quantity": 4,
+              "expiry_day": 22
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 23
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 24
+            }
+          ],
+          "pending_deliveries": [],
+          "units_sold": 182,
+          "units_expired": 0,
+          "selling_days": 17,
+          "selling_days_target": 12,
+          "purchase_requests": 191,
+          "unpaid_fees_cents": 0,
+          "service_rate": 0.9528795811518325
+        },
+        "event_id": "e0042",
+        "cost_used": 77
+      },
+      "previous_hash": "db5519afaa256046bd4a0dba53606a04d20c628a5c0cb93b157c58a6c024cb07",
+      "hash": "3404ef50b7840fc5042b286b8f3f5c2ec7e505481d45b49a640161deeff81363"
+    },
+    {
+      "event_id": "e0043",
+      "tool": "advance",
+      "arguments": {
+        "days": 1
+      },
+      "response": {
+        "days": [
+          {
+            "event": "day_close",
+            "day": 19,
+            "demand": 9,
+            "sold": 9,
+            "expired": 0,
+            "revenue_cents": 2520,
+            "operating_fee_paid_cents": 35,
+            "cash_cents": 48466
+          }
+        ],
+        "status": {
+          "day": 19,
+          "horizon_days": 20,
+          "cash_cents": 48466,
+          "cash_target_cents": 17500,
+          "price_cents": 280,
+          "available_units": 19,
+          "pending_units": 0,
+          "batches": [
+            {
+              "quantity": 7,
+              "expiry_day": 23
+            },
+            {
+              "quantity": 12,
+              "expiry_day": 24
+            }
+          ],
+          "pending_deliveries": [],
+          "units_sold": 191,
+          "units_expired": 0,
+          "selling_days": 18,
+          "selling_days_target": 12,
+          "purchase_requests": 200,
+          "unpaid_fees_cents": 0,
+          "service_rate": 0.955
+        },
+        "event_id": "e0043",
+        "cost_used": 78
+      },
+      "previous_hash": "3404ef50b7840fc5042b286b8f3f5c2ec7e505481d45b49a640161deeff81363",
+      "hash": "4b3011006ed975c525934b7829aee2555b9fcaa6c4c33cf1644a5828ab2cac53"
+    },
+    {
+      "event_id": "e0044",
+      "tool": "advance",
+      "arguments": {
+        "days": 1
+      },
+      "response": {
+        "days": [
+          {
+            "event": "day_close",
+            "day": 20,
+            "demand": 11,
+            "sold": 11,
+            "expired": 0,
+            "revenue_cents": 3080,
+            "operating_fee_paid_cents": 35,
+            "cash_cents": 51511
+          }
+        ],
+        "status": {
+          "day": 20,
+          "horizon_days": 20,
+          "cash_cents": 51511,
+          "cash_target_cents": 17500,
+          "price_cents": 280,
+          "available_units": 8,
+          "pending_units": 0,
+          "batches": [
+            {
+              "quantity": 8,
+              "expiry_day": 24
+            }
+          ],
+          "pending_deliveries": [],
+          "units_sold": 202,
+          "units_expired": 0,
+          "selling_days": 19,
+          "selling_days_target": 12,
+          "purchase_requests": 211,
+          "unpaid_fees_cents": 0,
+          "service_rate": 0.957345971563981
+        },
+        "event_id": "e0044",
+        "cost_used": 79
+      },
+      "previous_hash": "4b3011006ed975c525934b7829aee2555b9fcaa6c4c33cf1644a5828ab2cac53",
+      "hash": "06894eda37aa03c184d446e3ee922500d51cb6d2d9e04a1bdd72b82f286669c4"
+    },
+    {
+      "event_id": "e0045",
+      "tool": "submit",
+      "arguments": {
+        "fill": {
+          "lead_base_days": 2,
+          "weekend_extra_days": 0,
+          "fixed_fee_cents": 144,
+          "case_fee_cents": 25,
+          "receipt_event": "delivery"
+        },
+        "confidence": 1.0,
+        "abstain": false,
+        "evidence": [
+          "e0001",
+          "e0002",
+          "e0003",
+          "e0004",
+          "e0005",
+          "e0006",
+          "e0007",
+          "e0008",
+          "e0009",
+          "e0010",
+          "e0011",
+          "e0012",
+          "e0013",
+          "e0014",
+          "e0015",
+          "e0016",
+          "e0017",
+          "e0018",
+          "e0019",
+          "e0020",
+          "e0021",
+          "e0022",
+          "e0023",
+          "e0024",
+          "e0025",
+          "e0026",
+          "e0027",
+          "e0028",
+          "e0029",
+          "e0030",
+          "e0031",
+          "e0032",
+          "e0033",
+          "e0034",
+          "e0035",
+          "e0036",
+          "e0037",
+          "e0038",
+          "e0039",
+          "e0040",
+          "e0041",
+          "e0042",
+          "e0043",
+          "e0044"
+        ]
+      },
+      "response": {
+        "accepted": true,
+        "episode_closed": true,
+        "event_id": "e0045",
+        "cost_used": 79
+      },
+      "previous_hash": "06894eda37aa03c184d446e3ee922500d51cb6d2d9e04a1bdd72b82f286669c4",
+      "hash": "be5475607c9e094c03693535a09c073cdf8a0793ab99afff1d6dcda67d8870a7"
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "causalfill.belief-analytic-audit.v1",
+  "status": "passed",
+  "finished_utc": "2026-11-04T13:37:18.798063+00:00",
+  "seconds": 1.5724415829999998,
+  "source_sha256": {
+    "causalfill/belief_games.py": "3a1c1bf1f6e2a6bc58ea3f47dba8bc33787124143b400033b0a8ef138bb6a0d6",
+    "causalfill/belief_certificates.py": "7cdae1a36d572b5c02458fbd1583171fff964c36135987e560e774f38f2c585a",
+    "tools/stress_belief_v04.py": "f7d04a16425881870faa2a6bfeb0b0671fec42dbf7abbd058fc1e3558b48668d"
+  },
+  "source_stable_during_run": true,
+  "configuration": {
+    "cases": 3,
+    "deterministic_seed": 904173
+  },
+  "counts": {
+    "certificates": 12,
+    "beliefs_checked": 1093,
+    "assertions": 73,
+    "initial_worlds_replayed": 28,
+    "metamorphic_cases": 9,
+    "forged_certificates_rejected": 36
+  },
+  "failures": [],
+  "cases": [
+    {
+      "case": 0,
+      "bits": 2,
+      "sensors": 4,
+      "sensor_masks": [
+        1,
+        2,
+        2,
+        3
+      ],
+      "sensor_costs": [
+        4,
+        2,
+        3,
+        1
+      ],
+      "selection_cost": 4,
+      "expected_cost": 5,
+      "states": 66,
+      "mode_values": {
+        "adaptive": 5,
+        "no_observe": null,
+        "open_loop": null,
+        "open_loop_no_observe": null
+      }
+    },
+    {
+      "case": 1,
+      "bits": 3,
+      "sensors": 5,
+      "sensor_masks": [
+        1,
+        2,
+        4,
+        6,
+        7
+      ],
+      "sensor_costs": [
+        6,
+        5,
+        6,
+        9,
+        7
+      ],
+      "selection_cost": 3,
+      "expected_cost": 10,
+      "states": 258,
+      "mode_values": {
+        "adaptive": 10,
+        "no_observe": null,
+        "open_loop": null,
+        "open_loop_no_observe": null
+      }
+    },
+    {
+      "case": 2,
+      "bits": 4,
+      "sensors": 6,
+      "sensor_masks": [
+        1,
+        2,
+        4,
+        8,
+        8,
+        15
+      ],
+      "sensor_costs": [
+        9,
+        3,
+        3,
+        7,
+        7,
+        3
+      ],
+      "selection_cost": 1,
+      "expected_cost": 4,
+      "states": 1026,
+      "mode_values": {
+        "adaptive": 4,
+        "no_observe": null,
+        "open_loop": null,
+        "open_loop_no_observe": null
+      }
+    }
+  ],
+  "oracle": "minimum weighted sensor-set cover over a complete hidden bit cube; independent subset enumeration",
+  "limitations": [
+    "Assertions and mutated certificates are correlated engineering checks, not model task scores.",
+    "This analytic family validates the finite planner/checker; economic runtime conformance is audited separately."
+  ]
+}

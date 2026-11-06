@@ -1,0 +1,474 @@
+{
+  "public": {
+    "family": "proof",
+    "difficulty": 1,
+    "prompt": "Fill the missing proof of a controller's signed output condition. Read the immutable formal statement F, its variable count and goal literal. Supply a resolution refutation of F plus the negated goal, AND a concrete satisfying model of F. This establishes the stated conclusion without exploiting inconsistent assumptions. Use the exact statement digest; changing or weakening the theorem is invalid. Only compact proof-index triples are accepted; no source code, new premises, admitted axioms or prose proofs. The task is finite propositional logic and is not a Lean or physical-control evaluation.",
+    "slots": {
+      "statement_sha256": {
+        "type": "string",
+        "description": "Exact SHA256 from the fixed public formal statement."
+      },
+      "proof_steps": {
+        "type": "array[array[int,int,int]]",
+        "description": "Resolution steps [left_index,right_index,pivot]; max 12000 steps and protocol size bound."
+      },
+      "consistency_model": {
+        "type": "array[bool]",
+        "description": "Exactly 13 Boolean values satisfying the ORIGINAL premises F."
+      }
+    },
+    "files": [
+      "/docs/resolution.txt",
+      "/formal/statement.json",
+      "/skill/recovery.md",
+      "/workspace/controller.txt"
+    ],
+    "tools": {
+      "check_prefix": {
+        "description": "Check at most 256 proposed resolution steps; never solve or complete the proof",
+        "arguments": {
+          "proof_steps": "list of compact [a,b,p] triples"
+        },
+        "cost": 2
+      }
+    },
+    "budget": 20,
+    "max_calls": 24,
+    "episode_id": "c3d57a78f59a4094a454fefbf5d2eefd",
+    "common_tools": {
+      "list_files": {
+        "arguments": {},
+        "cost": 1
+      },
+      "read_file": {
+        "arguments": {
+          "path": "exact listed virtual path"
+        },
+        "cost": 1
+      },
+      "search_files": {
+        "arguments": {
+          "text": "literal string, 1\u2013160 characters"
+        },
+        "cost": 2
+      },
+      "session_status": {
+        "arguments": {},
+        "cost": 1
+      },
+      "submit": {
+        "arguments": {
+          "fill": "object",
+          "confidence": "number 0..1",
+          "abstain": "boolean",
+          "evidence": "list of returned event IDs"
+        },
+        "cost": 0
+      }
+    },
+    "max_seconds": 600,
+    "tools_enabled": true,
+    "submission_rule": "One final submission. Grades are evaluator-only; no retry after submission."
+  },
+  "events": [
+    {
+      "event_id": "e0001",
+      "tool": "read_file",
+      "arguments": {
+        "path": "/formal/statement.json"
+      },
+      "response": {
+        "path": "/formal/statement.json",
+        "content": "{\"nvars\":13,\"clauses\":[[-13,-10,-5,-4],[-5,8,11,12],[-6,-5,3,7],[-5,-2,-1,9],[-8,-5,10],[-5,6,10],[-9,-5,10],[-8,-5,6],[-9,-8,-5],[-9,-5,6],[-12,-5,4],[-5,-3,4],[-5,2,4],[-12,-5,-3],[-12,-5,2],[-5,-3,2],[-11,-5,13],[-7,-5,13],[-5,1,13],[-11,-7,-5],[-11,-5,1],[-7,-5,1],[-5,4,10],[-5,10,13],[-5,4,13],[-12,-8,-5],[-11,-8,-5],[-12,-11,-5],[-5,-3,6],[-7,-5,6],[-7,-5,-3],[-9,-5,2],[-9,-5,1],[-5,1,2]],\"goal\":-5,\"statement_sha256\":\"bd27bf616e5001750800377c7f08c24243e2a6f8773d2ab5e0c0d6a5f842ab38\"}",
+        "event_id": "e0001",
+        "cost_used": 1
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "98f6c6424205b56f814c6cd37dbabdf739cf32f3d1a13140545b2ff04bcf28ff"
+    },
+    {
+      "event_id": "e0002",
+      "tool": "submit",
+      "arguments": {
+        "fill": {
+          "statement_sha256": "bd27bf616e5001750800377c7f08c24243e2a6f8773d2ab5e0c0d6a5f842ab38",
+          "proof_steps": [
+            [
+              34,
+              13,
+              5
+            ],
+            [
+              34,
+              14,
+              5
+            ],
+            [
+              34,
+              10,
+              5
+            ],
+            [
+              34,
+              19,
+              5
+            ],
+            [
+              34,
+              20,
+              5
+            ],
+            [
+              34,
+              16,
+              5
+            ],
+            [
+              34,
+              8,
+              5
+            ],
+            [
+              34,
+              9,
+              5
+            ],
+            [
+              34,
+              6,
+              5
+            ],
+            [
+              34,
+              7,
+              5
+            ],
+            [
+              34,
+              4,
+              5
+            ],
+            [
+              34,
+              21,
+              5
+            ],
+            [
+              34,
+              17,
+              5
+            ],
+            [
+              34,
+              15,
+              5
+            ],
+            [
+              34,
+              11,
+              5
+            ],
+            [
+              34,
+              18,
+              5
+            ],
+            [
+              34,
+              12,
+              5
+            ],
+            [
+              34,
+              5,
+              5
+            ],
+            [
+              34,
+              0,
+              5
+            ],
+            [
+              34,
+              2,
+              5
+            ],
+            [
+              34,
+              3,
+              5
+            ],
+            [
+              34,
+              1,
+              5
+            ],
+            [
+              39,
+              55,
+              1
+            ],
+            [
+              46,
+              55,
+              1
+            ],
+            [
+              50,
+              55,
+              1
+            ],
+            [
+              54,
+              35,
+              3
+            ],
+            [
+              54,
+              48,
+              3
+            ],
+            [
+              54,
+              49,
+              3
+            ],
+            [
+              37,
+              53,
+              4
+            ],
+            [
+              51,
+              53,
+              4
+            ],
+            [
+              62,
+              53,
+              4
+            ],
+            [
+              56,
+              41,
+              8
+            ],
+            [
+              56,
+              44,
+              8
+            ],
+            [
+              56,
+              45,
+              8
+            ],
+            [
+              36,
+              58,
+              2
+            ],
+            [
+              36,
+              59,
+              2
+            ],
+            [
+              64,
+              57,
+              2
+            ],
+            [
+              64,
+              58,
+              2
+            ],
+            [
+              61,
+              57,
+              2
+            ],
+            [
+              61,
+              59,
+              2
+            ],
+            [
+              66,
+              38,
+              11
+            ],
+            [
+              66,
+              40,
+              11
+            ],
+            [
+              68,
+              38,
+              11
+            ],
+            [
+              67,
+              40,
+              11
+            ],
+            [
+              67,
+              71,
+              11
+            ],
+            [
+              68,
+              73,
+              11
+            ],
+            [
+              42,
+              60,
+              6
+            ],
+            [
+              52,
+              60,
+              6
+            ],
+            [
+              42,
+              65,
+              6
+            ],
+            [
+              52,
+              80,
+              6
+            ],
+            [
+              78,
+              74,
+              6
+            ],
+            [
+              79,
+              65,
+              6
+            ],
+            [
+              43,
+              63,
+              10
+            ],
+            [
+              82,
+              63,
+              10
+            ],
+            [
+              43,
+              83,
+              10
+            ],
+            [
+              77,
+              72,
+              10
+            ],
+            [
+              84,
+              86,
+              10
+            ],
+            [
+              88,
+              69,
+              7
+            ],
+            [
+              89,
+              75,
+              7
+            ],
+            [
+              91,
+              90,
+              7
+            ],
+            [
+              81,
+              47,
+              7
+            ],
+            [
+              85,
+              47,
+              7
+            ],
+            [
+              92,
+              87,
+              9
+            ],
+            [
+              94,
+              93,
+              9
+            ],
+            [
+              70,
+              95,
+              9
+            ],
+            [
+              96,
+              76,
+              9
+            ],
+            [
+              98,
+              97,
+              12
+            ],
+            [
+              100,
+              99,
+              12
+            ],
+            [
+              102,
+              101,
+              13
+            ]
+          ],
+          "consistency_model": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+          ]
+        },
+        "confidence": 1.0,
+        "abstain": false,
+        "evidence": [
+          "e0001"
+        ]
+      },
+      "response": {
+        "accepted": true,
+        "episode_closed": true,
+        "event_id": "e0002",
+        "cost_used": 1
+      },
+      "previous_hash": "98f6c6424205b56f814c6cd37dbabdf739cf32f3d1a13140545b2ff04bcf28ff",
+      "hash": "930fb4c79d712e0efbef178c13f372b5b7203ee75f40c61059dfc558fbe25fd5"
+    }
+  ]
+}

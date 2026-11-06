@@ -1,0 +1,69 @@
+{
+  "benchmark": "CausalFill-Bench",
+  "version": "0.1.0",
+  "verified_utc": "2026-11-01T13:59:18.757187+00:00",
+  "unit_and_integration_tests": {
+    "passed": 84,
+    "failed": 0,
+    "http_tests": "7 real loopback integration tests, not mocked",
+    "platform": "Linux, Python 3.12.14"
+  },
+  "development_suite": {
+    "evidence": {
+      "episodes": 720,
+      "answerable": 630,
+      "successes": 630,
+      "unanswerable": 90,
+      "correct_abstentions": 90,
+      "invalid_calls": 0
+    },
+    "blind": {
+      "episodes": 720,
+      "answerable": 630,
+      "successes": 0,
+      "unanswerable": 90,
+      "correct_abstentions": 0,
+      "invalid_calls": 0
+    },
+    "abstain": {
+      "episodes": 720,
+      "answerable": 630,
+      "successes": 0,
+      "unanswerable": 90,
+      "correct_abstentions": 90,
+      "invalid_calls": 0
+    }
+  },
+  "trace_chains_consistent": true,
+  "exploratory_trial": {
+    "results": [
+      {
+        "episode_id": "892c7a154f7d44c98605596e2fd71487",
+        "family": "latent_sparse",
+        "success": true,
+        "tool_cost": 6,
+        "tool_calls": 6,
+        "invalid_calls": 0,
+        "confidence": 1.0
+      },
+      {
+        "episode_id": "92c3772c445a4df2b17b63ba002fb8c2",
+        "family": "robotics",
+        "success": true,
+        "tool_cost": 19,
+        "tool_calls": 8,
+        "invalid_calls": 0,
+        "confidence": 0.99
+      }
+    ],
+    "status": "excluded_from_comparative_claims",
+    "qualification": "Coordinator saw other-agent summaries exposing sparse-method design, then used a fresh context for sparse solving. Robotics used public observations. Shared host and incompletely recorded model configuration prevent a certified blind model score. Both evaluator grades passed; these two cases therefore do not support a frontier-hardness claim."
+  },
+  "not_run": [
+    "External-provider comparative model evaluation",
+    "Physical robotics or pixel-vision evaluation",
+    "Docker isolation recipe",
+    "GitHub-hosted CI matrix",
+    "Lean compilation or OpenAI mathematical algorithm implementation"
+  ]
+}

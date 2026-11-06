@@ -1,0 +1,120 @@
+{
+  "benchmark": "CausalFill-Bench",
+  "version": "0.2.0",
+  "verified_utc": "2026-11-01T14:22:09.856895+00:00",
+  "source_sha256": "a6bab328e627e194ffdf75be503b6b423dde0f597ed21a1f4fe37075aeff045f",
+  "unit_and_integration_tests": {
+    "passed": 140,
+    "failed": 0,
+    "http_tests": "8 real loopback integration tests, not mocked",
+    "platform": "Linux, Python 3.12.14",
+    "log": "reports/unittest-v0.2.txt"
+  },
+  "development_suite_records": 2700,
+  "development_suite": {
+    "evidence": {
+      "episodes": 900,
+      "answerable": 810,
+      "successes": 810,
+      "unanswerable": 90,
+      "correct_abstentions": 90,
+      "invalid_calls": 0
+    },
+    "blind": {
+      "episodes": 900,
+      "answerable": 810,
+      "successes": 0,
+      "unanswerable": 90,
+      "correct_abstentions": 0,
+      "invalid_calls": 0
+    },
+    "abstain": {
+      "episodes": 900,
+      "answerable": 810,
+      "successes": 0,
+      "unanswerable": 90,
+      "correct_abstentions": 90,
+      "invalid_calls": 0
+    }
+  },
+  "suite_manifest": "reports/development-run-v0.2/manifest.json",
+  "trace_chains_consistent": true,
+  "certificate_audits": {
+    "propositional_kernel": "Resolution soundness checked exhaustively on small clauses; certificate binding and non-vacuity regression checks.",
+    "diagnosis": "154 distinct small response tables independently matched exhaustive binary policy enumeration.",
+    "transport": "A real HTTP submission accepted and privately passed a 6,018-step proof with 102,511 request bytes.",
+    "offline_verifier": "Requires the statement hash from a trusted channel; imports no task generator or proof search.",
+    "formalization_status": "Ordinary Python implementations; not Lean-verified."
+  },
+  "exploratory_trial_v01": {
+    "results": [
+      {
+        "episode_id": "892c7a154f7d44c98605596e2fd71487",
+        "family": "latent_sparse",
+        "success": true,
+        "tool_cost": 6,
+        "tool_calls": 6,
+        "invalid_calls": 0,
+        "confidence": 1.0
+      },
+      {
+        "episode_id": "92c3772c445a4df2b17b63ba002fb8c2",
+        "family": "robotics",
+        "success": true,
+        "tool_cost": 19,
+        "tool_calls": 8,
+        "invalid_calls": 0,
+        "confidence": 0.99
+      }
+    ],
+    "status": "excluded_from_comparative_claims",
+    "qualification": "Coordinator saw other-agent summaries exposing sparse-method design, then used a fresh context for sparse solving. Robotics used public observations. Shared host and incompletely recorded model configuration prevent a certified blind model score. Both evaluator grades passed; these two cases therefore do not support a frontier-hardness claim."
+  },
+  "exploratory_formal_trial": {
+    "episode_id": "f98089b291dc46d6bf8c27535a250b85",
+    "success": true,
+    "proof_steps": 865,
+    "reference_steps_same_statement": 6073,
+    "variables": 43,
+    "premises": 238,
+    "tool_cost": 7,
+    "tool_calls": 6,
+    "budget": 20,
+    "invalid_calls": 0,
+    "wall_seconds": 130.280365,
+    "confidence": 0.99,
+    "trace_integrity": true,
+    "protocol": "Fresh context, single agent, only the public evaluator client; no collaboration or web tools permitted.",
+    "status": "exploratory_not_comparative",
+    "qualification": "The evaluator and agent shared a host and exact deployment/sampling metadata was not captured. The passing case demonstrates certificate production, not isolated leaderboard performance or frontier hardness.",
+    "source_configuration": "reports/exploratory-trial/proof/configuration.json"
+  },
+  "certificate_examples": {
+    "proof": "reports/certificates/model-verification.json",
+    "diagnosis": "reports/certificates/diagnosis-verification.json",
+    "diagnosis_optimal_worst_case_queries": 5,
+    "diagnosis_checked_states": 541,
+    "constrained_diagnosis": {
+      "world_count": 32,
+      "experiments": 10,
+      "valid": true,
+      "optimal_depth": 6,
+      "checked_states": 1448,
+      "information_lower_bound": 5,
+      "scope": "exact deterministic adaptive identification in this finite noiseless binary table"
+    }
+  },
+  "not_run": [
+    "External-provider comparative model evaluation",
+    "Physical robotics or pixel-vision evaluation",
+    "Docker isolation recipe",
+    "GitHub-hosted CI matrix",
+    "Lean compilation or OpenAI mathematical algorithm implementation"
+  ],
+  "companion_skill": {
+    "status": "validated_draft_installation_blocked_pending_approval",
+    "validation": "Skill schema validator passed; actual HTTP client succeeded against a temporary local evaluator.",
+    "forward_test": "A fresh author/evaluator workflow ran the vending transfer difficulty 3 reference successfully: 56,900 cents ending cash, 234 units sold, 24 selling days, tool cost 92/162.",
+    "block_reason": "Automatic approval review rejected transmitting the five-file companion skill to the personal skills service without explicit payload-and-destination approval."
+  }
+}

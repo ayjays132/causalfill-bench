@@ -1,0 +1,139 @@
+{
+  "role": "author/evaluator reviewer",
+  "verdict": "reject_for_verified_release_summary",
+  "claim_usable_as_written": false,
+  "reason": "The claim requests guaranteed open-loop success at optimal action cost 8, but its certificate certifies adaptive mode. Open-loop success is impossible in the supplied finite game, as independently confirmed by a complete fixed-action product search.",
+  "claimed_result": {
+    "task": "finite procurement",
+    "mode": "open_loop",
+    "guaranteed_success": true,
+    "optimal_action_cost": 8
+  },
+  "model": {
+    "schema_version": "finite-belief-game-v1",
+    "states": 448,
+    "initial_worlds": 4,
+    "actions": 8,
+    "rank_range": [
+      0,
+      15
+    ],
+    "canonical_game_sha256": "6a6c388ea485a25d2510554ae48a2c44fcd8578424c1b860717be46be0feba89"
+  },
+  "checks": [
+    {
+      "check": "Parse all three packet JSON files with duplicate-key rejection; validate_game",
+      "result": "passed"
+    },
+    {
+      "check": "causalfill.belief_certificates.verify_game_certificate on the supplied certificate",
+      "valid": true,
+      "mode": "adaptive",
+      "winning": true,
+      "optimal_cost": 8,
+      "checked_beliefs": 326,
+      "checked_alternatives": 495,
+      "checked_outcome_branches": 565,
+      "note": "The checker verifies the certificate mode; it does not bind that mode to claim.json."
+    },
+    {
+      "check": "extract_game_strategy followed by verify_game_strategy",
+      "valid": true,
+      "mode": "adaptive",
+      "initial_states_checked": 4,
+      "nodes_checked": 19,
+      "maximum_action_steps": 6,
+      "per_initial_costs": [
+        8,
+        8,
+        8,
+        8
+      ],
+      "worst_case_cost": 8
+    },
+    {
+      "check": "Rebuild certificates in memory using build_game_certificate and check each with the separate verify_game_certificate implementation",
+      "results": [
+        {
+          "mode": "adaptive",
+          "valid": true,
+          "winning": true,
+          "optimal_cost": 8,
+          "checked_beliefs": 326,
+          "checked_alternatives": 495,
+          "checked_outcome_branches": 565
+        },
+        {
+          "mode": "no_observe",
+          "valid": true,
+          "winning": false,
+          "optimal_cost": null,
+          "checked_beliefs": 63,
+          "checked_alternatives": 45,
+          "checked_outcome_branches": 70
+        },
+        {
+          "mode": "open_loop",
+          "valid": true,
+          "winning": false,
+          "optimal_cost": null,
+          "checked_beliefs": 40,
+          "checked_alternatives": 61,
+          "checked_outcome_branches": 61
+        },
+        {
+          "mode": "open_loop_no_observe",
+          "valid": true,
+          "winning": false,
+          "optimal_cost": null,
+          "checked_beliefs": 10,
+          "checked_alternatives": 9,
+          "checked_outcome_branches": 9
+        }
+      ]
+    },
+    {
+      "check": "Change supplied certificate mode to open_loop in memory and verify",
+      "result": "rejected",
+      "error": "an alternative-action/outcome child belief is absent"
+    },
+    {
+      "check": "Independent breadth-first search over synchronized raw state tuples, without production optimizer or checker",
+      "semantics": "Allow every action including observations; use one common legal action across remaining live worlds; ignore feedback; preserve success as absorbing; prune any failed world; assert strict rank decrease.",
+      "reachable_world_tuples": 40,
+      "action_edges": 61,
+      "all_success_tuples": 0,
+      "failure_tuples": 10,
+      "nonterminal_dead_ends": 0,
+      "guaranteed_fixed_script_exists": false
+    },
+    {
+      "check": "PYTHONDONTWRITEBYTECODE=1 python -m causalfill list",
+      "exit_code": 0,
+      "result": "12 families; research prototype status"
+    }
+  ],
+  "supported_release_wording": "For this finite ranked deterministic procurement model, an adaptive observation-based strategy guarantees success across all four listed initial worlds at exact minimum worst-case action cost 8. No open-loop strategy guarantees success in the same model.",
+  "interpretation": {
+    "optimality": "The complete certificate checks every relevant alternative and outcome branch. Strategy replay separately establishes a cost-8 achievable upper bound.",
+    "infeasibility": "A null optimal_cost denotes no guaranteed-success strategy in the stated policy class, not zero cost.",
+    "cost": "Cost is the model-declared positive integer action cost, not cash, elapsed time, or tokens."
+  },
+  "not_established": [
+    "Equivalence between this explicit finite transition table and an external or live procurement simulator.",
+    "An open-loop guarantee or an open-loop optimum of 8; both are contradicted by this model.",
+    "A Lean-checked theorem, measured model or agent benchmark performance, scalability, novelty, or broader procurement optimality.",
+    "A Git revision for this checkout; git reported that the directory is not a Git repository."
+  ],
+  "scope_and_integrity": {
+    "packet_sha256": {
+      "claim.json": "2dd088c1dc0914135ddf7b0b835bb04eb70864bbad623ee5ff31f0cce50b7cd9",
+      "game.json": "e3cdbac208766b4dff750908c0b0f6e1f03c936997b0487f8df5e5cf4d1218b4",
+      "certificate.json": "6eff0ada6fda50e9e7da5b3884a88f4e8edaa4c03eebdc0ad3edd97407096be0"
+    },
+    "packet_unchanged_since_checks": true,
+    "unit_or_broad_release_tests_run": false,
+    "other_agents_or_unrelated_historical_reports_consulted": false,
+    "only_written_file": "/workspace/scratch/addf9cb6769c/causalfill-bench/reports/skill-forward-v0.4/reviewer.json"
+  }
+}

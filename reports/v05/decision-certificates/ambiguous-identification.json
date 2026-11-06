@@ -1,0 +1,173 @@
+{
+  "problem": {
+    "schema": "causalfill.noisy-decision.v1",
+    "worlds": [
+      "left_dry",
+      "left_wet",
+      "right_dry",
+      "right_wet"
+    ],
+    "actions": [
+      {
+        "id": "left_slow",
+        "cost": 0,
+        "success_worlds": [
+          "left_dry",
+          "left_wet"
+        ]
+      },
+      {
+        "id": "right_slow",
+        "cost": 0,
+        "success_worlds": [
+          "right_dry",
+          "right_wet"
+        ]
+      }
+    ],
+    "experiments": [
+      {
+        "id": "camera",
+        "cost": 1,
+        "supports": {
+          "left_dry": [
+            "left",
+            "blur"
+          ],
+          "left_wet": [
+            "left",
+            "blur"
+          ],
+          "right_dry": [
+            "right",
+            "blur"
+          ],
+          "right_wet": [
+            "right",
+            "blur"
+          ]
+        }
+      },
+      {
+        "id": "surface",
+        "cost": 3,
+        "supports": {
+          "left_dry": [
+            "dry"
+          ],
+          "left_wet": [
+            "wet"
+          ],
+          "right_dry": [
+            "dry"
+          ],
+          "right_wet": [
+            "wet"
+          ]
+        }
+      }
+    ]
+  },
+  "certificate": {
+    "schema": "causalfill.decision-sufficiency-certificate.v1",
+    "problem_sha256": "8740510de43b832d979978739b5eefda7d4a8b3f8fb98bc71d7e93f1e205bddd",
+    "objective": "identification",
+    "root": [
+      15,
+      3
+    ],
+    "value": null,
+    "nodes": [
+      [
+        1,
+        0,
+        0,
+        {
+          "kind": "identify",
+          "id": "left_dry"
+        }
+      ],
+      [
+        2,
+        0,
+        0,
+        {
+          "kind": "identify",
+          "id": "left_wet"
+        }
+      ],
+      [
+        4,
+        0,
+        0,
+        {
+          "kind": "identify",
+          "id": "right_dry"
+        }
+      ],
+      [
+        5,
+        0,
+        null,
+        null
+      ],
+      [
+        8,
+        0,
+        0,
+        {
+          "kind": "identify",
+          "id": "right_wet"
+        }
+      ],
+      [
+        10,
+        0,
+        null,
+        null
+      ],
+      [
+        3,
+        2,
+        3,
+        {
+          "kind": "query",
+          "id": "surface"
+        }
+      ],
+      [
+        5,
+        1,
+        null,
+        null
+      ],
+      [
+        10,
+        1,
+        null,
+        null
+      ],
+      [
+        12,
+        2,
+        3,
+        {
+          "kind": "query",
+          "id": "surface"
+        }
+      ],
+      [
+        15,
+        2,
+        null,
+        null
+      ],
+      [
+        15,
+        3,
+        null,
+        null
+      ]
+    ]
+  }
+}

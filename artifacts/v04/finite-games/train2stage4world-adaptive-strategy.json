@@ -1,0 +1,167 @@
+{
+  "schema_version": "finite-belief-strategy-v1",
+  "game_sha256": "6a6c388ea485a25d2510554ae48a2c44fcd8578424c1b860717be46be0feba89",
+  "mode": "adaptive",
+  "root": 0,
+  "nodes": [
+    {
+      "action": "forecast",
+      "branches": [
+        {
+          "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5000,\"cash_target_cents\":5676,\"day\":0,\"express_orders\":0,\"past_demand\":[],\"pending_order\":null,\"pending_units\":0,\"phase\":\"open\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":{\"kind\":\"forecast\",\"value\":0},\"stage\":0,\"stages\":2,\"status\":\"live\",\"units_expired\":0,\"units_received\":0,\"units_sold\":0}",
+          "next": 1
+        },
+        {
+          "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5000,\"cash_target_cents\":5676,\"day\":0,\"express_orders\":0,\"past_demand\":[],\"pending_order\":null,\"pending_units\":0,\"phase\":\"open\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":{\"kind\":\"forecast\",\"value\":1},\"stage\":0,\"stages\":2,\"status\":\"live\",\"units_expired\":0,\"units_received\":0,\"units_sold\":0}",
+          "next": 10
+        }
+      ]
+    },
+    {
+      "action": "order:0:express",
+      "branches": [
+        {
+          "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":4684,\"cash_target_cents\":5676,\"day\":0,\"express_orders\":1,\"past_demand\":[],\"pending_order\":{\"arrival_day\":1,\"product\":\"tea\",\"supplier\":\"express\",\"units\":4},\"pending_units\":4,\"phase\":\"ordered\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":{\"kind\":\"forecast\",\"value\":0},\"stage\":0,\"stages\":2,\"status\":\"live\",\"units_expired\":0,\"units_received\":0,\"units_sold\":0}",
+          "next": 2
+        }
+      ]
+    },
+    {
+      "action": "settle",
+      "branches": [
+        {
+          "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5322,\"cash_target_cents\":5676,\"day\":2,\"express_orders\":1,\"past_demand\":[0],\"pending_order\":null,\"pending_units\":0,\"phase\":\"open\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":null,\"stage\":1,\"stages\":2,\"status\":\"live\",\"units_expired\":0,\"units_received\":4,\"units_sold\":4}",
+          "next": 3
+        }
+      ]
+    },
+    {
+      "action": "forecast",
+      "branches": [
+        {
+          "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5322,\"cash_target_cents\":5676,\"day\":2,\"express_orders\":1,\"past_demand\":[0],\"pending_order\":null,\"pending_units\":0,\"phase\":\"open\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":{\"kind\":\"forecast\",\"value\":0},\"stage\":1,\"stages\":2,\"status\":\"live\",\"units_expired\":0,\"units_received\":4,\"units_sold\":4}",
+          "next": 4
+        },
+        {
+          "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5322,\"cash_target_cents\":5676,\"day\":2,\"express_orders\":1,\"past_demand\":[0],\"pending_order\":null,\"pending_units\":0,\"phase\":\"open\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":{\"kind\":\"forecast\",\"value\":1},\"stage\":1,\"stages\":2,\"status\":\"live\",\"units_expired\":0,\"units_received\":4,\"units_sold\":4}",
+          "next": 7
+        }
+      ]
+    },
+    {
+      "action": "order:0:standard",
+      "branches": [
+        {
+          "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5038,\"cash_target_cents\":5676,\"day\":2,\"express_orders\":1,\"past_demand\":[0],\"pending_order\":{\"arrival_day\":3,\"product\":\"tea\",\"supplier\":\"standard\",\"units\":4},\"pending_units\":4,\"phase\":\"ordered\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":{\"kind\":\"forecast\",\"value\":0},\"stage\":1,\"stages\":2,\"status\":\"live\",\"units_expired\":0,\"units_received\":4,\"units_sold\":4}",
+          "next": 5
+        }
+      ]
+    },
+    {
+      "action": "settle",
+      "branches": [
+        {
+          "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5676,\"cash_target_cents\":5676,\"day\":4,\"express_orders\":1,\"past_demand\":[0,0],\"pending_order\":null,\"pending_units\":0,\"phase\":\"closed\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":null,\"stage\":2,\"stages\":2,\"status\":\"success\",\"units_expired\":0,\"units_received\":8,\"units_sold\":8}",
+          "next": 6
+        }
+      ]
+    },
+    {
+      "stop": true
+    },
+    {
+      "action": "order:1:standard",
+      "branches": [
+        {
+          "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5038,\"cash_target_cents\":5676,\"day\":2,\"express_orders\":1,\"past_demand\":[0],\"pending_order\":{\"arrival_day\":3,\"product\":\"cocoa\",\"supplier\":\"standard\",\"units\":4},\"pending_units\":4,\"phase\":\"ordered\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":{\"kind\":\"forecast\",\"value\":1},\"stage\":1,\"stages\":2,\"status\":\"live\",\"units_expired\":0,\"units_received\":4,\"units_sold\":4}",
+          "next": 8
+        }
+      ]
+    },
+    {
+      "action": "settle",
+      "branches": [
+        {
+          "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5676,\"cash_target_cents\":5676,\"day\":4,\"express_orders\":1,\"past_demand\":[0,1],\"pending_order\":null,\"pending_units\":0,\"phase\":\"closed\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":null,\"stage\":2,\"stages\":2,\"status\":\"success\",\"units_expired\":0,\"units_received\":8,\"units_sold\":8}",
+          "next": 9
+        }
+      ]
+    },
+    {
+      "stop": true
+    },
+    {
+      "action": "order:1:express",
+      "branches": [
+        {
+          "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":4684,\"cash_target_cents\":5676,\"day\":0,\"express_orders\":1,\"past_demand\":[],\"pending_order\":{\"arrival_day\":1,\"product\":\"cocoa\",\"supplier\":\"express\",\"units\":4},\"pending_units\":4,\"phase\":\"ordered\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":{\"kind\":\"forecast\",\"value\":1},\"stage\":0,\"stages\":2,\"status\":\"live\",\"units_expired\":0,\"units_received\":0,\"units_sold\":0}",
+          "next": 11
+        }
+      ]
+    },
+    {
+      "action": "settle",
+      "branches": [
+        {
+          "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5322,\"cash_target_cents\":5676,\"day\":2,\"express_orders\":1,\"past_demand\":[1],\"pending_order\":null,\"pending_units\":0,\"phase\":\"open\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":null,\"stage\":1,\"stages\":2,\"status\":\"live\",\"units_expired\":0,\"units_received\":4,\"units_sold\":4}",
+          "next": 12
+        }
+      ]
+    },
+    {
+      "action": "forecast",
+      "branches": [
+        {
+          "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5322,\"cash_target_cents\":5676,\"day\":2,\"express_orders\":1,\"past_demand\":[1],\"pending_order\":null,\"pending_units\":0,\"phase\":\"open\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":{\"kind\":\"forecast\",\"value\":0},\"stage\":1,\"stages\":2,\"status\":\"live\",\"units_expired\":0,\"units_received\":4,\"units_sold\":4}",
+          "next": 13
+        },
+        {
+          "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5322,\"cash_target_cents\":5676,\"day\":2,\"express_orders\":1,\"past_demand\":[1],\"pending_order\":null,\"pending_units\":0,\"phase\":\"open\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":{\"kind\":\"forecast\",\"value\":1},\"stage\":1,\"stages\":2,\"status\":\"live\",\"units_expired\":0,\"units_received\":4,\"units_sold\":4}",
+          "next": 16
+        }
+      ]
+    },
+    {
+      "action": "order:0:standard",
+      "branches": [
+        {
+          "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5038,\"cash_target_cents\":5676,\"day\":2,\"express_orders\":1,\"past_demand\":[1],\"pending_order\":{\"arrival_day\":3,\"product\":\"tea\",\"supplier\":\"standard\",\"units\":4},\"pending_units\":4,\"phase\":\"ordered\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":{\"kind\":\"forecast\",\"value\":0},\"stage\":1,\"stages\":2,\"status\":\"live\",\"units_expired\":0,\"units_received\":4,\"units_sold\":4}",
+          "next": 14
+        }
+      ]
+    },
+    {
+      "action": "settle",
+      "branches": [
+        {
+          "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5676,\"cash_target_cents\":5676,\"day\":4,\"express_orders\":1,\"past_demand\":[1,0],\"pending_order\":null,\"pending_units\":0,\"phase\":\"closed\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":null,\"stage\":2,\"stages\":2,\"status\":\"success\",\"units_expired\":0,\"units_received\":8,\"units_sold\":8}",
+          "next": 15
+        }
+      ]
+    },
+    {
+      "stop": true
+    },
+    {
+      "action": "order:1:standard",
+      "branches": [
+        {
+          "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5038,\"cash_target_cents\":5676,\"day\":2,\"express_orders\":1,\"past_demand\":[1],\"pending_order\":{\"arrival_day\":3,\"product\":\"cocoa\",\"supplier\":\"standard\",\"units\":4},\"pending_units\":4,\"phase\":\"ordered\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":{\"kind\":\"forecast\",\"value\":1},\"stage\":1,\"stages\":2,\"status\":\"live\",\"units_expired\":0,\"units_received\":4,\"units_sold\":4}",
+          "next": 17
+        }
+      ]
+    },
+    {
+      "action": "settle",
+      "branches": [
+        {
+          "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5676,\"cash_target_cents\":5676,\"day\":4,\"express_orders\":1,\"past_demand\":[1,1],\"pending_order\":null,\"pending_units\":0,\"phase\":\"closed\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":null,\"stage\":2,\"stages\":2,\"status\":\"success\",\"units_expired\":0,\"units_received\":8,\"units_sold\":8}",
+          "next": 18
+        }
+      ]
+    },
+    {
+      "stop": true
+    }
+  ]
+}

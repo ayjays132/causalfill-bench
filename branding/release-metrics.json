@@ -1,0 +1,118 @@
+{
+  "schema": "causalfill.release-cards.v1",
+  "release": {
+    "version": "v0.5.1"
+  },
+  "metrics": [
+    {
+      "id": "unit-tests",
+      "kind": "measured",
+      "label": "Unit + integration tests",
+      "scope": "Release suite with no failures, errors or skips; implementation checks.",
+      "record_label": "v0.5.1 evidence",
+      "source": "reports/v051/release-verification.json",
+      "expected_source_sha256": "b11767852853c6171b6235a523a046d459d5d891c1d2c60af5b5f56f95e10378",
+      "pointers": [
+        "/unit_and_integration_tests/passed"
+      ],
+      "format": "integer"
+    },
+    {
+      "id": "scripted-controls",
+      "kind": "measured",
+      "label": "Scripted control episodes",
+      "scope": "Task-aware scripted policies across released configurations; not model scores.",
+      "record_label": "v0.5.1 evidence",
+      "source": "reports/v051/release-verification.json",
+      "expected_source_sha256": "b11767852853c6171b6235a523a046d459d5d891c1d2c60af5b5f56f95e10378",
+      "pointers": [
+        "/scripted_controls/records"
+      ],
+      "format": "integer"
+    },
+    {
+      "id": "independent-optima",
+      "kind": "measured",
+      "label": "Independent optimum checks",
+      "scope": "Finite model/objective comparisons against an independently represented oracle.",
+      "record_label": "v0.5.1 evidence",
+      "source": "reports/v051/release-verification.json",
+      "expected_source_sha256": "b11767852853c6171b6235a523a046d459d5d891c1d2c60af5b5f56f95e10378",
+      "pointers": [
+        "/robust_sensing/checks/independent_optimum"
+      ],
+      "format": "integer"
+    },
+    {
+      "id": "runtime-cases",
+      "kind": "measured",
+      "label": "Executed runtime cases",
+      "scope": "Fixed-world/fault cases in 27 recorded profiles; coverage, not independent tasks.",
+      "record_label": "v0.5.1 evidence",
+      "source": "reports/v051/release-verification.json",
+      "expected_source_sha256": "b11767852853c6171b6235a523a046d459d5d891c1d2c60af5b5f56f95e10378",
+      "pointers": [
+        "/robust_sensing/runtime/cases"
+      ],
+      "format": "integer"
+    },
+    {
+      "id": "formal-roots",
+      "kind": "formal",
+      "label": "Generic Lean theorem roots",
+      "scope": "Generic fault accounting and safe-action roots. Python refinement is not proved.",
+      "record_label": "v0.5.1 evidence",
+      "source": "reports/v051/release-verification.json",
+      "expected_source_sha256": "b11767852853c6171b6235a523a046d459d5d891c1d2c60af5b5f56f95e10378",
+      "pointers": [
+        "/formal_assurance/roots"
+      ],
+      "format": "integer"
+    },
+    {
+      "id": "assistant-pilot",
+      "kind": "measured",
+      "label": "Exploratory assistant pilot",
+      "scope": "Shared host; six development episodes. No OS-enforced isolation or frontier score.",
+      "record_label": "v0.5.1 evidence",
+      "source": "reports/v051/release-verification.json",
+      "expected_source_sha256": "b11767852853c6171b6235a523a046d459d5d891c1d2c60af5b5f56f95e10378",
+      "pointers": [
+        "/assistant_pilot/successes",
+        "/assistant_pilot/episodes"
+      ],
+      "format": "integer"
+    }
+  ],
+  "benchmark_card": {
+    "title": "Signal Repair",
+    "subtitle": "Globally bounded sensor corruption. Evidence before irreversible action.",
+    "source_label": "Read docs/robust-decisions.md and reports/v051/release-verification.json.",
+    "fields": [
+      {
+        "label": "Missing component",
+        "body": "Fill the selected action and observed exclusion witnesses. One fixed world and one global fault cap govern the episode."
+      },
+      {
+        "label": "Public evidence",
+        "body": "Published worlds, truthful sensor table, action success sets, costs and a trusted observation history."
+      },
+      {
+        "label": "Actions and budget",
+        "body": "Each query is available once. Sensing and commitment share the certified operational budget; setup has a separate tool cost."
+      },
+      {
+        "label": "Strict acceptance",
+        "body": "The action must work in every feasible world. Exclude each unsafe world with at least k+1 distinct observed contradictions."
+      },
+      {
+        "label": "Recorded evidence",
+        "body": "Scripted controls, independent finite audits, a shared-host assistant pilot and generic Lean guarantees have separate scopes."
+      },
+      {
+        "label": "Known boundaries",
+        "body": "Finite symbolic models; no proof of Python refinement, physical sensor validity or frontier hardness."
+      }
+    ]
+  }
+}

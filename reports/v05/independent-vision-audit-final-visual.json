@@ -1,0 +1,144 @@
+{
+  "checks": 5115,
+  "claims": {
+    "finite_engineering_checks": true,
+    "formal_proof": false,
+    "model_performance": false,
+    "physical_robot_validation": false
+  },
+  "counts": {
+    "alias_replay_compact_states": 1,
+    "alias_replay_cost_extrema": 1,
+    "alias_replay_exact_multiplicity": 1,
+    "alias_replay_optimum": 1,
+    "alias_replay_resource_cap": 1,
+    "bounded_rgb_noise": 32,
+    "calibration_inverse": 4,
+    "decision_certificate_valid": 1377,
+    "decision_forgery_rejection": 8,
+    "decoder_accepts_valid_control": 2,
+    "enumerated_complete_policy_optimum": 1377,
+    "exact_visual_tolerance": 8,
+    "image_client_credential_separation": 4,
+    "image_client_exits_cleanly": 4,
+    "image_client_integrity_metadata": 1,
+    "image_client_invalid_payload": 4,
+    "image_client_invalid_payload_atomicity": 4,
+    "image_client_no_private_annotations": 1,
+    "image_client_opaque_filenames": 1,
+    "image_client_public_png_chunks": 1,
+    "image_client_saved_exact_public_pixels": 1,
+    "image_http_grade_withheld": 1,
+    "image_http_public_contract": 1,
+    "image_http_trace_integrity": 1,
+    "image_http_virtual_files_only": 1,
+    "independent_landmark_calibration": 4,
+    "independent_png_roundtrip": 64,
+    "independent_raster_geometry": 64,
+    "invalid_calibration_rejection": 3,
+    "invalid_decision_model_checker": 5,
+    "invalid_decision_model_rejection": 5,
+    "invalid_visual_call": 5,
+    "invalid_visual_call_atomicity": 5,
+    "invalid_visual_fill": 10,
+    "malformed_envelope_rejection": 7,
+    "malformed_png_rejection": 20,
+    "noise_outside_intervention_unchanged": 32,
+    "occluded_counterfactual_equality": 32,
+    "producer_wire_profile": 64,
+    "repeated_capture_correlation": 32,
+    "selected_policy_attains_bound": 663,
+    "source_stability": 1,
+    "valid_certificate_order_alternative": 1,
+    "visual_budget_replay": 216,
+    "visual_counterfactual_changes_decision": 108,
+    "visual_counterfactual_changes_pixels": 108,
+    "visual_executed_rule_scoring": 216,
+    "visual_occluded_twin_byte_equivalence": 72,
+    "visual_public_pixel_reference": 216,
+    "visual_public_twin_equivalence": 108,
+    "visual_trace_integrity": 216
+  },
+  "created_utc": "2026-11-05T03:36:09.599404+00:00",
+  "elapsed_seconds": 53.57537357699994,
+  "failure_count": 0,
+  "failures": [],
+  "measurements": {
+    "alias_replay": {
+      "count_warning": "The leaf count is an exact multiplicity sum, not billions of individually executed trials.",
+      "exact_cost_range": [
+        1,
+        10
+      ],
+      "executed_replay_states": 76,
+      "experiments": 10,
+      "labels_per_world_sensor": 8,
+      "represented_supported_policy_leaves": 2300875336,
+      "worlds": 11
+    },
+    "decoder": {
+      "independent_valid_controls": 2,
+      "malformed_envelopes": 7,
+      "malformed_png_cases": 20,
+      "maximum_bomb_uncompressed_bytes": 1000000
+    },
+    "image_http_client": {
+      "copied_client_imports_evaluator": false,
+      "inline_observation_response_bytes": 148677,
+      "os_isolation_certified": false,
+      "png_bytes": 111341,
+      "transport": "real authenticated loopback HTTP plus copied standalone public client"
+    },
+    "raster": {
+      "exact_pixel_samples": 36864,
+      "oracle": "Fraction geometry plus independently parsed pixels",
+      "scenes": 64
+    },
+    "small_policy_oracle": {
+      "complete_syntactic_policies_per_model": 74,
+      "independence": "full syntactic tree enumeration and raw world-path execution, no production belief recursion",
+      "model_objective_comparisons": 1377,
+      "observation_support_tables": 81,
+      "scope": "2 worlds, 2 one-use experiments with supports {0}, {1}, {0,1}, 2 actions; all 16 action success-set pairs",
+      "selected_policy_replay_leaves": 1326,
+      "whole_policy_evaluations": 101898
+    },
+    "visual_domain": {
+      "episodes": 216,
+      "maximum_position_error_world": 0.05602700000000027,
+      "natural_images_or_model_trials": false,
+      "scripted_public_pixel_successes": 216
+    }
+  },
+  "role": "author/evaluator development audit",
+  "schema": "causalfill.independent-vision-audit.v05",
+  "sections": [
+    "pixels",
+    "decision",
+    "visual",
+    "http"
+  ],
+  "source_sha256_after": {
+    "causalfill/decision_sufficiency.py": "a445af42d5f8c69c86b974611b7b4f8e41072c217899d12ca1a11933964a3312",
+    "causalfill/domains/visual.py": "bb463f07ca3aad1e3afbfa9120783b7eaa651d7bac05ac674ad975b3473dced3",
+    "causalfill/protocol_json.py": "e28caad6721f3445881747553915292a109e71cf0954c5ad1764ce1ef1750c3a",
+    "causalfill/server.py": "a89622b56c832544c828bec770f5b58a5a994d5a293ba9b3d833f5223e4e8557",
+    "causalfill/session.py": "e9f2225452562d3bb0209eaa47ad5e6b211efa45d53c0f7a0cbcf6ce3ee8f71a",
+    "causalfill/types.py": "b307d7b170c8e5b04dd1565db666c790a35ef17567b6ccc0c3ea83598f42761b",
+    "causalfill/vision.py": "8ff1ed8eab0f9294fba832dd3939a3641c8a0a3419b217804de219746a839de1",
+    "clients/image_client.py": "3be50f88d58b43e54e7e312c7b77d2a223bf2fd32b0eaa80e77b13be6f937044",
+    "tools/stress_vision_audit_v05.py": "c057bdaac6cd727e263cd542d7ce117bf35b2679f55f7a4d17226ca5df5bbde9"
+  },
+  "source_sha256_before": {
+    "causalfill/decision_sufficiency.py": "a445af42d5f8c69c86b974611b7b4f8e41072c217899d12ca1a11933964a3312",
+    "causalfill/domains/visual.py": "bb463f07ca3aad1e3afbfa9120783b7eaa651d7bac05ac674ad975b3473dced3",
+    "causalfill/protocol_json.py": "e28caad6721f3445881747553915292a109e71cf0954c5ad1764ce1ef1750c3a",
+    "causalfill/server.py": "a89622b56c832544c828bec770f5b58a5a994d5a293ba9b3d833f5223e4e8557",
+    "causalfill/session.py": "e9f2225452562d3bb0209eaa47ad5e6b211efa45d53c0f7a0cbcf6ce3ee8f71a",
+    "causalfill/types.py": "b307d7b170c8e5b04dd1565db666c790a35ef17567b6ccc0c3ea83598f42761b",
+    "causalfill/vision.py": "8ff1ed8eab0f9294fba832dd3939a3641c8a0a3419b217804de219746a839de1",
+    "clients/image_client.py": "3be50f88d58b43e54e7e312c7b77d2a223bf2fd32b0eaa80e77b13be6f937044",
+    "tools/stress_vision_audit_v05.py": "c057bdaac6cd727e263cd542d7ce117bf35b2679f55f7a4d17226ca5df5bbde9"
+  },
+  "transcript_sha256": "1b26adeada8cc261d87b6b929eeb48768b619595567ae940a617309db6c7e6fb"
+}

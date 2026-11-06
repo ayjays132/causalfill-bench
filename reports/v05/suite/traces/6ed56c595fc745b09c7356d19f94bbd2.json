@@ -1,0 +1,577 @@
+{
+  "public": {
+    "family": "robotics_barrier",
+    "difficulty": 3,
+    "prompt": "Complete the masked manipulation plan in robotics_barrier_v1: target_world_position=<MASK>, safe_waypoints=<MASK>, grasp_precondition=<MASK>. Recover the target from calibrated numeric camera evidence and sense the full-height wall to choose an open passage. Read the workspace, robotics manual and barrier profile. The final route is checked in a symbolic 3D simulator; any behaviorally valid plan is accepted.",
+    "slots": {
+      "target_world_position": {
+        "type": "array[number,number,number]",
+        "description": "Recovered target location in world metres."
+      },
+      "safe_waypoints": {
+        "type": "array[array[number,number,number]]",
+        "description": "0-16 intermediate world points; straight segments connect them."
+      },
+      "grasp_precondition": {
+        "type": "object",
+        "description": "Exactly gripper='open' and force_limit_n within the observed material's valid range."
+      }
+    },
+    "files": [
+      "/docs/barrier-profile.txt",
+      "/docs/robotics-manual.txt",
+      "/scene/workspace.json",
+      "/skill/recovery.md"
+    ],
+    "tools": {
+      "camera": {
+        "description": "Observe calibrated fiducials and visible object projections; coordinates only, not images.",
+        "arguments": {
+          "view": "xy | xz | yz"
+        },
+        "cost": 3
+      },
+      "lidar": {
+        "description": "Observe obstacle boxes in the calibrated world frame.",
+        "arguments": {},
+        "cost": 3
+      },
+      "probe_path": {
+        "description": "Non-destructively check a proposed path for collision/bounds; no target correctness feedback.",
+        "arguments": {
+          "target_world_position": "three finite numbers",
+          "safe_waypoints": "0-16 three-number points"
+        },
+        "cost": 4
+      }
+    },
+    "budget": 40,
+    "max_calls": 60,
+    "episode_id": "6ed56c595fc745b09c7356d19f94bbd2",
+    "common_tools": {
+      "list_files": {
+        "arguments": {},
+        "cost": 1
+      },
+      "read_file": {
+        "arguments": {
+          "path": "exact listed virtual path"
+        },
+        "cost": 1
+      },
+      "search_files": {
+        "arguments": {
+          "text": "literal string, 1\u2013160 characters"
+        },
+        "cost": 2
+      },
+      "session_status": {
+        "arguments": {},
+        "cost": 1
+      },
+      "submit": {
+        "arguments": {
+          "fill": "object",
+          "confidence": "number 0..1",
+          "abstain": "boolean",
+          "evidence": "list of returned event IDs"
+        },
+        "cost": 0
+      }
+    },
+    "max_seconds": 600,
+    "tools_enabled": true,
+    "submission_rule": "One final submission. Grades are evaluator-only; no retry after submission."
+  },
+  "events": [
+    {
+      "event_id": "e0001",
+      "tool": "read_file",
+      "arguments": {
+        "path": "/scene/workspace.json"
+      },
+      "response": {
+        "path": "/scene/workspace.json",
+        "content": "{\n  \"target_id\": \"parcel-AZUFN\",\n  \"start\": [\n    1.0,\n    1.0,\n    1.0\n  ],\n  \"bounds\": [\n    [\n      0.0,\n      0.0,\n      0.0\n    ],\n    [\n      12.0,\n      12.0,\n      12.0\n    ]\n  ],\n  \"gripper_clearance\": 0.15,\n  \"camera_views\": [\n    \"xy\",\n    \"xz\",\n    \"yz\"\n  ],\n  \"material_force_limits_n\": {\n    \"glass\": 2.0,\n    \"foam\": 1.0,\n    \"steel\": 8.0\n  },\n  \"minimum_lifting_force_n\": 0.5,\n  \"goal_tolerance_m\": 1e-05,\n  \"profile_version\": \"robotics_barrier_v1\"\n}",
+        "event_id": "e0001",
+        "cost_used": 1
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "c919a02a58db6802fc2b93e396ee58d964c5792522d2f26bc9d749aca7cbf83a"
+    },
+    {
+      "event_id": "e0002",
+      "tool": "camera",
+      "arguments": {
+        "view": "xy"
+      },
+      "response": {
+        "view": "xy",
+        "kind": "symbolic_orthographic_coordinates",
+        "projection_axes": [
+          0,
+          1
+        ],
+        "fiducials": [
+          {
+            "id": "origin",
+            "world": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "image": [
+              116.0,
+              122.0
+            ]
+          },
+          {
+            "id": "u-anchor",
+            "world": [
+              10.0,
+              0.0,
+              0.0
+            ],
+            "image": [
+              146.0,
+              122.0
+            ]
+          },
+          {
+            "id": "v-anchor",
+            "world": [
+              0.0,
+              10.0,
+              0.0
+            ],
+            "image": [
+              116.0,
+              42.0
+            ]
+          }
+        ],
+        "objects": [
+          {
+            "id": "decoy-06",
+            "image": [
+              143.0,
+              84.0
+            ],
+            "material": "glass"
+          },
+          {
+            "id": "decoy-05",
+            "image": [
+              119.75,
+              34.0
+            ],
+            "material": "steel"
+          },
+          {
+            "id": "decoy-02",
+            "image": [
+              147.5,
+              62.0
+            ],
+            "material": "steel"
+          },
+          {
+            "id": "decoy-07",
+            "image": [
+              122.75,
+              82.0
+            ],
+            "material": "glass"
+          },
+          {
+            "id": "decoy-01",
+            "image": [
+              131.75,
+              48.0
+            ],
+            "material": "steel"
+          },
+          {
+            "id": "decoy-04",
+            "image": [
+              144.5,
+              108.0
+            ],
+            "material": "foam"
+          },
+          {
+            "id": "decoy-00",
+            "image": [
+              126.5,
+              84.0
+            ],
+            "material": "foam"
+          },
+          {
+            "id": "decoy-03",
+            "image": [
+              132.5,
+              78.0
+            ],
+            "material": "glass"
+          }
+        ],
+        "occlusion_possible": true,
+        "units": {
+          "world": "m",
+          "image": "arbitrary_sensor_units"
+        },
+        "event_id": "e0002",
+        "cost_used": 4
+      },
+      "previous_hash": "c919a02a58db6802fc2b93e396ee58d964c5792522d2f26bc9d749aca7cbf83a",
+      "hash": "60702db38bfa8d4cb6ffa39614da825b98eaf57e1651339a231508fb96344515"
+    },
+    {
+      "event_id": "e0003",
+      "tool": "camera",
+      "arguments": {
+        "view": "xz"
+      },
+      "response": {
+        "view": "xz",
+        "kind": "symbolic_orthographic_coordinates",
+        "projection_axes": [
+          0,
+          2
+        ],
+        "fiducials": [
+          {
+            "id": "origin",
+            "world": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "image": [
+              87.0,
+              151.0
+            ]
+          },
+          {
+            "id": "u-anchor",
+            "world": [
+              10.0,
+              0.0,
+              0.0
+            ],
+            "image": [
+              167.0,
+              151.0
+            ]
+          },
+          {
+            "id": "v-anchor",
+            "world": [
+              0.0,
+              0.0,
+              10.0
+            ],
+            "image": [
+              87.0,
+              181.0
+            ]
+          }
+        ],
+        "objects": [
+          {
+            "id": "decoy-00",
+            "image": [
+              115.0,
+              169.75
+            ],
+            "material": "foam"
+          },
+          {
+            "id": "decoy-05",
+            "image": [
+              97.0,
+              163.75
+            ],
+            "material": "steel"
+          },
+          {
+            "id": "parcel-AZUFN",
+            "image": [
+              161.0,
+              159.25
+            ],
+            "material": "glass"
+          },
+          {
+            "id": "decoy-02",
+            "image": [
+              171.0,
+              180.25
+            ],
+            "material": "steel"
+          },
+          {
+            "id": "decoy-03",
+            "image": [
+              131.0,
+              160.75
+            ],
+            "material": "glass"
+          },
+          {
+            "id": "decoy-07",
+            "image": [
+              105.0,
+              166.75
+            ],
+            "material": "glass"
+          },
+          {
+            "id": "decoy-06",
+            "image": [
+              159.0,
+              156.25
+            ],
+            "material": "glass"
+          },
+          {
+            "id": "decoy-01",
+            "image": [
+              129.0,
+              178.0
+            ],
+            "material": "steel"
+          },
+          {
+            "id": "decoy-04",
+            "image": [
+              163.0,
+              175.0
+            ],
+            "material": "foam"
+          }
+        ],
+        "occlusion_possible": true,
+        "units": {
+          "world": "m",
+          "image": "arbitrary_sensor_units"
+        },
+        "event_id": "e0003",
+        "cost_used": 7
+      },
+      "previous_hash": "60702db38bfa8d4cb6ffa39614da825b98eaf57e1651339a231508fb96344515",
+      "hash": "8afb2dbb8f9625ce639ce1a890a43722384be46b500df9b26c9a2371ba8c5399"
+    },
+    {
+      "event_id": "e0004",
+      "tool": "camera",
+      "arguments": {
+        "view": "yz"
+      },
+      "response": {
+        "view": "yz",
+        "kind": "symbolic_orthographic_coordinates",
+        "projection_axes": [
+          1,
+          2
+        ],
+        "fiducials": [
+          {
+            "id": "origin",
+            "world": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "image": [
+              139.0,
+              156.0
+            ]
+          },
+          {
+            "id": "u-anchor",
+            "world": [
+              0.0,
+              10.0,
+              0.0
+            ],
+            "image": [
+              79.0,
+              156.0
+            ]
+          },
+          {
+            "id": "v-anchor",
+            "world": [
+              0.0,
+              0.0,
+              10.0
+            ],
+            "image": [
+              139.0,
+              196.0
+            ]
+          }
+        ],
+        "objects": [
+          {
+            "id": "decoy-04",
+            "image": [
+              128.5,
+              188.0
+            ],
+            "material": "foam"
+          },
+          {
+            "id": "decoy-05",
+            "image": [
+              73.0,
+              173.0
+            ],
+            "material": "steel"
+          },
+          {
+            "id": "decoy-00",
+            "image": [
+              110.5,
+              181.0
+            ],
+            "material": "foam"
+          },
+          {
+            "id": "decoy-03",
+            "image": [
+              106.0,
+              169.0
+            ],
+            "material": "glass"
+          },
+          {
+            "id": "decoy-07",
+            "image": [
+              109.0,
+              177.0
+            ],
+            "material": "glass"
+          },
+          {
+            "id": "parcel-AZUFN",
+            "image": [
+              86.5,
+              167.0
+            ],
+            "material": "glass"
+          },
+          {
+            "id": "decoy-06",
+            "image": [
+              110.5,
+              163.0
+            ],
+            "material": "glass"
+          },
+          {
+            "id": "decoy-01",
+            "image": [
+              83.5,
+              192.0
+            ],
+            "material": "steel"
+          },
+          {
+            "id": "decoy-02",
+            "image": [
+              94.0,
+              195.0
+            ],
+            "material": "steel"
+          }
+        ],
+        "occlusion_possible": true,
+        "units": {
+          "world": "m",
+          "image": "arbitrary_sensor_units"
+        },
+        "event_id": "e0004",
+        "cost_used": 10
+      },
+      "previous_hash": "8afb2dbb8f9625ce639ce1a890a43722384be46b500df9b26c9a2371ba8c5399",
+      "hash": "6dac000704cc57569895c41ecfe4308c71af01f1772ff39556ffffdc826e8186"
+    },
+    {
+      "event_id": "e0005",
+      "tool": "lidar",
+      "arguments": {},
+      "response": {
+        "occupied_boxes": [
+          {
+            "id": "barrier-a",
+            "lower": [
+              5.5,
+              4.0,
+              0.0
+            ],
+            "upper": [
+              6.5,
+              12.0,
+              12.0
+            ]
+          }
+        ],
+        "frame": "world",
+        "units": "m",
+        "event_id": "e0005",
+        "cost_used": 13
+      },
+      "previous_hash": "6dac000704cc57569895c41ecfe4308c71af01f1772ff39556ffffdc826e8186",
+      "hash": "1f0289057e1b43b070d628d6ef834037c0d66e44d16be09e582aaed5d74cd92f"
+    },
+    {
+      "event_id": "e0006",
+      "tool": "submit",
+      "arguments": {
+        "fill": {
+          "target_world_position": [
+            9.25,
+            8.75,
+            2.75
+          ],
+          "safe_waypoints": [
+            [
+              1.0,
+              2.0,
+              1.0
+            ],
+            [
+              9.25,
+              2.0,
+              2.75
+            ]
+          ],
+          "grasp_precondition": {
+            "gripper": "open",
+            "force_limit_n": 2.0
+          }
+        },
+        "confidence": 1.0,
+        "abstain": false,
+        "evidence": [
+          "e0001",
+          "e0002",
+          "e0003",
+          "e0004",
+          "e0005"
+        ]
+      },
+      "response": {
+        "accepted": true,
+        "episode_closed": true,
+        "event_id": "e0006",
+        "cost_used": 13
+      },
+      "previous_hash": "1f0289057e1b43b070d628d6ef834037c0d66e44d16be09e582aaed5d74cd92f",
+      "hash": "c78c89babda62d60ced31b5584e098bffcda646bd415451b6c85ce0273c0cf6b"
+    }
+  ]
+}

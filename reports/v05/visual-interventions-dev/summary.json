@@ -1,0 +1,117 @@
+{
+  "schema": "causalfill.pixel-interventions.v05",
+  "passed": false,
+  "source_fingerprint": "578e76eacd5ce75066e62de709c0353f9efd3fce0522e08f65c8a669dd14ed0c",
+  "source_stable": false,
+  "records": 288,
+  "all_trace_hashes_verified": true,
+  "stored_traces": 12,
+  "summary": {
+    "intact": {
+      "episodes": 72,
+      "successes": 72,
+      "downstream_dispatch_successes": 72,
+      "complete_pairs": 36,
+      "pair_successes": 36,
+      "mean_tool_cost": 4.0,
+      "reference_cannot_recover": 0,
+      "by_split": {
+        "train": {
+          "episodes": 24,
+          "successes": 24
+        },
+        "dev": {
+          "episodes": 24,
+          "successes": 24
+        },
+        "transfer": {
+          "episodes": 24,
+          "successes": 24
+        }
+      }
+    },
+    "blank": {
+      "episodes": 72,
+      "successes": 0,
+      "downstream_dispatch_successes": 0,
+      "complete_pairs": 36,
+      "pair_successes": 0,
+      "mean_tool_cost": 4.0,
+      "reference_cannot_recover": 72,
+      "by_split": {
+        "train": {
+          "episodes": 24,
+          "successes": 0
+        },
+        "dev": {
+          "episodes": 24,
+          "successes": 0
+        },
+        "transfer": {
+          "episodes": 24,
+          "successes": 0
+        }
+      }
+    },
+    "paired_swap": {
+      "episodes": 72,
+      "successes": 0,
+      "downstream_dispatch_successes": 0,
+      "complete_pairs": 36,
+      "pair_successes": 0,
+      "mean_tool_cost": 4.0,
+      "reference_cannot_recover": 0,
+      "by_split": {
+        "train": {
+          "episodes": 24,
+          "successes": 0
+        },
+        "dev": {
+          "episodes": 24,
+          "successes": 0
+        },
+        "transfer": {
+          "episodes": 24,
+          "successes": 0
+        }
+      }
+    },
+    "forced_occlusion": {
+      "episodes": 72,
+      "successes": 24,
+      "downstream_dispatch_successes": 24,
+      "complete_pairs": 36,
+      "pair_successes": 12,
+      "mean_tool_cost": 4.0,
+      "reference_cannot_recover": 48,
+      "by_split": {
+        "train": {
+          "episodes": 24,
+          "successes": 24
+        },
+        "dev": {
+          "episodes": 24,
+          "successes": 0
+        },
+        "transfer": {
+          "episodes": 24,
+          "successes": 0
+        }
+      }
+    }
+  },
+  "failures": [
+    {
+      "kind": "source_changed_during_run"
+    }
+  ],
+  "elapsed_seconds": 57.556,
+  "scope": "Paired development interventions on a scripted pixel reader, not an evaluated vision-language model.",
+  "interpretation": [
+    "Blank observations remove all usable visual information while retaining valid dimensions/hash/PNG.",
+    "Paired swaps retain plausible pixels but change the causal target state; original hidden labels remain fixed.",
+    "Forced occlusion is identical to the clear overview in train; it hides the target in dev/transfer.",
+    "These outcomes establish sensor-path dependence for the reference, not general image understanding.",
+    "All records retained; twelve representative full traces retained. Other traces were checked in memory."
+  ]
+}

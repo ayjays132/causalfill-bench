@@ -1,0 +1,23 @@
+import CausalFill.FiniteArena
+
+#print axioms CausalFill.Information.equal_observation_equal_choice
+#print axioms CausalFill.Information.incompatible_same_observation
+#print axioms CausalFill.Information.guaranteed_pair_requires_distinguishing_observations
+#print axioms CausalFill.Information.successCount_zero
+#print axioms CausalFill.Information.successCount_congr
+#print axioms CausalFill.Information.successCount_le_one
+#print axioms CausalFill.Information.observation_class_success_le_one
+#print axioms CausalFill.Information.successCount_le_completionCapacity
+#print axioms CausalFill.Information.observation_class_capacity_bound
+#print axioms CausalFill.Information.canWin_mono
+#print axioms CausalFill.Information.worstBound_meets
+#print axioms CausalFill.Information.member_meets_worstBound
+#print axioms CausalFill.Information.boundLE_finite
+#print axioms CausalFill.Information.lower_certificate_sound
+#print axioms CausalFill.Information.infinite_value_unwinnable
+#print axioms CausalFill.Information.upper_certificate_sound
+#print axioms CausalFill.Information.certified_exact_budget
+#print axioms CausalFill.Information.FiniteArena.lower_of_check
+#print axioms CausalFill.Information.FiniteArena.upper_of_check
+#print axioms CausalFill.Information.FiniteArena.exact_budget_of_checks
+#print axioms CausalFill.Information.FiniteArena.unwinnable_of_check

@@ -1,0 +1,216 @@
+{
+  "allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "axioms": {
+    "CausalFill.BoundedFault.badReadings_length": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.BoundedFault.capped_live_iff": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.BoundedFault.capped_state_step": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.BoundedFault.capped_update_exact": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.BoundedFault.excluded_stays_excluded": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.BoundedFault.exclusion_witness_sound": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.BoundedFault.feasible_iff_realizes_within": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.BoundedFault.mismatches_append": [
+      "propext"
+    ],
+    "CausalFill.BoundedFault.mismatches_step": [
+      "propext"
+    ],
+    "CausalFill.BoundedFault.realizes_iff_mismatches": [
+      "propext"
+    ],
+    "CausalFill.BoundedFault.safe_action_sound": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.BoundedFault.true_world_preserved": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.BoundedFault.witness_count_le_mismatches": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.BoundedFault.witnesses_certify_action": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ]
+  },
+  "backend": "embedding",
+  "commands": [
+    {
+      "command": [
+        "cc",
+        "-std=c11",
+        "-D_POSIX_C_SOURCE=200809L",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux/include",
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-01/sources/embedding/lean_frontend.c",
+        "-L",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux/lib/lean",
+        "-Wl,-rpath,/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux/lib/lean",
+        "-lleanshared",
+        "-o",
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-01/lean_frontend"
+      ],
+      "cwd": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-01/sources",
+      "elapsed_seconds": 0.817,
+      "exit_code": 0,
+      "expected_success": true,
+      "lean_path": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-01/build",
+      "log": "build-host.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "build-host"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-01/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "EmbeddingSmoke",
+        "embedding/Smoke.lean",
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-01/build/EmbeddingSmoke.olean"
+      ],
+      "cwd": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-01/sources",
+      "elapsed_seconds": 1.419,
+      "exit_code": 0,
+      "expected_success": true,
+      "lean_path": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-01/build",
+      "log": "smoke.log",
+      "log_sha256": "f8a0f1c84cb70f77e60e3f7cf80a04383fcde96212cf43447aeb03e4b730c24d",
+      "name": "smoke"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-01/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "CausalFill.BoundedFault",
+        "CausalFill/BoundedFault.lean",
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-01/build/CausalFill/BoundedFault.olean"
+      ],
+      "cwd": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-01/sources",
+      "elapsed_seconds": 0.716,
+      "exit_code": 0,
+      "expected_success": true,
+      "lean_path": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-01/build",
+      "log": "bounded-fault.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "bounded-fault"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-01/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "BoundedFaultAudit",
+        "BoundedFaultAudit.lean",
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-01/build/BoundedFaultAudit.olean"
+      ],
+      "cwd": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-01/sources",
+      "elapsed_seconds": 0.416,
+      "exit_code": 0,
+      "expected_success": true,
+      "lean_path": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-01/build",
+      "log": "audit.log",
+      "log_sha256": "f7812029c3b9657d0e0dbb3338ef4a2a5fb22a2a31bd14dc7cfda0b21efa7af9",
+      "name": "audit"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-01/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "PositiveBoundaries",
+        "PositiveBoundaries.lean"
+      ],
+      "cwd": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-01/controls",
+      "elapsed_seconds": 0.466,
+      "exit_code": 1,
+      "expected_success": true,
+      "lean_path": "/workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-01/build",
+      "log": "positive-boundaries.log",
+      "log_sha256": "2ecd5d609cc066c498d9b9e2635ef71cd617519793492ca75d6a25617f0e27ee",
+      "name": "positive-boundaries"
+    }
+  ],
+  "elaboration_async": false,
+  "embedding_host_sha256": "676524e258c5abdcf5dea1192b75f493193aea0d6155e3c946266e0eabeb7b2c",
+  "error": "positive-boundaries: unexpected verdict; inspect /workspace/scratch/addf9cb6769c/causalfill-next/causalfill-bench/formal/verification-v051-fault/run-01/positive-boundaries.log",
+  "finished_at_utc": "2026-11-05T22:54:12.470393+00:00",
+  "kernel_replay": {},
+  "limitations": [
+    "Claims concern a fixed world, a truthful binary table, and a single global flip cap.",
+    "Runtime one-use query IDs must correspond to distinct accepted transcript occurrences; that representation refinement is not proved here.",
+    "The optimizer's Bellman costs, Python/runtime equivalence, physical sensing, and model performance are outside these theorem statements.",
+    "Six checker configurations include Lean's checker, its hardened variant, and four bundled external implementations; they are not six wholly independent stacks.",
+    "Checkers run directly on a data export; this does not assert that Lake's full paranoid build sandbox ran."
+  ],
+  "negative_controls": {},
+  "required_roots": [
+    "CausalFill.BoundedFault.mismatches_append",
+    "CausalFill.BoundedFault.mismatches_step",
+    "CausalFill.BoundedFault.realizes_iff_mismatches",
+    "CausalFill.BoundedFault.feasible_iff_realizes_within",
+    "CausalFill.BoundedFault.capped_update_exact",
+    "CausalFill.BoundedFault.capped_live_iff",
+    "CausalFill.BoundedFault.capped_state_step",
+    "CausalFill.BoundedFault.true_world_preserved",
+    "CausalFill.BoundedFault.excluded_stays_excluded",
+    "CausalFill.BoundedFault.badReadings_length",
+    "CausalFill.BoundedFault.witness_count_le_mismatches",
+    "CausalFill.BoundedFault.exclusion_witness_sound",
+    "CausalFill.BoundedFault.witnesses_certify_action",
+    "CausalFill.BoundedFault.safe_action_sound"
+  ],
+  "schema": "causalfill.bounded-fault-verification.v1",
+  "smoke_axioms": {
+    "embedding_smoke": []
+  },
+  "source_sha256": {
+    "BoundedFaultAudit.lean": "969525acc26ab860f8d3058ec2be40fa2cbd709b839cd266ef8bbc2c55993886",
+    "BoundedFaultExport.lean": "1216871fedb3bedfedfb09560262a1c070c088d2e8787643d22b78296cd6b6af",
+    "CausalFill/BoundedFault.lean": "67b4b1bdae52597b783e2816639845d12139f12b5252d479d826aa775067651d",
+    "bounded-fault-roots.json": "73df85fc60bd3a87c82f973d1fd945a772382ee9d273dae4c86985f431200562",
+    "embedding/Smoke.lean": "9e68618384d73e51b28301fdc52003bfb76be0e3d66491461d7dca4f67989913",
+    "embedding/lean_frontend.c": "c3ca22596fbd699f7a5f2a99a9fc028c157a79235a781ac798e52d1346e89dc0",
+    "lean-toolchain": "ca5f1f601d34c49079e38d7e7041eb0f2a9c227fbc1df0f404820069a052330c",
+    "verify_bounded_fault.py": "dc0f9fa345b24b08ec96163c38ee9ab199f5b21f6a6346aad732279e2df3cbdc"
+  },
+  "started_at_utc": "2026-11-05T22:54:07.849203+00:00",
+  "statement_bindings": {
+    "all_root_types_checked": true
+  },
+  "status": "failed",
+  "toolchain_files_sha256": {
+    "include/lean/version.h": "9907fbdb242103decf5c1a1541d6ddc701c8f9b94126b5af7d8a6dfc69200fdf",
+    "lib/lean/libleanshared.so": "efef27df56f2197139afe12f1a2b63913a05f1aba81ce88824c44100431ed8c4"
+  },
+  "toolchain_version": "4.35.0",
+  "trust_level": 0,
+  "verified_toolchain_archive_sha256": "7289597a44543246c9227b8cae501767e095ce17f6d448b95fc4a8dc97268f6d"
+}

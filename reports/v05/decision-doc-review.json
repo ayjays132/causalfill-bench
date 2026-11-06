@@ -1,0 +1,74 @@
+{
+  "schema": "causalfill.decision-doc-review.v1",
+  "reviewer": "AI assistant visual_perception agent, separate from module author",
+  "reviewed_utc": "2026-11-05T03:45:17.331688+00:00",
+  "source_sha256": {
+    "docs/decision-sufficiency.md": "ddec24b418e9b5da1b4d2b998de8a9bb2e43efafd0e9e00267be26621d2e9b90",
+    "causalfill/decision_sufficiency.py": "a445af42d5f8c69c86b974611b7b4f8e41072c217899d12ca1a11933964a3312",
+    "tools/stress_decision_v05.py": "490a1bf8055793b15b18d2fc293a3750f767887e3f17865211aebcd10ce64e64"
+  },
+  "method": "Read prose and implementation, manually checked fixture cost arguments, and reproduced the six exact optimum comparisons. This is a documentation consistency review, not an independent proof kernel.",
+  "arithmetic_or_objective_errors_found": 0,
+  "fixtures": [
+    {
+      "fixture": "decision",
+      "action_cost": 1,
+      "identification_cost": 4,
+      "best_fixed_sensing_action_cost": 1,
+      "all_terminal_costs_zero": true,
+      "action_certificate_valid": true,
+      "identification_certificate_valid": true
+    },
+    {
+      "fixture": "robust",
+      "action_cost": 0,
+      "identification_cost": 4,
+      "best_fixed_sensing_action_cost": 0,
+      "all_terminal_costs_zero": true,
+      "action_certificate_valid": true,
+      "identification_certificate_valid": true
+    },
+    {
+      "fixture": "ambiguous",
+      "action_cost": null,
+      "identification_cost": null,
+      "best_fixed_sensing_action_cost": null,
+      "all_terminal_costs_zero": true,
+      "action_certificate_valid": true,
+      "identification_certificate_valid": true
+    },
+    {
+      "fixture": "noisy_resolvable",
+      "action_cost": 2,
+      "identification_cost": 5,
+      "best_fixed_sensing_action_cost": 2,
+      "all_terminal_costs_zero": true,
+      "action_certificate_valid": true,
+      "identification_certificate_valid": true
+    },
+    {
+      "fixture": "adaptive",
+      "action_cost": 3,
+      "identification_cost": 3,
+      "best_fixed_sensing_action_cost": 4,
+      "all_terminal_costs_zero": true,
+      "action_certificate_valid": true,
+      "identification_certificate_valid": true
+    },
+    {
+      "fixture": "action_ambiguity",
+      "action_cost": 1,
+      "identification_cost": null,
+      "best_fixed_sensing_action_cost": 1,
+      "all_terminal_costs_zero": true,
+      "action_certificate_valid": true,
+      "identification_certificate_valid": true
+    }
+  ],
+  "wording_notes": [
+    "At zero-cost terminal states the implementation intentionally prunes positive-cost query alternatives using the nonnegative lower bound; qualify wording that all query subproblems are always enumerated.",
+    "Noisy-resolvable action cost2 is achieved by querying side_camera directly; taking the frontal camera first can raise worst-case sensing cost to3. Calling it an alternative side view avoids implying a mandatory two-query sequence.",
+    "The support-table model permits all cross-experiment combinations consistent with a fixed world; it does not encode joint cross-sensor correlations. This is a scope clarification, not a stochastic independence requirement."
+  ],
+  "edits_made": false
+}

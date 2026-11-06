@@ -1,0 +1,359 @@
+{
+  "claims": {
+    "finite_evaluator_stress_test": true,
+    "formal_machine_checked_proof": false,
+    "global_correctness_proved": false,
+    "model_solver_run": false
+  },
+  "created_utc": "2026-11-05T03:23:31.458273+00:00",
+  "deterministic_transcript_sha256": "56962b7d169260188b1616b9b6f345e085b0ba81bb821f494a4143baf913fde6",
+  "elapsed_seconds": 11.562144,
+  "failure_examples_cap": 100,
+  "failures": [],
+  "measurements": {
+    "diagnosis_complete_policy_oracle": {
+      "oracle_independence": "Enumerates every complete bounded-depth query assignment and simulates every binary response row. No Bellman recurrence computes expected depths.",
+      "oracles": [
+        {
+          "complete_policies_enumerated": 2,
+          "complete_world_trajectories": 4,
+          "depth_limit": 1,
+          "different_subsets_evaluated": 3,
+          "policy_subset_compatibility_checks": 4,
+          "tables": 1,
+          "width": 1
+        },
+        {
+          "complete_policies_enumerated": 11,
+          "complete_world_trajectories": 44,
+          "depth_limit": 2,
+          "different_subsets_evaluated": 15,
+          "policy_subset_compatibility_checks": 77,
+          "tables": 11,
+          "width": 2
+        },
+        {
+          "complete_policies_enumerated": 2218,
+          "complete_world_trajectories": 17744,
+          "depth_limit": 3,
+          "different_subsets_evaluated": 255,
+          "policy_subset_compatibility_checks": 227796,
+          "tables": 247,
+          "width": 3
+        },
+        {
+          "complete_policies_enumerated": 16453,
+          "complete_world_trajectories": 263248,
+          "depth_limit": 3,
+          "different_subsets_evaluated": 272,
+          "policy_subset_compatibility_checks": 90576,
+          "tables": 96,
+          "width": 4
+        }
+      ],
+      "table_scope": "Every subset of distinct rows with at least two worlds for widths 1, 2, 3; fixed-seed samples of 2..4 worlds for width 4."
+    },
+    "diagnosis_observed_eliminations": {
+      "state_injection": "Synthetic evaluator-only instances exercise actual query/evaluate methods; no scored or model solver runs.",
+      "table_world_cases": 1330,
+      "worlds_are_all_rows_of_each_audited_table": true
+    },
+    "formal_malformed_and_resource_bounds": {
+      "bounds_exercised": {
+        "certificate_states_rejected": 100001,
+        "initial_clauses": 2000,
+        "literal_entries": 500000,
+        "proof_steps": 12000,
+        "variables": 200
+      },
+      "malformed_scope": "JSON-like values plus NaN/Infinity, tuples where excluded, huge integers, and cyclic in-process trees; no arbitrary Python object gadget execution."
+    },
+    "generated_diagnosis_operational_checks": {
+      "instances": 108,
+      "max_certificate_states": 1573,
+      "max_depth": 6,
+      "oracle_limitation": "Operational strategy replay and evidence integrity only; large-table lower bounds are not independently policy-enumerated here.",
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "world_paths": 2016
+    },
+    "generated_proof_statement_semantics": {
+      "complete_valuations": 366592,
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "statements": 112,
+      "transfer_difficulties_excluded_from_truth_enumeration": [
+        2,
+        3
+      ]
+    },
+    "model_truth_tables": {
+      "complete_cnf_scope": "All 0-, 1-, and ordered 2-clause formulas over 1..3 variables, including tautologies and duplicates.",
+      "model_calls": 50422,
+      "random_formulas": 2000
+    },
+    "proof_alternatives_and_forgeries": {
+      "construction": "All assignment blockers, randomly relabeled and signed, paired into a resolution tree.",
+      "independent_statements": 160,
+      "input_variables": "1..7 plus the signed goal",
+      "randomized_internal_step_corruptions": 1920,
+      "uses_production_proof_search": false
+    },
+    "proof_nonvacuity_and_nonentailment": {
+      "cases": [
+        "explicit inconsistent units",
+        "existing empty premise",
+        "empty satisfiable nonentailing premises",
+        "satisfiable disjunction not entailing goal"
+      ],
+      "complete_consistency_assignments_per_statement": 4,
+      "statements": 4
+    },
+    "resolution_exhaustive": {
+      "accepted_inferences": 120295,
+      "assignment_implications_represented": 1878926,
+      "assignments_satisfying_both_parents": 1741446,
+      "clause_pair_pivot_cases": 274960,
+      "oracle": "Complete Boolean truth tables compressed into bit masks; no proof-search oracle.",
+      "variables": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "satisfiable_multistep_semantics": {
+      "complete_valuations": 65364,
+      "constructed_steps": 31894,
+      "oracle": "Final clause truth implication under every Boolean valuation, with at least one known premise model.",
+      "satisfiable_formulas": 1000,
+      "variables": "1..8"
+    },
+    "statement_commitment_metamorphisms": {
+      "cryptographic_limitation": "Tests canonicalization and changed-input commitments on this finite corpus; does not prove SHA256 collision resistance or authenticity.",
+      "formulas": 300
+    }
+  },
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.39",
+  "profile": "full",
+  "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+  "reproduce_command": "python tools/stress_formal.py --output reports/stress-v0.3/formal-results.json",
+  "run_kind": "evaluator-development-author-audit",
+  "schema_version": "causalfill.formal-stress.v0.3",
+  "sections": {
+    "audit_reproducibility": {
+      "acceptance_checks": 0,
+      "checks": 1,
+      "exceptions": 0,
+      "expected_accepts": 0,
+      "expected_rejects": 0,
+      "false_accepts": 0,
+      "false_rejects": 0,
+      "invariant_checks": 1,
+      "invariant_failures": 0,
+      "observed_accepts": 0,
+      "observed_rejects": 0
+    },
+    "diagnosis_bound_and_strategy_forgeries": {
+      "acceptance_checks": 29011,
+      "checks": 29011,
+      "exceptions": 0,
+      "expected_accepts": 1353,
+      "expected_rejects": 27658,
+      "false_accepts": 0,
+      "false_rejects": 0,
+      "invariant_checks": 0,
+      "invariant_failures": 0,
+      "observed_accepts": 1353,
+      "observed_rejects": 27658
+    },
+    "diagnosis_complete_policy_oracle": {
+      "acceptance_checks": 1975,
+      "checks": 3240,
+      "exceptions": 0,
+      "expected_accepts": 1975,
+      "expected_rejects": 0,
+      "false_accepts": 0,
+      "false_rejects": 0,
+      "invariant_checks": 1265,
+      "invariant_failures": 0,
+      "observed_accepts": 1975,
+      "observed_rejects": 0
+    },
+    "diagnosis_observed_eliminations": {
+      "acceptance_checks": 19016,
+      "checks": 22102,
+      "exceptions": 0,
+      "expected_accepts": 5675,
+      "expected_rejects": 13341,
+      "false_accepts": 0,
+      "false_rejects": 0,
+      "invariant_checks": 3086,
+      "invariant_failures": 0,
+      "observed_accepts": 5675,
+      "observed_rejects": 13341
+    },
+    "formal_malformed_and_resource_bounds": {
+      "acceptance_checks": 180,
+      "checks": 188,
+      "exceptions": 0,
+      "expected_accepts": 19,
+      "expected_rejects": 161,
+      "false_accepts": 0,
+      "false_rejects": 0,
+      "invariant_checks": 8,
+      "invariant_failures": 0,
+      "observed_accepts": 19,
+      "observed_rejects": 161
+    },
+    "generated_diagnosis_operational_checks": {
+      "acceptance_checks": 108,
+      "checks": 216,
+      "exceptions": 0,
+      "expected_accepts": 108,
+      "expected_rejects": 0,
+      "false_accepts": 0,
+      "false_rejects": 0,
+      "invariant_checks": 108,
+      "invariant_failures": 0,
+      "observed_accepts": 108,
+      "observed_rejects": 0
+    },
+    "generated_proof_statement_semantics": {
+      "acceptance_checks": 0,
+      "checks": 224,
+      "exceptions": 0,
+      "expected_accepts": 0,
+      "expected_rejects": 0,
+      "false_accepts": 0,
+      "false_rejects": 0,
+      "invariant_checks": 224,
+      "invariant_failures": 0,
+      "observed_accepts": 0,
+      "observed_rejects": 0
+    },
+    "model_truth_tables": {
+      "acceptance_checks": 50422,
+      "checks": 50422,
+      "exceptions": 0,
+      "expected_accepts": 30188,
+      "expected_rejects": 20234,
+      "false_accepts": 0,
+      "false_rejects": 0,
+      "invariant_checks": 0,
+      "invariant_failures": 0,
+      "observed_accepts": 30188,
+      "observed_rejects": 20234
+    },
+    "proof_alternatives_and_forgeries": {
+      "acceptance_checks": 5600,
+      "checks": 5920,
+      "exceptions": 0,
+      "expected_accepts": 1120,
+      "expected_rejects": 4480,
+      "false_accepts": 0,
+      "false_rejects": 0,
+      "invariant_checks": 320,
+      "invariant_failures": 0,
+      "observed_accepts": 1120,
+      "observed_rejects": 4480
+    },
+    "proof_nonvacuity_and_nonentailment": {
+      "acceptance_checks": 16,
+      "checks": 16,
+      "exceptions": 0,
+      "expected_accepts": 0,
+      "expected_rejects": 16,
+      "false_accepts": 0,
+      "false_rejects": 0,
+      "invariant_checks": 0,
+      "invariant_failures": 0,
+      "observed_accepts": 0,
+      "observed_rejects": 16
+    },
+    "resolution_exhaustive": {
+      "acceptance_checks": 274960,
+      "checks": 515550,
+      "exceptions": 0,
+      "expected_accepts": 120295,
+      "expected_rejects": 154665,
+      "false_accepts": 0,
+      "false_rejects": 0,
+      "invariant_checks": 240590,
+      "invariant_failures": 0,
+      "observed_accepts": 120295,
+      "observed_rejects": 154665
+    },
+    "satisfiable_multistep_semantics": {
+      "acceptance_checks": 3997,
+      "checks": 4997,
+      "exceptions": 0,
+      "expected_accepts": 1000,
+      "expected_rejects": 2997,
+      "false_accepts": 0,
+      "false_rejects": 0,
+      "invariant_checks": 1000,
+      "invariant_failures": 0,
+      "observed_accepts": 1000,
+      "observed_rejects": 2997
+    },
+    "statement_commitment_metamorphisms": {
+      "acceptance_checks": 0,
+      "checks": 1200,
+      "exceptions": 0,
+      "expected_accepts": 0,
+      "expected_rejects": 0,
+      "false_accepts": 0,
+      "false_rejects": 0,
+      "invariant_checks": 1200,
+      "invariant_failures": 0,
+      "observed_accepts": 0,
+      "observed_rejects": 0
+    }
+  },
+  "seed": 2026110103,
+  "source_sha256_after": {
+    "causalfill/decision_certificates.py": "72a78f7cef527057c60388e9419885902fee8b2bd8f15fbd99c6189f31d87523",
+    "causalfill/domains/diagnosis.py": "df2b66386d73e4527c16faa2ad9589e59be38ee21e4525bfd3e677f0ba76b767",
+    "causalfill/domains/proof.py": "6f56ba758c299308d8a6d058ba556e27664e2ed8d76956419bba6de6775e2e5b",
+    "causalfill/logic_kernel.py": "cb79c9cc40c34dee62b7d660cd9fbd9799faab052d229b549c10eb599100dea1",
+    "causalfill/types.py": "b307d7b170c8e5b04dd1565db666c790a35ef17567b6ccc0c3ea83598f42761b",
+    "tools/stress_formal.py": "cb81182664435af2068bf98cc63a25bec568fee261efb4224589b7cf98862fa6"
+  },
+  "source_sha256_before": {
+    "causalfill/decision_certificates.py": "72a78f7cef527057c60388e9419885902fee8b2bd8f15fbd99c6189f31d87523",
+    "causalfill/domains/diagnosis.py": "df2b66386d73e4527c16faa2ad9589e59be38ee21e4525bfd3e677f0ba76b767",
+    "causalfill/domains/proof.py": "6f56ba758c299308d8a6d058ba556e27664e2ed8d76956419bba6de6775e2e5b",
+    "causalfill/logic_kernel.py": "cb79c9cc40c34dee62b7d660cd9fbd9799faab052d229b549c10eb599100dea1",
+    "causalfill/types.py": "b307d7b170c8e5b04dd1565db666c790a35ef17567b6ccc0c3ea83598f42761b",
+    "tools/stress_formal.py": "cb81182664435af2068bf98cc63a25bec568fee261efb4224589b7cf98862fa6"
+  },
+  "source_stable_during_run": true,
+  "totals": {
+    "acceptance_checks": 385285,
+    "checks": 633087,
+    "exceptions": 0,
+    "expected_accepts": 161733,
+    "expected_rejects": 223552,
+    "false_accepts": 0,
+    "false_rejects": 0,
+    "invariant_checks": 247802,
+    "invariant_failures": 0,
+    "observed_accepts": 161733,
+    "observed_rejects": 223552
+  }
+}

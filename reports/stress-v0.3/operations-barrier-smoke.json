@@ -1,0 +1,83 @@
+{
+  "arguments": {
+    "actions_per_episode": 50,
+    "geometry_cases": 10000,
+    "master_seed": 371905,
+    "metamorphic_seed_count": 8,
+    "output": "reports/stress-v0.3/operations-barrier-smoke.json",
+    "sections": [
+      "robotics_barrier"
+    ],
+    "seed_count": 2
+  },
+  "audit_version": "operations-v0.3",
+  "elapsed_seconds": 0.320269,
+  "episode_seeds": [
+    0,
+    1
+  ],
+  "master_seed": 371905,
+  "metamorphic_episode_seeds": [
+    0,
+    1,
+    2,
+    17,
+    101,
+    9223372036854775807,
+    221318266990595571,
+    6329510949758400530
+  ],
+  "mode": "evaluator-development",
+  "sections": [
+    {
+      "counters": {
+        "certificate_forgeries_rejected": 144,
+        "certificate_forgery_attempts": 144,
+        "check:barrier_alternative_valid_certificate": 18,
+        "check:barrier_certificate_forgery": 144,
+        "check:barrier_fixed_roof_adjudication": 36,
+        "check:barrier_fixed_roof_never_solves_pair": 18,
+        "check:barrier_independent_constructive_route": 36,
+        "check:barrier_pair_certificate": 18,
+        "check:barrier_probe_is_distinguishing_geometry_evidence": 18,
+        "check:barrier_reference_route": 36,
+        "check:barrier_shared_camera_observations": 54,
+        "check:barrier_shared_public_contract": 18,
+        "check:barrier_swapped_route_independently_collides": 36,
+        "check:barrier_swapped_route_rejected": 36,
+        "checks": 468,
+        "constructive_route_successes": 36,
+        "episodes": 36,
+        "expected_accepts": 73,
+        "expected_rejects": 215,
+        "fixed_roof_successes_twin_0": 0,
+        "fixed_roof_successes_twin_1": 1,
+        "pairs": 18,
+        "passed_checks": 468,
+        "valid_pair_certificates": 18,
+        "verdict_checks": 288
+      },
+      "elapsed_seconds": 0.319184,
+      "examples": [],
+      "failure_counts": {},
+      "name": "robotics_barrier",
+      "notes": [
+        "Separate versioned profile; original robotics routes remain valid. Both twins share public files and cameras. Exact paired certificates establish no common continuous route, while geometry-dependent probes or lidar can distinguish the worlds.",
+        "The stress oracle independently reconstructs camera targets and checks route segments by exact face intersection. Forged certificates include recomputed hashes with an uncovered section, shortened walls, or changed shared observations."
+      ]
+    }
+  ],
+  "source_sha256": {
+    "causalfill/domains/__init__.py": "74c7870d72f6afa7a52cae22b2952e14ea85731fc8b9eb55e130687cfb1f8f23",
+    "causalfill/domains/diagnosis.py": "df2b66386d73e4527c16faa2ad9589e59be38ee21e4525bfd3e677f0ba76b767",
+    "causalfill/domains/grid.py": "8e8bcfdfaef7238c4706b04b981965046f257db3c456187b9b663ed5ffa17753",
+    "causalfill/domains/latent.py": "3cbe4ce70fc92ca0d748e7a8aa7b82f6985e976576f1f884b4bdbc466b35de9d",
+    "causalfill/domains/proof.py": "6f56ba758c299308d8a6d058ba556e27664e2ed8d76956419bba6de6775e2e5b",
+    "causalfill/domains/robotics.py": "e24e99b9c27f05d239ff7f22e87727870e02682d9e81791be1d89bdf8a97d283",
+    "causalfill/domains/robotics_barrier.py": "397edec3e71c1b9b740266e2fdd14d6cdad9a86aec1155456f5b47ec55af9f1a",
+    "causalfill/domains/vending.py": "e50a449a8c0090858c9579216b646ec37a814f630b93588de6754be005d92174",
+    "causalfill/domains/words.py": "6fa66419f1d55390d46289260914cd4ef0d7b6e18ab87498502695e109ede914",
+    "causalfill/domains/workflow.py": "7ae8b03f537bb50f305471111bdb8a1e5586f2719535303855de7941d45e4b2c",
+    "tools/stress_operations.py": "2b36e6123a588511ad4d4c03fe7121b381b48501e6d654d8c0ce5dea94a715c0"
+  }
+}

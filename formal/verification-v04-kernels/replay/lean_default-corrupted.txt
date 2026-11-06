@@ -1,0 +1,11 @@
+Lean default kernel rejects the solution: while replaying declaration 'CausalFill.Information.certified_exact_budget':
+(kernel) declaration type mismatch, 'CausalFill.Information.certified_exact_budget' has type
+  Type
+but it is expected to have type
+  ∀ {State : Type} {game : CausalFill.Information.Game State} {values : State → Option Nat} {rank : State → Nat},
+    CausalFill.Information.ValidLower game values →
+      CausalFill.Information.ValidUpper game values rank →
+        ∀ {state : State} {required : Nat},
+          Eq (values state) (Option.some required) →
+            And (CausalFill.Information.CanWin game state required)
+              (∀ (budget : Nat), CausalFill.Information.CanWin game state budget → LE.le required budget)

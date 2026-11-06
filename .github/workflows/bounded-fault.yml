@@ -1,0 +1,60 @@
+name: bounded-fault-assurance
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'causalfill/robust_decisions.py'
+      - 'causalfill/domains/robust_sensing.py'
+      - 'formal/CausalFill/BoundedFault.lean'
+      - 'formal/BoundedFault*.lean'
+      - 'formal/bounded-fault-roots.json'
+      - 'formal/verify_bounded_fault.py'
+      - 'tools/stress_robust*.py'
+      - '.github/workflows/bounded-fault.yml'
+  pull_request:
+    paths:
+      - 'causalfill/robust_decisions.py'
+      - 'causalfill/domains/robust_sensing.py'
+      - 'formal/CausalFill/BoundedFault.lean'
+      - 'formal/BoundedFault*.lean'
+      - 'formal/bounded-fault-roots.json'
+      - 'formal/verify_bounded_fault.py'
+      - 'tools/stress_robust*.py'
+      - '.github/workflows/bounded-fault.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: '3.12'
+      - name: Check independent finite oracle and live fault cases
+        run: python tools/stress_robust_v051.py --cases 256 --runtime-seeds 3 --output private-runs/robust-ci
+      - name: Install the pinned official Lean toolchain
+        shell: bash
+        run: |
+          curl --fail --location --retry 3 --output "$RUNNER_TEMP/lean.tar.zst" https://github.com/leanprover/lean4/releases/download/v4.35.0/lean-4.35.0-linux.tar.zst
+          printf '%s  %s\n' 7289597a44543246c9227b8cae501767e095ce17f6d448b95fc4a8dc97268f6d "$RUNNER_TEMP/lean.tar.zst" | sha256sum --check
+          tar --zstd -xf "$RUNNER_TEMP/lean.tar.zst" -C "$RUNNER_TEMP"
+      - name: Check bounded-fault statements, axioms, proofs and negative controls
+        shell: bash
+        run: |
+          python formal/verify_bounded_fault.py \
+            --toolchain "$RUNNER_TEMP/lean-4.35.0-linux" \
+            --toolchain-archive "$RUNNER_TEMP/lean.tar.zst" \
+            --backend embedding \
+            --output formal/verification-ci-bounded-fault \
+            --timeout 300
+      - name: Retain evidence and diagnostics
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: bounded-fault-${{ github.run_id }}-${{ github.run_attempt }}
+          retention-days: 14
+          path: |
+            private-runs/robust-ci/
+            formal/verification-ci-bounded-fault/

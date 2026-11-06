@@ -1,0 +1,368 @@
+{
+  "public": {
+    "family": "latent_sparse",
+    "difficulty": 1,
+    "prompt": "Recover a masked affine operator f: GF(101)^8 -> GF(101)^8 under a budget of nine cost units. Each output coordinate depends on at most two input coordinates plus an offset. You may choose bounded intervention vectors for the probe tool. Submit offset and sparse rows: output[i] = (offset[i] + sum(term.coefficient * input[term.column] for term in rows[i])) modulo 101. All entries are integers 0..100; columns are indexed from zero. Your map must work on all inputs, not only your probes.",
+    "slots": {
+      "offset": {
+        "type": "integer_vector",
+        "description": "Exactly 8 residues."
+      },
+      "rows": {
+        "type": "sparse_matrix_rows",
+        "description": "Exactly 8 lists of {column: int, coefficient: int}. No duplicate columns within a row; omitted entries mean zero."
+      }
+    },
+    "files": [
+      "/docs/field.txt",
+      "/skill/recovery.md",
+      "/workspace/operator.masked.json"
+    ],
+    "tools": {
+      "probe": {
+        "description": "Evaluate the operator on one intervention vector; no state is changed.",
+        "arguments": {
+          "vector": "list of 8 integers in [0, 100]"
+        },
+        "cost": 1
+      }
+    },
+    "budget": 9,
+    "max_calls": 14,
+    "episode_id": "e2e12eec6af447ee976d090f1803abb1",
+    "common_tools": {
+      "list_files": {
+        "arguments": {},
+        "cost": 1
+      },
+      "read_file": {
+        "arguments": {
+          "path": "exact listed virtual path"
+        },
+        "cost": 1
+      },
+      "search_files": {
+        "arguments": {
+          "text": "literal string, 1\u2013160 characters"
+        },
+        "cost": 2
+      },
+      "session_status": {
+        "arguments": {},
+        "cost": 1
+      },
+      "submit": {
+        "arguments": {
+          "fill": "object",
+          "confidence": "number 0..1",
+          "abstain": "boolean",
+          "evidence": "list of returned event IDs"
+        },
+        "cost": 0
+      }
+    },
+    "max_seconds": 600,
+    "tools_enabled": true,
+    "submission_rule": "One final submission. Grades are evaluator-only; no retry after submission."
+  },
+  "events": [
+    {
+      "event_id": "e0001",
+      "tool": "read_file",
+      "arguments": {
+        "path": "/workspace/operator.masked.json"
+      },
+      "response": {
+        "path": "/workspace/operator.masked.json",
+        "content": "{\"modulus\":101,\"dimension\":8,\"rows\":[{\"offset\":\"[MASK:b_0]\",\"terms\":[{\"column\":\"[MASK:j_0_0]\",\"coefficient\":\"[MASK:a_0_0]\"},{\"column\":\"[MASK:j_0_1]\",\"coefficient\":\"[MASK:a_0_1]\"}]},{\"offset\":\"[MASK:b_1]\",\"terms\":[{\"column\":\"[MASK:j_1_0]\",\"coefficient\":\"[MASK:a_1_0]\"},{\"column\":\"[MASK:j_1_1]\",\"coefficient\":\"[MASK:a_1_1]\"}]},{\"offset\":\"[MASK:b_2]\",\"terms\":[{\"column\":\"[MASK:j_2_0]\",\"coefficient\":\"[MASK:a_2_0]\"},{\"column\":\"[MASK:j_2_1]\",\"coefficient\":\"[MASK:a_2_1]\"}]},{\"offset\":\"[MASK:b_3]\",\"terms\":[{\"column\":\"[MASK:j_3_0]\",\"coefficient\":\"[MASK:a_3_0]\"},{\"column\":\"[MASK:j_3_1]\",\"coefficient\":\"[MASK:a_3_1]\"}]},{\"offset\":\"[MASK:b_4]\",\"terms\":[{\"column\":\"[MASK:j_4_0]\",\"coefficient\":\"[MASK:a_4_0]\"},{\"column\":\"[MASK:j_4_1]\",\"coefficient\":\"[MASK:a_4_1]\"}]},{\"offset\":\"[MASK:b_5]\",\"terms\":[{\"column\":\"[MASK:j_5_0]\",\"coefficient\":\"[MASK:a_5_0]\"},{\"column\":\"[MASK:j_5_1]\",\"coefficient\":\"[MASK:a_5_1]\"}]},{\"offset\":\"[MASK:b_6]\",\"terms\":[{\"column\":\"[MASK:j_6_0]\",\"coefficient\":\"[MASK:a_6_0]\"},{\"column\":\"[MASK:j_6_1]\",\"coefficient\":\"[MASK:a_6_1]\"}]},{\"offset\":\"[MASK:b_7]\",\"terms\":[{\"column\":\"[MASK:j_7_0]\",\"coefficient\":\"[MASK:a_7_0]\"},{\"column\":\"[MASK:j_7_1]\",\"coefficient\":\"[MASK:a_7_1]\"}]}]}",
+        "event_id": "e0001",
+        "cost_used": 1
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "09a6711917fee49045fa6233077ef67e1c84ae2362a6cbe479139950d0dba01c"
+    },
+    {
+      "event_id": "e0002",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "response": {
+        "output": [
+          27,
+          87,
+          60,
+          27,
+          36,
+          82,
+          64,
+          17
+        ],
+        "modulus": 101,
+        "event_id": "e0002",
+        "cost_used": 2
+      },
+      "previous_hash": "09a6711917fee49045fa6233077ef67e1c84ae2362a6cbe479139950d0dba01c",
+      "hash": "6264cd9781a6d413f45ec2bb9287b814234df7cb694018c45ba22c3704b4eaad"
+    },
+    {
+      "event_id": "e0003",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "response": {
+        "output": [
+          53,
+          43,
+          93,
+          7,
+          96,
+          37,
+          58,
+          46
+        ],
+        "modulus": 101,
+        "event_id": "e0003",
+        "cost_used": 3
+      },
+      "previous_hash": "6264cd9781a6d413f45ec2bb9287b814234df7cb694018c45ba22c3704b4eaad",
+      "hash": "9e5e360ec381786229acd950a6bc5c0a012dbeab13ccb082f26f14421f572fba"
+    },
+    {
+      "event_id": "e0004",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "response": {
+        "output": [
+          19,
+          19,
+          8,
+          60,
+          97,
+          9,
+          56,
+          75
+        ],
+        "modulus": 101,
+        "event_id": "e0004",
+        "cost_used": 4
+      },
+      "previous_hash": "9e5e360ec381786229acd950a6bc5c0a012dbeab13ccb082f26f14421f572fba",
+      "hash": "5a61af4a48cbc0c57a85db22fff1cb764e135309ac5c70852ae02194eebcf2ee"
+    },
+    {
+      "event_id": "e0005",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          1,
+          4,
+          9,
+          16,
+          25,
+          36,
+          49
+        ]
+      },
+      "response": {
+        "output": [
+          55,
+          11,
+          58,
+          12,
+          3,
+          99,
+          32,
+          62
+        ],
+        "modulus": 101,
+        "event_id": "e0005",
+        "cost_used": 5
+      },
+      "previous_hash": "5a61af4a48cbc0c57a85db22fff1cb764e135309ac5c70852ae02194eebcf2ee",
+      "hash": "41775e69a7bd5769965bf9efdd89400752fe5ec4456eef7f92234d8ef517fe9e"
+    },
+    {
+      "event_id": "e0006",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          1,
+          8,
+          27,
+          64,
+          24,
+          14,
+          40
+        ]
+      },
+      "response": {
+        "output": [
+          44,
+          14,
+          16,
+          5,
+          52,
+          55,
+          37,
+          85
+        ],
+        "modulus": 101,
+        "event_id": "e0006",
+        "cost_used": 6
+      },
+      "previous_hash": "41775e69a7bd5769965bf9efdd89400752fe5ec4456eef7f92234d8ef517fe9e",
+      "hash": "e23b160712fd4b27e1fdd26cbfadce0f4f4df605676fc7401f0fe695d787cd04"
+    },
+    {
+      "event_id": "e0007",
+      "tool": "submit",
+      "arguments": {
+        "fill": {
+          "offset": [
+            27,
+            87,
+            60,
+            27,
+            36,
+            82,
+            64,
+            17
+          ],
+          "rows": [
+            [
+              {
+                "column": 2,
+                "coefficient": 41
+              },
+              {
+                "column": 6,
+                "coefficient": 86
+              }
+            ],
+            [
+              {
+                "column": 2,
+                "coefficient": 37
+              },
+              {
+                "column": 3,
+                "coefficient": 20
+              }
+            ],
+            [
+              {
+                "column": 3,
+                "coefficient": 58
+              },
+              {
+                "column": 5,
+                "coefficient": 76
+              }
+            ],
+            [
+              {
+                "column": 5,
+                "coefficient": 65
+              },
+              {
+                "column": 7,
+                "coefficient": 16
+              }
+            ],
+            [
+              {
+                "column": 1,
+                "coefficient": 43
+              },
+              {
+                "column": 7,
+                "coefficient": 17
+              }
+            ],
+            [
+              {
+                "column": 1,
+                "coefficient": 99
+              },
+              {
+                "column": 4,
+                "coefficient": 58
+              }
+            ],
+            [
+              {
+                "column": 0,
+                "coefficient": 97
+              },
+              {
+                "column": 4,
+                "coefficient": 99
+              }
+            ],
+            [
+              {
+                "column": 0,
+                "coefficient": 53
+              },
+              {
+                "column": 6,
+                "coefficient": 77
+              }
+            ]
+          ]
+        },
+        "confidence": 1.0,
+        "abstain": false,
+        "evidence": [
+          "e0001",
+          "e0002",
+          "e0003",
+          "e0004",
+          "e0005",
+          "e0006"
+        ]
+      },
+      "response": {
+        "accepted": true,
+        "episode_closed": true,
+        "event_id": "e0007",
+        "cost_used": 6
+      },
+      "previous_hash": "e23b160712fd4b27e1fdd26cbfadce0f4f4df605676fc7401f0fe695d787cd04",
+      "hash": "0e05a6f7d524ea3feeca0da68165e90ac396bbd48b8fb6827ea3a24a2d943d8b"
+    }
+  ]
+}

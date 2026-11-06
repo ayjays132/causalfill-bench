@@ -1,0 +1,188 @@
+{
+  "public": {
+    "family": "diagnosis",
+    "difficulty": 1,
+    "prompt": "Complete a missing diagnosis and certify it from experiments. Exactly one listed world is current. The public table lists every possible world's deterministic binary response to each experiment; it does not identify the current world. Choose experiments, identify the world, and for every other world cite an experiment you actually performed whose observed response excludes it. A lucky world guess without these elimination witnesses does not pass. At most 3 experiments are permitted, even if unused file-read cost remains. This is the independently checked minimum worst-case deterministic adaptive query depth for this table. Read /formal/diagnosis.json.",
+    "slots": {
+      "world": {
+        "type": "integer",
+        "description": "Current candidate-world index 0..7."
+      },
+      "eliminations": {
+        "type": "array[object]",
+        "description": "Exactly one {world: competitor_index, experiment: observed_experiment_id} for every competing world."
+      }
+    },
+    "files": [
+      "/docs/diagnosis.txt",
+      "/formal/diagnosis.json",
+      "/skill/recovery.md"
+    ],
+    "tools": {
+      "experiment": {
+        "description": "Observe one binary response from the current world; repeated experiments still count.",
+        "arguments": {
+          "id": "integer 0..5"
+        },
+        "cost": 1
+      }
+    },
+    "budget": 5,
+    "max_calls": 11,
+    "episode_id": "10ff9ad9788e4112a91a984f9e3c5f95",
+    "common_tools": {
+      "list_files": {
+        "arguments": {},
+        "cost": 1
+      },
+      "read_file": {
+        "arguments": {
+          "path": "exact listed virtual path"
+        },
+        "cost": 1
+      },
+      "search_files": {
+        "arguments": {
+          "text": "literal string, 1\u2013160 characters"
+        },
+        "cost": 2
+      },
+      "session_status": {
+        "arguments": {},
+        "cost": 1
+      },
+      "submit": {
+        "arguments": {
+          "fill": "object",
+          "confidence": "number 0..1",
+          "abstain": "boolean",
+          "evidence": "list of returned event IDs"
+        },
+        "cost": 0
+      }
+    },
+    "max_seconds": 600,
+    "tools_enabled": true,
+    "submission_rule": "One final submission. Grades are evaluator-only; no retry after submission."
+  },
+  "events": [
+    {
+      "event_id": "e0001",
+      "tool": "read_file",
+      "arguments": {
+        "path": "/formal/diagnosis.json"
+      },
+      "response": {
+        "path": "/formal/diagnosis.json",
+        "content": "{\"world_count\":8,\"experiment_count\":6,\"responses\":[[0,0,1,1,0,0],[0,1,1,0,1,0],[1,0,0,0,0,0],[1,1,0,0,0,1],[0,0,1,1,0,1],[1,1,1,0,0,0],[0,0,1,0,0,0],[1,1,0,0,1,0]],\"table_sha256\":\"3297800b9f263c66fcc83be477171616693cab1c376cb4d17c9b5df3f176dc26\",\"query_budget\":3,\"binary_information_lower_bound\":3,\"world_indices\":\"zero-based rows\",\"experiment_indices\":\"zero-based columns\"}",
+        "event_id": "e0001",
+        "cost_used": 1
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "8013c89b2d83bf07984bdbde49f27f1769b49aa435418d91e2d8422bca4cfb54"
+    },
+    {
+      "event_id": "e0002",
+      "tool": "experiment",
+      "arguments": {
+        "id": 1
+      },
+      "response": {
+        "experiment": 1,
+        "outcome": 0,
+        "remaining_experiments": 2,
+        "event_id": "e0002",
+        "cost_used": 2
+      },
+      "previous_hash": "8013c89b2d83bf07984bdbde49f27f1769b49aa435418d91e2d8422bca4cfb54",
+      "hash": "aa8010c6055a97a0183109d7072709483763298b47bc545da54a6b00dcfda6c4"
+    },
+    {
+      "event_id": "e0003",
+      "tool": "experiment",
+      "arguments": {
+        "id": 3
+      },
+      "response": {
+        "experiment": 3,
+        "outcome": 1,
+        "remaining_experiments": 1,
+        "event_id": "e0003",
+        "cost_used": 3
+      },
+      "previous_hash": "aa8010c6055a97a0183109d7072709483763298b47bc545da54a6b00dcfda6c4",
+      "hash": "c093f23eb0343d704663b7f3d5d85824f277a2a9b61857e8ab7498669b4e11e4"
+    },
+    {
+      "event_id": "e0004",
+      "tool": "experiment",
+      "arguments": {
+        "id": 5
+      },
+      "response": {
+        "experiment": 5,
+        "outcome": 1,
+        "remaining_experiments": 0,
+        "event_id": "e0004",
+        "cost_used": 4
+      },
+      "previous_hash": "c093f23eb0343d704663b7f3d5d85824f277a2a9b61857e8ab7498669b4e11e4",
+      "hash": "df33ad877b550265c397018427d320a8a97d42f8fd7893f55cddf22b1854212d"
+    },
+    {
+      "event_id": "e0005",
+      "tool": "submit",
+      "arguments": {
+        "fill": {
+          "world": 4,
+          "eliminations": [
+            {
+              "world": 0,
+              "experiment": 5
+            },
+            {
+              "world": 1,
+              "experiment": 1
+            },
+            {
+              "world": 2,
+              "experiment": 3
+            },
+            {
+              "world": 3,
+              "experiment": 1
+            },
+            {
+              "world": 5,
+              "experiment": 1
+            },
+            {
+              "world": 6,
+              "experiment": 3
+            },
+            {
+              "world": 7,
+              "experiment": 1
+            }
+          ]
+        },
+        "confidence": 1.0,
+        "abstain": false,
+        "evidence": [
+          "e0001",
+          "e0002",
+          "e0003",
+          "e0004"
+        ]
+      },
+      "response": {
+        "accepted": true,
+        "episode_closed": true,
+        "event_id": "e0005",
+        "cost_used": 4
+      },
+      "previous_hash": "df33ad877b550265c397018427d320a8a97d42f8fd7893f55cddf22b1854212d",
+      "hash": "1f80ceb7d6339f3776b67c39a5bf8f7f50162a622f3c86e64a1ba7ba897274dc"
+    }
+  ]
+}

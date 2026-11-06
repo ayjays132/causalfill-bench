@@ -1,0 +1,321 @@
+{
+  "problem": {
+    "schema": "causalfill.noisy-decision.v1",
+    "worlds": [
+      "left_dry",
+      "left_wet",
+      "right_dry",
+      "right_wet"
+    ],
+    "actions": [
+      {
+        "id": "left_slow",
+        "cost": 0,
+        "success_worlds": [
+          "left_dry",
+          "left_wet"
+        ]
+      },
+      {
+        "id": "right_slow",
+        "cost": 0,
+        "success_worlds": [
+          "right_dry",
+          "right_wet"
+        ]
+      }
+    ],
+    "experiments": [
+      {
+        "id": "camera",
+        "cost": 1,
+        "supports": {
+          "left_dry": [
+            "left",
+            "blur"
+          ],
+          "left_wet": [
+            "left",
+            "blur"
+          ],
+          "right_dry": [
+            "right",
+            "blur"
+          ],
+          "right_wet": [
+            "right",
+            "blur"
+          ]
+        }
+      },
+      {
+        "id": "surface",
+        "cost": 3,
+        "supports": {
+          "left_dry": [
+            "dry"
+          ],
+          "left_wet": [
+            "wet"
+          ],
+          "right_dry": [
+            "dry"
+          ],
+          "right_wet": [
+            "wet"
+          ]
+        }
+      },
+      {
+        "id": "side_camera",
+        "cost": 2,
+        "supports": {
+          "left_dry": [
+            "left_a",
+            "left_b"
+          ],
+          "left_wet": [
+            "left_a",
+            "left_b"
+          ],
+          "right_dry": [
+            "right_a",
+            "right_b"
+          ],
+          "right_wet": [
+            "right_a",
+            "right_b"
+          ]
+        }
+      }
+    ]
+  },
+  "certificate": {
+    "schema": "causalfill.decision-sufficiency-certificate.v1",
+    "problem_sha256": "f7fbf4cb0ce28fcd1a5714d71193b806b5cfd78b109db153f5fabfe239ec21ba",
+    "objective": "identification",
+    "root": [
+      15,
+      7
+    ],
+    "value": 5,
+    "nodes": [
+      [
+        1,
+        0,
+        0,
+        {
+          "kind": "identify",
+          "id": "left_dry"
+        }
+      ],
+      [
+        2,
+        0,
+        0,
+        {
+          "kind": "identify",
+          "id": "left_wet"
+        }
+      ],
+      [
+        4,
+        0,
+        0,
+        {
+          "kind": "identify",
+          "id": "right_dry"
+        }
+      ],
+      [
+        8,
+        0,
+        0,
+        {
+          "kind": "identify",
+          "id": "right_wet"
+        }
+      ],
+      [
+        1,
+        1,
+        0,
+        {
+          "kind": "identify",
+          "id": "left_dry"
+        }
+      ],
+      [
+        1,
+        4,
+        0,
+        {
+          "kind": "identify",
+          "id": "left_dry"
+        }
+      ],
+      [
+        2,
+        1,
+        0,
+        {
+          "kind": "identify",
+          "id": "left_wet"
+        }
+      ],
+      [
+        2,
+        4,
+        0,
+        {
+          "kind": "identify",
+          "id": "left_wet"
+        }
+      ],
+      [
+        3,
+        2,
+        3,
+        {
+          "kind": "query",
+          "id": "surface"
+        }
+      ],
+      [
+        4,
+        1,
+        0,
+        {
+          "kind": "identify",
+          "id": "right_dry"
+        }
+      ],
+      [
+        4,
+        4,
+        0,
+        {
+          "kind": "identify",
+          "id": "right_dry"
+        }
+      ],
+      [
+        5,
+        4,
+        2,
+        {
+          "kind": "query",
+          "id": "side_camera"
+        }
+      ],
+      [
+        8,
+        1,
+        0,
+        {
+          "kind": "identify",
+          "id": "right_wet"
+        }
+      ],
+      [
+        8,
+        4,
+        0,
+        {
+          "kind": "identify",
+          "id": "right_wet"
+        }
+      ],
+      [
+        10,
+        4,
+        2,
+        {
+          "kind": "query",
+          "id": "side_camera"
+        }
+      ],
+      [
+        12,
+        2,
+        3,
+        {
+          "kind": "query",
+          "id": "surface"
+        }
+      ],
+      [
+        3,
+        3,
+        3,
+        {
+          "kind": "query",
+          "id": "surface"
+        }
+      ],
+      [
+        3,
+        6,
+        3,
+        {
+          "kind": "query",
+          "id": "surface"
+        }
+      ],
+      [
+        5,
+        5,
+        2,
+        {
+          "kind": "query",
+          "id": "side_camera"
+        }
+      ],
+      [
+        10,
+        5,
+        2,
+        {
+          "kind": "query",
+          "id": "side_camera"
+        }
+      ],
+      [
+        12,
+        3,
+        3,
+        {
+          "kind": "query",
+          "id": "surface"
+        }
+      ],
+      [
+        12,
+        6,
+        3,
+        {
+          "kind": "query",
+          "id": "surface"
+        }
+      ],
+      [
+        15,
+        6,
+        5,
+        {
+          "kind": "query",
+          "id": "side_camera"
+        }
+      ],
+      [
+        15,
+        7,
+        5,
+        {
+          "kind": "query",
+          "id": "side_camera"
+        }
+      ]
+    ]
+  }
+}

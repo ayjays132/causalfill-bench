@@ -1,0 +1,105 @@
+{
+  "arguments": {
+    "actions_per_episode": 50,
+    "geometry_cases": 10000,
+    "master_seed": 371905,
+    "metamorphic_seed_count": 16,
+    "output": "reports/stress-v0.3/operations-workflow-followup.json",
+    "sections": [
+      "workflow"
+    ],
+    "seed_count": 32
+  },
+  "audit_version": "operations-v0.3",
+  "elapsed_seconds": 18.310192,
+  "episode_seeds": [
+    0,
+    1,
+    2,
+    17,
+    101,
+    9223372036854775807,
+    7594596528502505151,
+    9100958416505487452,
+    5274252333415628999,
+    6389709599768338555,
+    1329759766786914708,
+    8647149717656224600,
+    7681989809271861532,
+    3969068133012207515,
+    7143082649007396547,
+    2677715525425012751,
+    7137067415909357186,
+    7744727350115842455,
+    5971314159713489204,
+    5433915157239813966,
+    7879117937092608554,
+    5890249470840359023,
+    7443014294209665528,
+    323187773189721038,
+    5226407866097286665,
+    2908334427351983524,
+    4864929315316584732,
+    3335069324828331661,
+    5213293672671160326,
+    2470710024658800111,
+    7514820935839676808,
+    8203013724887725167
+  ],
+  "master_seed": 371905,
+  "metamorphic_episode_seeds": [
+    0,
+    1,
+    2,
+    17,
+    101,
+    9223372036854775807,
+    221318266990595571,
+    6329510949758400530,
+    8546790207430122902,
+    7778101383077782898,
+    397575124028459929,
+    4921181624114015556,
+    2233344919941754874,
+    903823165116928278,
+    1749666857386958739,
+    8323627499409043401
+  ],
+  "mode": "evaluator-development",
+  "sections": [
+    {
+      "counters": {
+        "check:equivalent_workflow_expression": 1440,
+        "check:frozen_calibration_rejected": 288,
+        "check:independent_fractional_signed_ood": 8640,
+        "check:workflow_attack_witness_differs": 1440,
+        "check:workflow_ood_range_attack": 1440,
+        "checks": 13248,
+        "episodes": 288,
+        "expected_accepts": 1440,
+        "expected_rejects": 1728,
+        "passed_checks": 13248,
+        "verdict_checks": 3168
+      },
+      "elapsed_seconds": 18.309354,
+      "examples": [],
+      "failure_counts": {},
+      "name": "workflow",
+      "notes": [
+        "Acceptance is compared with explicit well-formed OOD witnesses, not merely disagreement with a reference string. Current strict success also requires a sufficient symbolic certificate over the declared integer domain [-1000000,1000000] with positive scale 1..1000000. Signed/fractional interpreter probes outside that contract are diagnostics only. Older baseline reports capture the original finite-suite-only verifier."
+      ]
+    }
+  ],
+  "source_sha256": {
+    "causalfill/domains/__init__.py": "74c7870d72f6afa7a52cae22b2952e14ea85731fc8b9eb55e130687cfb1f8f23",
+    "causalfill/domains/diagnosis.py": "df2b66386d73e4527c16faa2ad9589e59be38ee21e4525bfd3e677f0ba76b767",
+    "causalfill/domains/grid.py": "8e8bcfdfaef7238c4706b04b981965046f257db3c456187b9b663ed5ffa17753",
+    "causalfill/domains/latent.py": "3cbe4ce70fc92ca0d748e7a8aa7b82f6985e976576f1f884b4bdbc466b35de9d",
+    "causalfill/domains/proof.py": "6f56ba758c299308d8a6d058ba556e27664e2ed8d76956419bba6de6775e2e5b",
+    "causalfill/domains/robotics.py": "b89e035ca757aba1e8e552059c8cf12000c79728f6686a27fa8c1c6b712175f3",
+    "causalfill/domains/vending.py": "e50a449a8c0090858c9579216b646ec37a814f630b93588de6754be005d92174",
+    "causalfill/domains/words.py": "6fa66419f1d55390d46289260914cd4ef0d7b6e18ab87498502695e109ede914",
+    "causalfill/domains/workflow.py": "7ae8b03f537bb50f305471111bdb8a1e5586f2719535303855de7941d45e4b2c",
+    "tools/stress_operations.py": "8b2ec4f433ffd1cc7d03fc8f35ad31a0869edba3cb30214dc00abd24b8da2f5c"
+  }
+}

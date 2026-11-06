@@ -1,0 +1,468 @@
+{
+  "arguments": {
+    "actions_per_episode": 80,
+    "geometry_cases": 20000,
+    "master_seed": 371905,
+    "metamorphic_seed_count": 16,
+    "output": "reports/stress-v0.3/operations.json",
+    "sections": [
+      "geometry",
+      "robotics",
+      "vending",
+      "workflow",
+      "grid",
+      "latent"
+    ],
+    "seed_count": 64
+  },
+  "audit_version": "operations-v0.3",
+  "elapsed_seconds": 86.765324,
+  "episode_seeds": [
+    0,
+    1,
+    2,
+    17,
+    101,
+    9223372036854775807,
+    7594596528502505151,
+    9100958416505487452,
+    5274252333415628999,
+    6389709599768338555,
+    1329759766786914708,
+    8647149717656224600,
+    7681989809271861532,
+    3969068133012207515,
+    7143082649007396547,
+    2677715525425012751,
+    7137067415909357186,
+    7744727350115842455,
+    5971314159713489204,
+    5433915157239813966,
+    7879117937092608554,
+    5890249470840359023,
+    7443014294209665528,
+    323187773189721038,
+    5226407866097286665,
+    2908334427351983524,
+    4864929315316584732,
+    3335069324828331661,
+    5213293672671160326,
+    2470710024658800111,
+    7514820935839676808,
+    8203013724887725167,
+    415795650648838875,
+    7742513944140306021,
+    5141368681976154084,
+    5656174373300155534,
+    2384339294750570161,
+    914406621966210905,
+    7811760490839720686,
+    1311697427590518994,
+    7321671892804180327,
+    8233349049119547765,
+    6044927325940952626,
+    8697556347013953499,
+    7386751233449467412,
+    3166205917787619010,
+    4996676458208815265,
+    4929886182403249701,
+    2731031332751861181,
+    2449767049069435191,
+    32273930721832901,
+    7944269965698368252,
+    3482879679675036737,
+    8134461269139531544,
+    4284259674010941148,
+    1001498055559040301,
+    1858017594255240756,
+    4575723659700998933,
+    8933576304462719149,
+    6698295481680123638,
+    3157040484476167611,
+    7909506839133095858,
+    6830016494887664688,
+    3666864355153380281
+  ],
+  "master_seed": 371905,
+  "metamorphic_episode_seeds": [
+    0,
+    1,
+    2,
+    17,
+    101,
+    9223372036854775807,
+    221318266990595571,
+    6329510949758400530,
+    8546790207430122902,
+    7778101383077782898,
+    397575124028459929,
+    4921181624114015556,
+    2233344919941754874,
+    903823165116928278,
+    1749666857386958739,
+    8323627499409043401
+  ],
+  "mode": "evaluator-development",
+  "sections": [
+    {
+      "counters": {
+        "check:exact_segment_geometry": 60000,
+        "checks": 60000,
+        "expected_accepts": 58839,
+        "expected_rejects": 1161,
+        "passed_checks": 60000,
+        "segment_comparisons": 60000,
+        "verdict_checks": 60000
+      },
+      "elapsed_seconds": 3.394384,
+      "examples": [],
+      "failure_counts": {},
+      "name": "geometry",
+      "notes": [
+        "Exact decimal-rational oracle tests segment endpoints and all six box faces; the implementation under test uses its own predicate."
+      ]
+    },
+    {
+      "counters": {
+        "check:closed_gripper": 1152,
+        "check:constant_route_force": 1152,
+        "check:defensive_lidar_copy": 1152,
+        "check:direct_route": 1152,
+        "check:force_boundary": 8064,
+        "check:incorrect_target": 3456,
+        "check:maximum_valid_waypoints": 1152,
+        "check:obstacle_grazing": 6912,
+        "check:probe_geometry_only": 3456,
+        "check:workspace_boundary": 5760,
+        "checks": 33408,
+        "constant_route_force_successes": 1152,
+        "direct_successes_twin_0": 0,
+        "direct_successes_twin_1": 576,
+        "episodes": 1152,
+        "expected_accepts": 13629,
+        "expected_rejects": 15171,
+        "passed_checks": 33408,
+        "verdict_checks": 28800
+      },
+      "elapsed_seconds": 14.811625,
+      "examples": [],
+      "failure_counts": {},
+      "name": "robotics",
+      "notes": [
+        "Targets are reconstructed by independent exact Gaussian calibration from camera observations. All route verdicts use the independent face-intersection oracle.",
+        "A fixed z=10 detour and fixed 0.5 N force is a legal shortcut control; successes are not classified as verifier false accepts."
+      ]
+    },
+    {
+      "counters": {
+        "actions": 121932,
+        "check:advance_chunking_equivalence": 1152,
+        "check:cash_conservation": 121932,
+        "check:expiry_day_is_inclusive": 1152,
+        "check:expiry_next_day_removes_stock": 1152,
+        "check:express_trajectory_independent_of_cedar_twin": 576,
+        "check:fee_obligation_conservation": 121932,
+        "check:fixed_controller_session_result": 1152,
+        "check:fixed_controller_within_budget": 1152,
+        "check:independent_quote_arithmetic": 6956,
+        "check:invalid_world_atomicity": 50124,
+        "check:quote_does_not_mutate_world": 6956,
+        "check:reachable_insolvency_records_unpaid_fees": 1152,
+        "check:stock_conservation": 121932,
+        "check:unit_inventory_and_cash_oracle": 121932,
+        "check:unpaid_fees_fail_invariant_score": 1152,
+        "check:vending_action_contract": 121932,
+        "check:vending_defensive_copies": 1152,
+        "check:vending_final_outcome": 1152,
+        "check:vending_twin_single_lead_parameter": 576,
+        "check:wrong_procurement_field_rejected": 5760,
+        "check:zero_demand_does_not_pass": 1152,
+        "checks": 692128,
+        "constructed_insolvent_episodes": 1152,
+        "expected_accepts": 72048,
+        "expected_rejects": 57948,
+        "fixed_controller_tool_calls_total": 34560,
+        "fixed_controller_tool_cost_total": 49536,
+        "fixed_express_episodes": 1152,
+        "fixed_express_successes": 1152,
+        "fixed_express_successes:dev:d1:t0": 64,
+        "fixed_express_successes:dev:d1:t1": 64,
+        "fixed_express_successes:dev:d2:t0": 64,
+        "fixed_express_successes:dev:d2:t1": 64,
+        "fixed_express_successes:dev:d3:t0": 64,
+        "fixed_express_successes:dev:d3:t1": 64,
+        "fixed_express_successes:train:d1:t0": 64,
+        "fixed_express_successes:train:d1:t1": 64,
+        "fixed_express_successes:train:d2:t0": 64,
+        "fixed_express_successes:train:d2:t1": 64,
+        "fixed_express_successes:train:d3:t0": 64,
+        "fixed_express_successes:train:d3:t1": 64,
+        "fixed_express_successes:transfer:d1:t0": 64,
+        "fixed_express_successes:transfer:d1:t1": 64,
+        "fixed_express_successes:transfer:d2:t0": 64,
+        "fixed_express_successes:transfer:d2:t1": 64,
+        "fixed_express_successes:transfer:d3:t0": 64,
+        "fixed_express_successes:transfer:d3:t1": 64,
+        "fuzz_episodes": 1152,
+        "invalid_actions": 50124,
+        "passed_checks": 692128,
+        "reachable_expiry_episodes": 853,
+        "reachable_unpaid_fee_episodes": 14,
+        "valid_actions": 71808,
+        "verdict_checks": 129996
+      },
+      "elapsed_seconds": 30.506006,
+      "examples": [],
+      "failure_counts": {},
+      "name": "vending",
+      "notes": [
+        "Independent unit inventory oracle uses three public quotes, public forecast and initial constants; hidden noise is copied once only as evaluator-side exogenous scenario data.",
+        "The fixed Express controller sets price 359 and orders five cases on days 0,4,8,...; it receives three Cedar quotes solely to fill the required coefficients and one initial status for the horizon. It runs through the budgeted Session interface. It is a scripted shortcut control, not a model result."
+      ]
+    },
+    {
+      "counters": {
+        "check:equivalent_workflow_expression": 1440,
+        "check:frozen_calibration_rejected": 288,
+        "check:independent_fractional_signed_ood": 8640,
+        "check:workflow_attack_witness_differs": 1440,
+        "check:workflow_ood_range_attack": 1440,
+        "checks": 13248,
+        "episodes": 288,
+        "expected_accepts": 1440,
+        "expected_rejects": 1728,
+        "passed_checks": 11808,
+        "verdict_checks": 3168
+      },
+      "elapsed_seconds": 16.828154,
+      "examples": [
+        {
+          "actual_output": "-102",
+          "case": {
+            "difficulty": 1,
+            "seed": 0,
+            "split": "train",
+            "twin": 0
+          },
+          "expected_output": "-103",
+          "expression": "(balance-amount*scale-fee)+max(0,scale-19)",
+          "kind": "false_accept",
+          "label": "workflow_ood_range_attack",
+          "verdict": {
+            "details": {
+              "behavior_cases": 131,
+              "passed": 131
+            },
+            "outcome": 1.0,
+            "recovery": 1.0,
+            "safety": 1.0,
+            "success": true
+          },
+          "witness": {
+            "amount": 7,
+            "balance": 40,
+            "ceiling": 50,
+            "fee": 3,
+            "reserve": 10,
+            "scale": 20
+          }
+        },
+        {
+          "actual_output": "234",
+          "case": {
+            "difficulty": 1,
+            "seed": 0,
+            "split": "train",
+            "twin": 0
+          },
+          "expected_output": "233",
+          "expression": "(balance-amount*scale-fee)+max(0,balance-249)",
+          "kind": "false_accept",
+          "label": "workflow_ood_range_attack",
+          "verdict": {
+            "details": {
+              "behavior_cases": 131,
+              "passed": 131
+            },
+            "outcome": 1.0,
+            "recovery": 1.0,
+            "safety": 1.0,
+            "success": true
+          },
+          "witness": {
+            "amount": 7,
+            "balance": 250,
+            "ceiling": 50,
+            "fee": 3,
+            "reserve": 10,
+            "scale": 2
+          }
+        },
+        {
+          "actual_output": "-82",
+          "case": {
+            "difficulty": 1,
+            "seed": 0,
+            "split": "train",
+            "twin": 0
+          },
+          "expected_output": "-83",
+          "expression": "(balance-amount*scale-fee)+max(0,amount-59)",
+          "kind": "false_accept",
+          "label": "workflow_ood_range_attack",
+          "verdict": {
+            "details": {
+              "behavior_cases": 131,
+              "passed": 131
+            },
+            "outcome": 1.0,
+            "recovery": 1.0,
+            "safety": 1.0,
+            "success": true
+          },
+          "witness": {
+            "amount": 60,
+            "balance": 40,
+            "ceiling": 50,
+            "fee": 3,
+            "reserve": 10,
+            "scale": 2
+          }
+        },
+        {
+          "actual_output": "7",
+          "case": {
+            "difficulty": 1,
+            "seed": 0,
+            "split": "train",
+            "twin": 0
+          },
+          "expected_output": "6",
+          "expression": "(balance-amount*scale-fee)+max(0,fee-19)",
+          "kind": "false_accept",
+          "label": "workflow_ood_range_attack",
+          "verdict": {
+            "details": {
+              "behavior_cases": 131,
+              "passed": 131
+            },
+            "outcome": 1.0,
+            "recovery": 1.0,
+            "safety": 1.0,
+            "success": true
+          },
+          "witness": {
+            "amount": 7,
+            "balance": 40,
+            "ceiling": 50,
+            "fee": 20,
+            "reserve": 10,
+            "scale": 2
+          }
+        },
+        {
+          "actual_output": "-69962",
+          "case": {
+            "difficulty": 1,
+            "seed": 0,
+            "split": "train",
+            "twin": 0
+          },
+          "expected_output": "-69963",
+          "expression": "(balance-amount*scale-fee)+max(0,scale-9999)",
+          "kind": "false_accept",
+          "label": "workflow_ood_range_attack",
+          "verdict": {
+            "details": {
+              "behavior_cases": 131,
+              "passed": 131
+            },
+            "outcome": 1.0,
+            "recovery": 1.0,
+            "safety": 1.0,
+            "success": true
+          },
+          "witness": {
+            "amount": 7,
+            "balance": 40,
+            "ceiling": 50,
+            "fee": 3,
+            "reserve": 10,
+            "scale": 10000
+          }
+        }
+      ],
+      "failure_counts": {
+        "false_accept": 1440,
+        "false_accept:workflow_ood_range_attack": 1440
+      },
+      "name": "workflow",
+      "notes": [
+        "Acceptance is compared with explicit well-formed OOD witnesses, not merely disagreement with a reference string. The finite verifier cannot certify every unbounded input of its min/max DSL."
+      ]
+    },
+    {
+      "counters": {
+        "check:cross_twin_grid_rejected": 288,
+        "check:equivalent_grid_composition": 288,
+        "check:fixed_grid_default_adjudicated": 288,
+        "check:grid_composition_metamorphism": 13824,
+        "check:incorrect_grid_program_rejected": 768,
+        "check:independent_grid_semantics": 13824,
+        "check:independently_recovered_grid_program": 288,
+        "check:public_observations_identify_grid_program": 288,
+        "checks": 29856,
+        "episodes": 288,
+        "expected_accepts": 585,
+        "expected_rejects": 1335,
+        "fixed_grid_default_successes": 9,
+        "passed_checks": 29856,
+        "verdict_checks": 1920
+      },
+      "elapsed_seconds": 9.378015,
+      "examples": [],
+      "failure_counts": {},
+      "name": "grid",
+      "notes": [
+        "Uses an independent coordinate-index grid interpreter and evidence-filtered public grammar enumeration; no generator interpreter or reference-answer calls are used."
+      ]
+    },
+    {
+      "counters": {
+        "check:affine_addition_metamorphism": 11520,
+        "check:dense_basis_certificate_accepted": 576,
+        "check:dense_random_affine_interventions": 11520,
+        "check:five_probe_recovery_matches_dense_oracle": 576,
+        "check:latent_cross_twin_rejected": 576,
+        "check:latent_mutation_rejected": 2304,
+        "check:latent_single_coefficient_twin": 576,
+        "check:reordered_zero_augmented_matrix": 576,
+        "checks": 28224,
+        "episodes": 576,
+        "expected_accepts": 1152,
+        "expected_rejects": 2880,
+        "passed_checks": 28224,
+        "verdict_checks": 4032
+      },
+      "elapsed_seconds": 11.841269,
+      "examples": [],
+      "failure_counts": {},
+      "name": "latent",
+      "notes": [
+        "Dense full-basis recovery is an evaluator-side exact oracle. For SparseLatentTask it exceeds the nine-unit solver budget and is never reported as budgeted policy success."
+      ]
+    }
+  ],
+  "source_sha256": {
+    "causalfill/domains/__init__.py": "74c7870d72f6afa7a52cae22b2952e14ea85731fc8b9eb55e130687cfb1f8f23",
+    "causalfill/domains/diagnosis.py": "df2b66386d73e4527c16faa2ad9589e59be38ee21e4525bfd3e677f0ba76b767",
+    "causalfill/domains/grid.py": "8e8bcfdfaef7238c4706b04b981965046f257db3c456187b9b663ed5ffa17753",
+    "causalfill/domains/latent.py": "3cbe4ce70fc92ca0d748e7a8aa7b82f6985e976576f1f884b4bdbc466b35de9d",
+    "causalfill/domains/proof.py": "6f56ba758c299308d8a6d058ba556e27664e2ed8d76956419bba6de6775e2e5b",
+    "causalfill/domains/robotics.py": "b89e035ca757aba1e8e552059c8cf12000c79728f6686a27fa8c1c6b712175f3",
+    "causalfill/domains/vending.py": "e50a449a8c0090858c9579216b646ec37a814f630b93588de6754be005d92174",
+    "causalfill/domains/words.py": "6fa66419f1d55390d46289260914cd4ef0d7b6e18ab87498502695e109ede914",
+    "causalfill/domains/workflow.py": "39f8c242d9e89f3d14bc1ff49bfd17e1c8077dc5dd95ffbeaf917388f905e0b9",
+    "tools/stress_operations.py": "3e7792d82d891a55bd76d892f00ea757d60af9a568467131153c563add1bf2f6"
+  }
+}

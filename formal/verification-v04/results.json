@@ -1,0 +1,386 @@
+{
+  "allowed_axioms": [
+    "Classical.choice",
+    "Quot.sound",
+    "propext"
+  ],
+  "arena_certificates": {},
+  "axioms": {
+    "CausalFill.Examples.exampleNonvacuous": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.Examples.exampleProofAccepted": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.Examples.negativeGoalNonvacuous": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.Exported.ReleaseModel.certifiedNonvacuous": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.Information.FiniteArena.exact_budget_of_checks": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.Information.FiniteArena.lower_of_check": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.Information.FiniteArena.unwinnable_of_check": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.Information.FiniteArena.upper_of_check": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.Information.boundLE_finite": [
+      "propext"
+    ],
+    "CausalFill.Information.canWin_mono": [],
+    "CausalFill.Information.certified_exact_budget": [
+      "propext"
+    ],
+    "CausalFill.Information.equal_observation_equal_choice": [],
+    "CausalFill.Information.guaranteed_pair_requires_distinguishing_observations": [],
+    "CausalFill.Information.incompatible_same_observation": [],
+    "CausalFill.Information.infinite_value_unwinnable": [
+      "propext"
+    ],
+    "CausalFill.Information.lower_certificate_sound": [
+      "propext"
+    ],
+    "CausalFill.Information.member_meets_worstBound": [
+      "propext"
+    ],
+    "CausalFill.Information.observation_class_capacity_bound": [
+      "propext"
+    ],
+    "CausalFill.Information.observation_class_success_le_one": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.Information.successCount_congr": [
+      "propext"
+    ],
+    "CausalFill.Information.successCount_le_completionCapacity": [
+      "propext"
+    ],
+    "CausalFill.Information.successCount_le_one": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.Information.successCount_zero": [
+      "propext"
+    ],
+    "CausalFill.Information.upper_certificate_sound": [
+      "propext"
+    ],
+    "CausalFill.Information.worstBound_meets": [
+      "propext"
+    ],
+    "CausalFill.checkModel_sound": [
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.checked_derivation_nonvacuous": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.checked_nonvacuous": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.derivable_empty_entails": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.derivable_empty_unsatisfiable": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.derivable_sound": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.derive_sound": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.mem_mergeResolvent": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.refutation_entails": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.refutes_unsatisfiable": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.resolve_sound": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "CausalFill.satisfiable_refutation_nonvacuous": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "embedding_smoke": []
+  },
+  "backend": "embedding",
+  "commands": [
+    {
+      "command": [
+        "cc",
+        "-std=c11",
+        "-D_POSIX_C_SOURCE=200809L",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux/include",
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/embedding/lean_frontend.c",
+        "-L",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux/lib/lean",
+        "-Wl,-rpath,/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux/lib/lean",
+        "-lleanshared",
+        "-o",
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/verification-v04/lean_frontend"
+      ],
+      "elapsed_seconds": 0.743,
+      "exit_code": 0,
+      "expected_success": true,
+      "name": "build-host",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/verification-v04/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "EmbeddingSmoke",
+        "embedding/Smoke.lean",
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/.lake/build/lib/lean/EmbeddingSmoke.olean"
+      ],
+      "elapsed_seconds": 0.818,
+      "exit_code": 0,
+      "expected_success": true,
+      "name": "EmbeddingSmoke",
+      "output_sha256": "f8a0f1c84cb70f77e60e3f7cf80a04383fcde96212cf43447aeb03e4b730c24d"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/verification-v04/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "KernelNegative",
+        ".lake/build/lib/lean/KernelNegative.lean"
+      ],
+      "elapsed_seconds": 0.319,
+      "exit_code": 1,
+      "expected_success": false,
+      "name": "KernelNegative",
+      "output_sha256": "49115ae0df7ff0b333da740b7d53261365e6a687e47eaab934ba9bb2f8c3933a"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/verification-v04/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "CausalFill.Information",
+        "CausalFill/Information.lean",
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/.lake/build/lib/lean/CausalFill/Information.olean"
+      ],
+      "elapsed_seconds": 0.488,
+      "exit_code": 0,
+      "expected_success": true,
+      "name": "CausalFill-Information",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/verification-v04/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "CausalFill.FiniteArena",
+        "CausalFill/FiniteArena.lean",
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/.lake/build/lib/lean/CausalFill/FiniteArena.olean"
+      ],
+      "elapsed_seconds": 0.415,
+      "exit_code": 0,
+      "expected_success": true,
+      "name": "CausalFill-FiniteArena",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/verification-v04/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "CausalFill.ArenaJSON",
+        "CausalFill/ArenaJSON.lean",
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/.lake/build/lib/lean/CausalFill/ArenaJSON.olean"
+      ],
+      "elapsed_seconds": 0.316,
+      "exit_code": 0,
+      "expected_success": true,
+      "name": "CausalFill-ArenaJSON",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/verification-v04/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "CausalFill.InformationAudit",
+        "CausalFill/InformationAudit.lean",
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/.lake/build/lib/lean/CausalFill/InformationAudit.olean"
+      ],
+      "elapsed_seconds": 0.366,
+      "exit_code": 0,
+      "expected_success": true,
+      "name": "CausalFill-InformationAudit",
+      "output_sha256": "b90b5d56b27c0a3586882915f4ffb36ac2bf75bae9711c4554f1c7b7dc250902"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/verification-v04/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "CausalFill.Resolution",
+        "CausalFill/Resolution.lean",
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/.lake/build/lib/lean/CausalFill/Resolution.olean"
+      ],
+      "elapsed_seconds": 0.682,
+      "exit_code": 0,
+      "expected_success": true,
+      "name": "CausalFill-Resolution",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/verification-v04/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "CausalFill.Examples",
+        "CausalFill/Examples.lean",
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/.lake/build/lib/lean/CausalFill/Examples.olean"
+      ],
+      "elapsed_seconds": 0.42,
+      "exit_code": 0,
+      "expected_success": true,
+      "name": "CausalFill-Examples",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/verification-v04/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "CausalFill",
+        "CausalFill.lean",
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/.lake/build/lib/lean/CausalFill.olean"
+      ],
+      "elapsed_seconds": 0.381,
+      "exit_code": 0,
+      "expected_success": true,
+      "name": "CausalFill",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/verification-v04/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "CausalFill.Audit",
+        "CausalFill/Audit.lean",
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/.lake/build/lib/lean/CausalFill/Audit.olean"
+      ],
+      "elapsed_seconds": 0.33,
+      "exit_code": 0,
+      "expected_success": true,
+      "name": "CausalFill-Audit",
+      "output_sha256": "81e3a4e0ba37d2f1e7d5de512448908458872f7fade54bb149c9a0824a76e2d9"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/verification-v04/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "CausalFill.ReleaseModel",
+        "CausalFill/ReleaseModel.lean",
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/.lake/build/lib/lean/CausalFill/ReleaseModel.olean"
+      ],
+      "elapsed_seconds": 22.741,
+      "exit_code": 0,
+      "expected_success": true,
+      "name": "CausalFill-ReleaseModel",
+      "output_sha256": "118107e29fcd46bd3048ef4116ace811bb7d28594f7cc3aa5c5fc5246adc0825"
+    },
+    {
+      "command": [
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/verification-v04/lean_frontend",
+        "/workspace/scratch/addf9cb6769c/toolchains/lean-4.35.0-linux",
+        "CausalFill.ReleaseReference",
+        "CausalFill/ReleaseReference.lean",
+        "/workspace/scratch/addf9cb6769c/causalfill-bench/formal/.lake/build/lib/lean/CausalFill/ReleaseReference.olean"
+      ],
+      "elapsed_seconds": 49.143,
+      "exit_code": -9,
+      "expected_success": true,
+      "name": "CausalFill-ReleaseReference",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "custom_axiom_gate_rejected": true,
+  "embedding_host_sha256": "57da5663cdb84bd611c9ac434a9e78b8b03663cb3697c9fd200a34b2f53e7288",
+  "error": "CausalFill-ReleaseReference unexpected exit; see /workspace/scratch/addf9cb6769c/causalfill-bench/formal/verification-v04/CausalFill-ReleaseReference.log",
+  "false_theorem_rejected": true,
+  "finished_at_utc": "2026-11-04T13:42:16.927823+00:00",
+  "independent_kernel_replay": "separate gate, not asserted by this report",
+  "resolution_regression": {
+    "model": {
+      "canonical_statement_sha256": "0b2fbd2916a4bf10d536aada3c30467b8713b59ca0592f5a6e8e044b6fda9298",
+      "exact_roundtrip": true,
+      "input_and_generated_source_hashes_match": true,
+      "proof_steps": 865,
+      "roundtrip_sha256": "c90ffc324bea1d5b8590967a032065afe456582bdea030059225fb10bf5a97b7"
+    }
+  },
+  "schema": "causalfill.information-verification.v1",
+  "source_sha256": {
+    ".lake/build/lib/lean/KernelNegative.lean": "5c85aa427c44c50fa70897fc8b49389643e46308c18f01e8bbf2adc7c6d8d3e0",
+    "CausalFill.lean": "2013cb6f20553111b4943f46ecd22cf9c6e0183d3b694c0228ef0ec51587be38",
+    "CausalFill/ArenaJSON.lean": "14da37a650117709849e799bbdb75d29f22d41285afdba10cb372c16474c8a9d",
+    "CausalFill/Audit.lean": "c2323be1c27084a7225fdf5c9e8257c04338dce08ad384c03d1343e27b1099fa",
+    "CausalFill/Examples.lean": "727377aeadac81d138271760a5095890c83cae8a2038ca3c6e8c0ce2fba27768",
+    "CausalFill/FiniteArena.lean": "a57b4dd7e593c20172b47d21ec9938f9adf3d2cc715b7fc6b203bc98e411b998",
+    "CausalFill/Information.lean": "ee881dae4467d4f7344e4d376562bc0dd6f596aab11a09ca914aacc5478aedb4",
+    "CausalFill/InformationAudit.lean": "bb5365d78bc2858ac45ff1d185e83677c8668be716e42d0af90721f60aa9c3a6",
+    "CausalFill/ReleaseModel.lean": "96d1d86401a07c1e6e6214abff56754789d192791fc04bbbda8c5dfa622006a7",
+    "CausalFill/ReleaseReference.lean": "daa56c14a7a950bcf76e1fdf3aed9ac66de3946b23c11e232abd6704019986a4",
+    "CausalFill/Resolution.lean": "555991f3339000753bd939d75410c08f1e4f2ffff3f558edea6a29725ab91272",
+    "embedding/Smoke.lean": "9e68618384d73e51b28301fdc52003bfb76be0e3d66491461d7dca4f67989913",
+    "embedding/lean_frontend.c": "fe78f3cd7a98fd2ef06a7444ce64edcbd091b27d0a089392a94ae79718b270b5"
+  },
+  "started_at_utc": "2026-11-04T13:40:59.165384+00:00",
+  "status": "failed",
+  "toolchain_files_sha256": {
+    "include/lean/version.h": "9907fbdb242103decf5c1a1541d6ddc701c8f9b94126b5af7d8a6dfc69200fdf",
+    "lib/lean/libleanshared.so": "efef27df56f2197139afe12f1a2b63913a05f1aba81ce88824c44100431ed8c4"
+  },
+  "toolchain_version_header": "4.35.0",
+  "trust_level": 0,
+  "trusted_boundary": "Lean runtime/kernel, C ABI host when selected, Python projection and roundtrip comparator",
+  "verified_toolchain_archive_sha256": "7289597a44543246c9227b8cae501767e095ce17f6d448b95fc4a8dc97268f6d"
+}

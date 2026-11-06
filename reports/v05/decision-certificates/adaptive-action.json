@@ -1,0 +1,316 @@
+{
+  "problem": {
+    "schema": "causalfill.noisy-decision.v1",
+    "worlds": [
+      "left_dry",
+      "left_wet",
+      "right_dry",
+      "right_wet"
+    ],
+    "actions": [
+      {
+        "id": "left_dry",
+        "cost": 0,
+        "success_worlds": [
+          "left_dry"
+        ]
+      },
+      {
+        "id": "left_wet",
+        "cost": 0,
+        "success_worlds": [
+          "left_wet"
+        ]
+      },
+      {
+        "id": "right_dry",
+        "cost": 0,
+        "success_worlds": [
+          "right_dry"
+        ]
+      },
+      {
+        "id": "right_wet",
+        "cost": 0,
+        "success_worlds": [
+          "right_wet"
+        ]
+      }
+    ],
+    "experiments": [
+      {
+        "id": "camera",
+        "cost": 1,
+        "supports": {
+          "left_dry": [
+            "left"
+          ],
+          "left_wet": [
+            "left"
+          ],
+          "right_dry": [
+            "right"
+          ],
+          "right_wet": [
+            "right"
+          ]
+        }
+      },
+      {
+        "id": "left_probe",
+        "cost": 2,
+        "supports": {
+          "left_dry": [
+            "left_dry"
+          ],
+          "left_wet": [
+            "left_wet"
+          ],
+          "right_dry": [
+            "unused"
+          ],
+          "right_wet": [
+            "unused"
+          ]
+        }
+      },
+      {
+        "id": "right_probe",
+        "cost": 2,
+        "supports": {
+          "left_dry": [
+            "unused"
+          ],
+          "left_wet": [
+            "unused"
+          ],
+          "right_dry": [
+            "right_dry"
+          ],
+          "right_wet": [
+            "right_wet"
+          ]
+        }
+      }
+    ]
+  },
+  "certificate": {
+    "schema": "causalfill.decision-sufficiency-certificate.v1",
+    "problem_sha256": "858a4cae40023d468ed737fab2553f2603b6870f870119c3171b2e1026b22007",
+    "objective": "action",
+    "root": [
+      15,
+      7
+    ],
+    "value": 3,
+    "nodes": [
+      [
+        1,
+        0,
+        0,
+        {
+          "kind": "act",
+          "id": "left_dry"
+        }
+      ],
+      [
+        2,
+        0,
+        0,
+        {
+          "kind": "act",
+          "id": "left_wet"
+        }
+      ],
+      [
+        4,
+        0,
+        0,
+        {
+          "kind": "act",
+          "id": "right_dry"
+        }
+      ],
+      [
+        8,
+        0,
+        0,
+        {
+          "kind": "act",
+          "id": "right_wet"
+        }
+      ],
+      [
+        1,
+        1,
+        0,
+        {
+          "kind": "act",
+          "id": "left_dry"
+        }
+      ],
+      [
+        1,
+        4,
+        0,
+        {
+          "kind": "act",
+          "id": "left_dry"
+        }
+      ],
+      [
+        2,
+        1,
+        0,
+        {
+          "kind": "act",
+          "id": "left_wet"
+        }
+      ],
+      [
+        2,
+        4,
+        0,
+        {
+          "kind": "act",
+          "id": "left_wet"
+        }
+      ],
+      [
+        3,
+        2,
+        2,
+        {
+          "kind": "query",
+          "id": "left_probe"
+        }
+      ],
+      [
+        4,
+        1,
+        0,
+        {
+          "kind": "act",
+          "id": "right_dry"
+        }
+      ],
+      [
+        4,
+        2,
+        0,
+        {
+          "kind": "act",
+          "id": "right_dry"
+        }
+      ],
+      [
+        8,
+        1,
+        0,
+        {
+          "kind": "act",
+          "id": "right_wet"
+        }
+      ],
+      [
+        8,
+        2,
+        0,
+        {
+          "kind": "act",
+          "id": "right_wet"
+        }
+      ],
+      [
+        12,
+        4,
+        2,
+        {
+          "kind": "query",
+          "id": "right_probe"
+        }
+      ],
+      [
+        1,
+        5,
+        0,
+        {
+          "kind": "act",
+          "id": "left_dry"
+        }
+      ],
+      [
+        2,
+        5,
+        0,
+        {
+          "kind": "act",
+          "id": "left_wet"
+        }
+      ],
+      [
+        3,
+        3,
+        2,
+        {
+          "kind": "query",
+          "id": "left_probe"
+        }
+      ],
+      [
+        3,
+        6,
+        2,
+        {
+          "kind": "query",
+          "id": "left_probe"
+        }
+      ],
+      [
+        4,
+        3,
+        0,
+        {
+          "kind": "act",
+          "id": "right_dry"
+        }
+      ],
+      [
+        8,
+        3,
+        0,
+        {
+          "kind": "act",
+          "id": "right_wet"
+        }
+      ],
+      [
+        12,
+        5,
+        2,
+        {
+          "kind": "query",
+          "id": "right_probe"
+        }
+      ],
+      [
+        12,
+        6,
+        2,
+        {
+          "kind": "query",
+          "id": "right_probe"
+        }
+      ],
+      [
+        15,
+        7,
+        3,
+        {
+          "kind": "query",
+          "id": "camera"
+        }
+      ]
+    ]
+  }
+}

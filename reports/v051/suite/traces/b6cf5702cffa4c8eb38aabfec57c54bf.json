@@ -1,0 +1,103 @@
+{
+  "public": {
+    "family": "robotics_vision",
+    "difficulty": 1,
+    "prompt": "Deliver a payload using a finite 2D robot simulator. A roof hides which of two lanes is open. Move the camera to inspection and use RGB pixels plus visible fiducials to recover world geometry. A contact probe measures friction but also wears the surface. Choose a route and contact mode before irreversible execution, accounting for simulated time, energy, and tool cost. A slow detour can work without recovering geometry or friction when the public deadline allows it. Read /scene/robotics_vision.json. Submit delivered=true only after a successful execution.",
+    "slots": {
+      "delivered": {
+        "type": "boolean",
+        "description": "True only after successful robot_execute."
+      }
+    },
+    "files": [
+      "/scene/robotics_vision.json",
+      "/skill/recovery.md"
+    ],
+    "tools": {
+      "robot_move_camera": {
+        "description": "Move to the named camera station; 1 simulated time and 1 energy, even if already there.",
+        "arguments": {
+          "view": "overview or inspection"
+        },
+        "cost": 2
+      },
+      "robot_capture": {
+        "description": "Return PNG pixels at the current station; 1 time, no energy. Repeats have identical fixed-pattern photometric noise.",
+        "arguments": {},
+        "cost": 3
+      },
+      "robot_probe": {
+        "description": "Contact the surface, apply wear, then measure friction. Gentle: 2 time, 1 energy, +1 wear. Firm: 2 time, 2 energy, +2 wear. Errors share a persistent bias.",
+        "arguments": {
+          "force": "gentle or firm"
+        },
+        "cost": 4
+      },
+      "robot_execute": {
+        "description": "Irreversibly execute one route/mode. Primary roll/grip: 5 time, 5 energy; primary slow: 12 time, 4 energy; detour slow: 18 time, 6 energy. No further domain actions afterward.",
+        "arguments": {
+          "route": "upper, lower, or detour",
+          "mode": "roll, grip, or slow; detour requires slow"
+        },
+        "cost": 2
+      }
+    },
+    "budget": 30,
+    "max_calls": 24,
+    "episode_id": "b6cf5702cffa4c8eb38aabfec57c54bf",
+    "common_tools": {
+      "list_files": {
+        "arguments": {},
+        "cost": 1
+      },
+      "read_file": {
+        "arguments": {
+          "path": "exact listed virtual path"
+        },
+        "cost": 1
+      },
+      "search_files": {
+        "arguments": {
+          "text": "literal string, 1\u2013160 characters"
+        },
+        "cost": 2
+      },
+      "session_status": {
+        "arguments": {},
+        "cost": 1
+      },
+      "submit": {
+        "arguments": {
+          "fill": "object",
+          "confidence": "number 0..1",
+          "abstain": "boolean",
+          "evidence": "list of returned event IDs"
+        },
+        "cost": 0
+      }
+    },
+    "max_seconds": 600,
+    "tools_enabled": true,
+    "submission_rule": "One final submission. Grades are evaluator-only; no retry after submission."
+  },
+  "events": [
+    {
+      "event_id": "e0001",
+      "tool": "submit",
+      "arguments": {
+        "fill": {},
+        "confidence": 1.0,
+        "abstain": true,
+        "evidence": []
+      },
+      "response": {
+        "accepted": true,
+        "episode_closed": true,
+        "event_id": "e0001",
+        "cost_used": 0
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "745a0707435ac20269e47b032004fb00eaf133d55e0c6bc0b0fcec293152e488"
+    }
+  ]
+}

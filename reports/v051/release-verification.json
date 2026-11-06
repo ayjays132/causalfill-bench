@@ -1,0 +1,1157 @@
+{
+  "schema": "causalfill.release-verification.v051",
+  "version": "0.5.1",
+  "status": "passed",
+  "generated_utc": "2026-11-05T23:03:32.900922+00:00",
+  "source_fingerprint": "a7f0b47a3c8a26ebba2cab3dc7fdb9fa5c3ea2c211048c5d872e28e221f61c7a",
+  "task_configurations": 15,
+  "conceptual_domains": 9,
+  "unit_and_integration_tests": {
+    "passed": 316,
+    "tests": 316,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsed_seconds": 45.787
+  },
+  "scripted_controls": {
+    "records": 4050,
+    "policies": {
+      "evidence": {
+        "episodes": 1350,
+        "answerable_episodes": 1260,
+        "answerable_successes": 1260,
+        "unanswerable_episodes": 90,
+        "correct_unanswerable_abstentions": 90,
+        "complete_pairs": 675,
+        "answerable_pairs": 630,
+        "answerable_pair_successes": 630,
+        "valid_traces": 1350,
+        "mean_tool_cost": 14.731111111111112,
+        "canonical_response_bytes": 23020062
+      },
+      "blind": {
+        "episodes": 1350,
+        "answerable_episodes": 1260,
+        "answerable_successes": 0,
+        "unanswerable_episodes": 90,
+        "correct_unanswerable_abstentions": 0,
+        "complete_pairs": 675,
+        "answerable_pairs": 630,
+        "answerable_pair_successes": 0,
+        "valid_traces": 1350,
+        "mean_tool_cost": 0.0,
+        "canonical_response_bytes": 97200
+      },
+      "abstain": {
+        "episodes": 1350,
+        "answerable_episodes": 1260,
+        "answerable_successes": 0,
+        "unanswerable_episodes": 90,
+        "correct_unanswerable_abstentions": 90,
+        "complete_pairs": 675,
+        "answerable_pairs": 630,
+        "answerable_pair_successes": 0,
+        "valid_traces": 1350,
+        "mean_tool_cost": 0.0,
+        "canonical_response_bytes": 97200
+      }
+    },
+    "manifest": {
+      "benchmark": "CausalFill-Bench",
+      "version": "0.5.1",
+      "status": "development-only",
+      "created_utc": "2026-11-05T22:57:08.338781+00:00",
+      "python": "3.12.14",
+      "platform": "Linux-6.18.57-x86_64-with-glibc2.39",
+      "families": [
+        "words",
+        "workflow",
+        "grid",
+        "vending",
+        "vending_adaptive",
+        "robotics",
+        "robotics_barrier",
+        "latent",
+        "latent_sparse",
+        "ambiguity",
+        "proof",
+        "diagnosis",
+        "visual",
+        "robotics_vision",
+        "robust_sensing"
+      ],
+      "splits": [
+        "train",
+        "dev",
+        "transfer"
+      ],
+      "difficulties": [
+        1,
+        2,
+        3
+      ],
+      "seeds": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "policies": [
+        "evidence",
+        "blind",
+        "abstain"
+      ],
+      "twins": true,
+      "skill": true,
+      "tools": true,
+      "mask_strategy": "causal",
+      "records": 4050,
+      "records_sha256": "da19404e92c3f25ca428e3290a23daa43fab5399ec83cb45d14e65d28fd6a7d9",
+      "source_sha256": "a7f0b47a3c8a26ebba2cab3dc7fdb9fa5c3ea2c211048c5d872e28e221f61c7a",
+      "note": "Scripted controls; not frontier-model scores. Seeds are evaluator-only metadata."
+    },
+    "all_stored_trace_chains_reverified": true,
+    "scope": "Scripted development controls. No learned-model scores or enforced isolation claim."
+  },
+  "robust_sensing": {
+    "checks": {
+      "certificate_valid": 4234,
+      "independent_optimum": 3584,
+      "independent_policy_replay": 1644,
+      "analytic_cube_formula": 180,
+      "certificate_mutation_rejected": 1280,
+      "cost_scaling": 128,
+      "renaming_order_and_polarity": 128,
+      "corruption_monotonicity": 86,
+      "query_addition_monotonicity": 128,
+      "runtime_probe_accepted": 16520,
+      "runtime_observation_matches_case": 16520,
+      "runtime_commit_accepted": 2652,
+      "runtime_case_success": 2652,
+      "runtime_trace_integrity": 2652,
+      "runtime_within_bound": 2652,
+      "runtime_bound_attained": 27,
+      "core_source_stable": 1
+    },
+    "complete_tiny_corpus": {
+      "models": 1536,
+      "objectives_per_model": 2,
+      "scope": "complete 2-world/2-query/2-action binary tables, k=0..2, two explicit cost profiles"
+    },
+    "random_models": 256,
+    "analytic_cases": 180,
+    "independent_oracle_states": 48842,
+    "verified_certificate_state_occurrences": 74522,
+    "mutation_rejections": {
+      "stale_digest": 256,
+      "wrong_optimum": 256,
+      "duplicate_state": 256,
+      "missing_root": 256,
+      "untrusted_objective_switch": 256
+    },
+    "runtime": {
+      "profiles": [
+        {
+          "seed": 4103,
+          "split": "train",
+          "difficulty": 1,
+          "worlds": 2,
+          "experiments": 3,
+          "max_corruptions": 1,
+          "terminal_actions": 2,
+          "cases": 8,
+          "minimum_runtime_cost": 3,
+          "worst_runtime_cost": 4,
+          "certified_operational_budget": 4,
+          "certificate_states": 20
+        },
+        {
+          "seed": 4103,
+          "split": "train",
+          "difficulty": 2,
+          "worlds": 4,
+          "experiments": 6,
+          "max_corruptions": 1,
+          "terminal_actions": 4,
+          "cases": 28,
+          "minimum_runtime_cost": 5,
+          "worst_runtime_cost": 6,
+          "certified_operational_budget": 6,
+          "certificate_states": 371
+        },
+        {
+          "seed": 4103,
+          "split": "train",
+          "difficulty": 3,
+          "worlds": 8,
+          "experiments": 9,
+          "max_corruptions": 1,
+          "terminal_actions": 8,
+          "cases": 80,
+          "minimum_runtime_cost": 6,
+          "worst_runtime_cost": 8,
+          "certified_operational_budget": 8,
+          "certificate_states": 6578
+        },
+        {
+          "seed": 4103,
+          "split": "dev",
+          "difficulty": 1,
+          "worlds": 2,
+          "experiments": 3,
+          "max_corruptions": 1,
+          "terminal_actions": 2,
+          "cases": 8,
+          "minimum_runtime_cost": 3,
+          "worst_runtime_cost": 4,
+          "certified_operational_budget": 4,
+          "certificate_states": 20
+        },
+        {
+          "seed": 4103,
+          "split": "dev",
+          "difficulty": 2,
+          "worlds": 8,
+          "experiments": 6,
+          "max_corruptions": 1,
+          "terminal_actions": 8,
+          "cases": 56,
+          "minimum_runtime_cost": 6,
+          "worst_runtime_cost": 7,
+          "certified_operational_budget": 7,
+          "certificate_states": 633
+        },
+        {
+          "seed": 4103,
+          "split": "dev",
+          "difficulty": 3,
+          "worlds": 16,
+          "experiments": 7,
+          "max_corruptions": 1,
+          "terminal_actions": 16,
+          "cases": 128,
+          "minimum_runtime_cost": 7,
+          "worst_runtime_cost": 8,
+          "certified_operational_budget": 8,
+          "certificate_states": 1923
+        },
+        {
+          "seed": 4103,
+          "split": "transfer",
+          "difficulty": 1,
+          "worlds": 8,
+          "experiments": 7,
+          "max_corruptions": 1,
+          "terminal_actions": 4,
+          "cases": 64,
+          "minimum_runtime_cost": 3,
+          "worst_runtime_cost": 3,
+          "certified_operational_budget": 3,
+          "certificate_states": 1571
+        },
+        {
+          "seed": 4103,
+          "split": "transfer",
+          "difficulty": 2,
+          "worlds": 8,
+          "experiments": 7,
+          "max_corruptions": 1,
+          "terminal_actions": 5,
+          "cases": 64,
+          "minimum_runtime_cost": 5,
+          "worst_runtime_cost": 5,
+          "certified_operational_budget": 5,
+          "certificate_states": 1571
+        },
+        {
+          "seed": 4103,
+          "split": "transfer",
+          "difficulty": 3,
+          "worlds": 8,
+          "experiments": 10,
+          "max_corruptions": 2,
+          "terminal_actions": 8,
+          "cases": 448,
+          "minimum_runtime_cost": 9,
+          "worst_runtime_cost": 11,
+          "certified_operational_budget": 11,
+          "certificate_states": 30743
+        },
+        {
+          "seed": 4104,
+          "split": "train",
+          "difficulty": 1,
+          "worlds": 2,
+          "experiments": 3,
+          "max_corruptions": 1,
+          "terminal_actions": 2,
+          "cases": 8,
+          "minimum_runtime_cost": 3,
+          "worst_runtime_cost": 4,
+          "certified_operational_budget": 4,
+          "certificate_states": 20
+        },
+        {
+          "seed": 4104,
+          "split": "train",
+          "difficulty": 2,
+          "worlds": 4,
+          "experiments": 6,
+          "max_corruptions": 1,
+          "terminal_actions": 4,
+          "cases": 28,
+          "minimum_runtime_cost": 5,
+          "worst_runtime_cost": 6,
+          "certified_operational_budget": 6,
+          "certificate_states": 371
+        },
+        {
+          "seed": 4104,
+          "split": "train",
+          "difficulty": 3,
+          "worlds": 8,
+          "experiments": 9,
+          "max_corruptions": 1,
+          "terminal_actions": 8,
+          "cases": 80,
+          "minimum_runtime_cost": 6,
+          "worst_runtime_cost": 8,
+          "certified_operational_budget": 8,
+          "certificate_states": 6578
+        },
+        {
+          "seed": 4104,
+          "split": "dev",
+          "difficulty": 1,
+          "worlds": 2,
+          "experiments": 3,
+          "max_corruptions": 1,
+          "terminal_actions": 2,
+          "cases": 8,
+          "minimum_runtime_cost": 3,
+          "worst_runtime_cost": 4,
+          "certified_operational_budget": 4,
+          "certificate_states": 20
+        },
+        {
+          "seed": 4104,
+          "split": "dev",
+          "difficulty": 2,
+          "worlds": 8,
+          "experiments": 6,
+          "max_corruptions": 1,
+          "terminal_actions": 8,
+          "cases": 56,
+          "minimum_runtime_cost": 6,
+          "worst_runtime_cost": 7,
+          "certified_operational_budget": 7,
+          "certificate_states": 633
+        },
+        {
+          "seed": 4104,
+          "split": "dev",
+          "difficulty": 3,
+          "worlds": 16,
+          "experiments": 7,
+          "max_corruptions": 1,
+          "terminal_actions": 16,
+          "cases": 128,
+          "minimum_runtime_cost": 7,
+          "worst_runtime_cost": 8,
+          "certified_operational_budget": 8,
+          "certificate_states": 1923
+        },
+        {
+          "seed": 4104,
+          "split": "transfer",
+          "difficulty": 1,
+          "worlds": 8,
+          "experiments": 7,
+          "max_corruptions": 1,
+          "terminal_actions": 4,
+          "cases": 64,
+          "minimum_runtime_cost": 3,
+          "worst_runtime_cost": 3,
+          "certified_operational_budget": 3,
+          "certificate_states": 1571
+        },
+        {
+          "seed": 4104,
+          "split": "transfer",
+          "difficulty": 2,
+          "worlds": 8,
+          "experiments": 7,
+          "max_corruptions": 1,
+          "terminal_actions": 5,
+          "cases": 64,
+          "minimum_runtime_cost": 6,
+          "worst_runtime_cost": 6,
+          "certified_operational_budget": 6,
+          "certificate_states": 1571
+        },
+        {
+          "seed": 4104,
+          "split": "transfer",
+          "difficulty": 3,
+          "worlds": 8,
+          "experiments": 10,
+          "max_corruptions": 2,
+          "terminal_actions": 8,
+          "cases": 448,
+          "minimum_runtime_cost": 9,
+          "worst_runtime_cost": 11,
+          "certified_operational_budget": 11,
+          "certificate_states": 30743
+        },
+        {
+          "seed": 4105,
+          "split": "train",
+          "difficulty": 1,
+          "worlds": 2,
+          "experiments": 3,
+          "max_corruptions": 1,
+          "terminal_actions": 2,
+          "cases": 8,
+          "minimum_runtime_cost": 3,
+          "worst_runtime_cost": 4,
+          "certified_operational_budget": 4,
+          "certificate_states": 20
+        },
+        {
+          "seed": 4105,
+          "split": "train",
+          "difficulty": 2,
+          "worlds": 4,
+          "experiments": 6,
+          "max_corruptions": 1,
+          "terminal_actions": 4,
+          "cases": 28,
+          "minimum_runtime_cost": 5,
+          "worst_runtime_cost": 6,
+          "certified_operational_budget": 6,
+          "certificate_states": 371
+        },
+        {
+          "seed": 4105,
+          "split": "train",
+          "difficulty": 3,
+          "worlds": 8,
+          "experiments": 9,
+          "max_corruptions": 1,
+          "terminal_actions": 8,
+          "cases": 80,
+          "minimum_runtime_cost": 6,
+          "worst_runtime_cost": 8,
+          "certified_operational_budget": 8,
+          "certificate_states": 6578
+        },
+        {
+          "seed": 4105,
+          "split": "dev",
+          "difficulty": 1,
+          "worlds": 2,
+          "experiments": 3,
+          "max_corruptions": 1,
+          "terminal_actions": 2,
+          "cases": 8,
+          "minimum_runtime_cost": 3,
+          "worst_runtime_cost": 4,
+          "certified_operational_budget": 4,
+          "certificate_states": 20
+        },
+        {
+          "seed": 4105,
+          "split": "dev",
+          "difficulty": 2,
+          "worlds": 8,
+          "experiments": 6,
+          "max_corruptions": 1,
+          "terminal_actions": 8,
+          "cases": 56,
+          "minimum_runtime_cost": 6,
+          "worst_runtime_cost": 7,
+          "certified_operational_budget": 7,
+          "certificate_states": 633
+        },
+        {
+          "seed": 4105,
+          "split": "dev",
+          "difficulty": 3,
+          "worlds": 16,
+          "experiments": 7,
+          "max_corruptions": 1,
+          "terminal_actions": 16,
+          "cases": 128,
+          "minimum_runtime_cost": 7,
+          "worst_runtime_cost": 8,
+          "certified_operational_budget": 8,
+          "certificate_states": 1923
+        },
+        {
+          "seed": 4105,
+          "split": "transfer",
+          "difficulty": 1,
+          "worlds": 8,
+          "experiments": 7,
+          "max_corruptions": 1,
+          "terminal_actions": 4,
+          "cases": 64,
+          "minimum_runtime_cost": 3,
+          "worst_runtime_cost": 3,
+          "certified_operational_budget": 3,
+          "certificate_states": 1571
+        },
+        {
+          "seed": 4105,
+          "split": "transfer",
+          "difficulty": 2,
+          "worlds": 8,
+          "experiments": 7,
+          "max_corruptions": 1,
+          "terminal_actions": 5,
+          "cases": 64,
+          "minimum_runtime_cost": 4,
+          "worst_runtime_cost": 6,
+          "certified_operational_budget": 6,
+          "certificate_states": 1571
+        },
+        {
+          "seed": 4105,
+          "split": "transfer",
+          "difficulty": 3,
+          "worlds": 8,
+          "experiments": 10,
+          "max_corruptions": 2,
+          "terminal_actions": 8,
+          "cases": 448,
+          "minimum_runtime_cost": 9,
+          "worst_runtime_cost": 11,
+          "certified_operational_budget": 11,
+          "certificate_states": 30743
+        }
+      ],
+      "cases": 2652,
+      "executed_probe_and_commit_transitions": 19172,
+      "observed_corruptions": 2464,
+      "assigned_fault_cases_with_zero_exposure": 596,
+      "distinct_profile_action_choices": 162,
+      "worst_case_witnesses": [
+        "train-1-seed4103",
+        "train-2-seed4103",
+        "train-3-seed4103",
+        "dev-1-seed4103",
+        "dev-2-seed4103",
+        "dev-3-seed4103",
+        "transfer-1-seed4103",
+        "transfer-2-seed4103",
+        "transfer-3-seed4103",
+        "train-1-seed4104",
+        "train-2-seed4104",
+        "train-3-seed4104",
+        "dev-1-seed4104",
+        "dev-2-seed4104",
+        "dev-3-seed4104",
+        "transfer-1-seed4104",
+        "transfer-2-seed4104",
+        "transfer-3-seed4104",
+        "train-1-seed4105",
+        "train-2-seed4105",
+        "train-3-seed4105",
+        "dev-1-seed4105",
+        "dev-2-seed4105",
+        "dev-3-seed4105",
+        "transfer-1-seed4105",
+        "transfer-2-seed4105",
+        "transfer-3-seed4105"
+      ],
+      "scope": "every fixed world and every whole fault subset of size at most k for the selected finite profiles; one certified policy, not every policy"
+    },
+    "source_stable": true,
+    "elapsed_seconds": 19.408
+  },
+  "robust_ablation": {
+    "schema": "causalfill.robust-ablation.v051",
+    "version": "0.5.1",
+    "source_fingerprint": "a7f0b47a3c8a26ebba2cab3dc7fdb9fa5c3ea2c211048c5d872e28e221f61c7a",
+    "source_stable": true,
+    "episodes": 180,
+    "policies": [
+      {
+        "mode": "assume_no_corruption",
+        "episodes": 90,
+        "strict_success": 0,
+        "committed": 90,
+        "actual_operation_succeeded": 79,
+        "justified_at_commit": 0,
+        "invalid_calls": 0,
+        "clean": {
+          "episodes": 45,
+          "strict_success": 0
+        },
+        "assigned_fault": {
+          "episodes": 45,
+          "strict_success": 0
+        }
+      },
+      {
+        "mode": "query_every_sensor",
+        "episodes": 90,
+        "strict_success": 40,
+        "committed": 40,
+        "actual_operation_succeeded": 40,
+        "justified_at_commit": 40,
+        "invalid_calls": 46,
+        "clean": {
+          "episodes": 45,
+          "strict_success": 20
+        },
+        "assigned_fault": {
+          "episodes": 45,
+          "strict_success": 20
+        }
+      }
+    ],
+    "trace_integrity": true,
+    "elapsed_seconds": 55.207,
+    "scope": "Two deliberately restricted scripted controls. Outcome and justification have separate denominators. Paired generated fixtures are correlated; no AI score is implied."
+  },
+  "formal_assurance": {
+    "status": "passed",
+    "roots": 14,
+    "root_inventory": [
+      "CausalFill.BoundedFault.mismatches_append",
+      "CausalFill.BoundedFault.mismatches_step",
+      "CausalFill.BoundedFault.realizes_iff_mismatches",
+      "CausalFill.BoundedFault.feasible_iff_realizes_within",
+      "CausalFill.BoundedFault.capped_update_exact",
+      "CausalFill.BoundedFault.capped_live_iff",
+      "CausalFill.BoundedFault.capped_state_step",
+      "CausalFill.BoundedFault.true_world_preserved",
+      "CausalFill.BoundedFault.excluded_stays_excluded",
+      "CausalFill.BoundedFault.badReadings_length",
+      "CausalFill.BoundedFault.witness_count_le_mismatches",
+      "CausalFill.BoundedFault.exclusion_witness_sound",
+      "CausalFill.BoundedFault.witnesses_certify_action",
+      "CausalFill.BoundedFault.safe_action_sound"
+    ],
+    "valid_kernel_checks": 6,
+    "negative_kernel_checks": 6,
+    "checker_configurations": [
+      "con_leche",
+      "con_ron",
+      "lean4lean",
+      "lean_default",
+      "lean_hardened",
+      "nanoda"
+    ],
+    "allowed_axioms": [
+      "Classical.choice",
+      "Quot.sound",
+      "propext"
+    ],
+    "negative_controls": {
+      "DebtResurrection": {
+        "intended_diagnostic": true,
+        "rejected": true,
+        "source_sha256": "efe837c8d2088c49da923a08a911e3f3779ae4d9dae36227586f2de58ca787a3"
+      },
+      "DuplicateOccurrence": {
+        "intended_diagnostic": true,
+        "rejected": true,
+        "source_sha256": "819ea9ecc6bad773c0b7509538f5b274666ff214d2095e691365442a7b22e010"
+      },
+      "FalseTheorem": {
+        "intended_diagnostic": true,
+        "rejected": true,
+        "source_sha256": "4c36c945af506fae5f2533d37c27dcdb1381c945715cce34171c5ec3fb840649"
+      },
+      "InsufficientContradictions": {
+        "intended_diagnostic": true,
+        "rejected": true,
+        "source_sha256": "33d0cda097b3893e692ac7b7da7a4f1f139eab2886795fd6a901a2e0afe096a8"
+      },
+      "PerQueryReset": {
+        "intended_diagnostic": true,
+        "rejected": true,
+        "source_sha256": "c0e648bf66ef883408716963cd0498f2d5f30618b4a6194c1eae44c32a69c013"
+      },
+      "custom_axiom_inventory": {
+        "compiled": true,
+        "diagnostic": "unapproved axioms for CausalFill.BoundedFault.UnapprovedClaim: ['UnapprovedAssumption']",
+        "whitelist_rejected": true
+      },
+      "omitted_required_export_root": {
+        "rejected": true
+      }
+    },
+    "statement_bindings": {
+      "all_root_types_checked": true,
+      "capped_live_iff": {
+        "mutant_source_sha256": "fb7c518edfd2cb20dec5fb529f157987072eafeb2a8f40b08b9920433c8b7663",
+        "mutation": "retain name and parameters; replace conclusion/proof by True",
+        "unchanged_audit_sha256": "969525acc26ab860f8d3058ec2be40fa2cbd709b839cd266ef8bbc2c55993886",
+        "unchanged_expected_type_audit_rejects": true,
+        "weakened_statement_compiles": true
+      },
+      "safe_action_sound": {
+        "mutant_source_sha256": "dd01f72dcab13b4ecb57038a7e1cc2eba42d48339f6c2c52134d151bb6d6ad58",
+        "mutation": "retain name and parameters; replace conclusion/proof by True",
+        "unchanged_audit_sha256": "969525acc26ab860f8d3058ec2be40fa2cbd709b839cd266ef8bbc2c55993886",
+        "unchanged_expected_type_audit_rejects": true,
+        "weakened_statement_compiles": true
+      }
+    },
+    "scope": "Generic fault accounting, occurrence-supported exclusions and safe action. No proof of Python optimizer/runtime refinement or physical sensing. Six configurations are not six wholly independent stacks.",
+    "backend": "embedding",
+    "toolchain_version": "4.35.0",
+    "source_file": "formal/verification-v051-fault/run-02/results.json",
+    "export": {
+      "axioms": [
+        "Classical.choice",
+        "Quot.sound",
+        "propext"
+      ],
+      "bytes": 5055897,
+      "declaration_count": 1426,
+      "metadata": {
+        "meta": {
+          "exporter": {
+            "name": "lean4export",
+            "version": "3.1.0"
+          },
+          "format": {
+            "version": "3.1.0"
+          },
+          "lean": {
+            "githash": "eb6cafb7290e8bd5f2937522d8d804f58f02bafc",
+            "version": "4.35.0"
+          }
+        }
+      },
+      "records": 99095,
+      "selected_declarations": {
+        "CausalFill.BoundedFault.ExclusionWitness": "def",
+        "CausalFill.BoundedFault.Feasible": "def",
+        "CausalFill.BoundedFault.Reading": "def",
+        "CausalFill.BoundedFault.SafeAction": "def",
+        "CausalFill.BoundedFault.badReadings": "def",
+        "CausalFill.BoundedFault.badReadings_length": "thm",
+        "CausalFill.BoundedFault.capped": "def",
+        "CausalFill.BoundedFault.capped_live_iff": "thm",
+        "CausalFill.BoundedFault.capped_live_iff._proof_1": "thm",
+        "CausalFill.BoundedFault.capped_state_step": "thm",
+        "CausalFill.BoundedFault.capped_update_exact": "thm",
+        "CausalFill.BoundedFault.capped_update_exact._proof_2": "thm",
+        "CausalFill.BoundedFault.discrepancy": "def",
+        "CausalFill.BoundedFault.excluded_stays_excluded": "thm",
+        "CausalFill.BoundedFault.excluded_stays_excluded._proof_1": "thm",
+        "CausalFill.BoundedFault.exclusion_witness_sound": "thm",
+        "CausalFill.BoundedFault.exclusion_witness_sound._proof_1": "thm",
+        "CausalFill.BoundedFault.feasible_iff_realizes_within": "thm",
+        "CausalFill.BoundedFault.feasible_iff_realizes_within._proof_1": "thm",
+        "CausalFill.BoundedFault.mismatches": "def",
+        "CausalFill.BoundedFault.mismatches._f": "def",
+        "CausalFill.BoundedFault.mismatches.eq_2": "thm",
+        "CausalFill.BoundedFault.mismatches.match_1": "def",
+        "CausalFill.BoundedFault.mismatches_append": "thm",
+        "CausalFill.BoundedFault.mismatches_step": "thm",
+        "CausalFill.BoundedFault.realizes_iff_mismatches": "thm",
+        "CausalFill.BoundedFault.safe_action_sound": "thm",
+        "CausalFill.BoundedFault.true_world_preserved": "thm",
+        "CausalFill.BoundedFault.witness_count_le_mismatches": "thm",
+        "CausalFill.BoundedFault.witnesses_certify_action": "thm"
+      },
+      "sha256": "49fde2cfe1f847b30e12b1cd665f1de21fe865c9bc546b5f98c0b1382502169e",
+      "unsafe_declarations": []
+    }
+  },
+  "assistant_pilot": {
+    "episodes": 6,
+    "successes": 6,
+    "source_stable_during_run": true,
+    "os_enforced_isolation": false,
+    "model_inference_telemetry_available": false,
+    "scope": "Fresh-context assistant via public requests only; no OS-enforced isolation or full model-inference telemetry.",
+    "transport": "public-json-mailbox",
+    "roster_sha256": "ae3d108c7cc4d836ad3a69d4b59312f467ddb41c81f99f4fd3b1e8aae07cd58e",
+    "results": [
+      {
+        "label": "pilot-1",
+        "episode_id": "22a4270512364142a8f24a6d3714c692",
+        "family": "robust_sensing",
+        "split": "train",
+        "difficulty": 3,
+        "structural_signature": "robust_sensing:repetition-3-bits-one-global-fault:v1",
+        "twin_kind": "sensor_corruption",
+        "answerable": true,
+        "success": true,
+        "abstained": false,
+        "decision_correct": true,
+        "confidence": 1.0,
+        "brier_decision": 0.0,
+        "recovery": 1.0,
+        "outcome": 1.0,
+        "safety": 1.0,
+        "tool_cost": 9,
+        "tool_calls": 9,
+        "invalid_calls": 0,
+        "wall_seconds": 197.079505,
+        "condition": {
+          "skill": true,
+          "tools": true
+        },
+        "verdict": {
+          "success": true,
+          "recovery": 1.0,
+          "outcome": 1.0,
+          "safety": 1.0,
+          "details": {
+            "actual_operation_succeeded": true,
+            "action_justified_before_commit": true,
+            "valid_exclusions": 7,
+            "required_exclusions": 7,
+            "compatible_worlds_at_commit": 1,
+            "full_identification_required": false,
+            "assigned_corruptions": 1,
+            "observed_corruptions": 1,
+            "global_corruption_limit": 1,
+            "queries_used": 7,
+            "operational_cost": 8,
+            "certified_operational_budget": 8,
+            "within_operational_budget": true,
+            "scope": "finite symbolic operation with evidence valid under a global bounded corruption model"
+          }
+        },
+        "trace_hash": "6a5441595c1963b918cb69cc97a0b5828097df80ba204118b08aee01666a1109"
+      },
+      {
+        "label": "pilot-2",
+        "episode_id": "cea1826d3d544643aa9e4e946cbe8ed3",
+        "family": "robust_sensing",
+        "split": "dev",
+        "difficulty": 2,
+        "structural_signature": "robust_sensing:punctured-simplex-eight-worlds:v1",
+        "twin_kind": "sensor_corruption",
+        "answerable": true,
+        "success": true,
+        "abstained": false,
+        "decision_correct": true,
+        "confidence": 1.0,
+        "brier_decision": 0.0,
+        "recovery": 1.0,
+        "outcome": 1.0,
+        "safety": 1.0,
+        "tool_cost": 8,
+        "tool_calls": 8,
+        "invalid_calls": 0,
+        "wall_seconds": 197.049816,
+        "condition": {
+          "skill": true,
+          "tools": true
+        },
+        "verdict": {
+          "success": true,
+          "recovery": 1.0,
+          "outcome": 1.0,
+          "safety": 1.0,
+          "details": {
+            "actual_operation_succeeded": true,
+            "action_justified_before_commit": true,
+            "valid_exclusions": 7,
+            "required_exclusions": 7,
+            "compatible_worlds_at_commit": 1,
+            "full_identification_required": false,
+            "assigned_corruptions": 1,
+            "observed_corruptions": 1,
+            "global_corruption_limit": 1,
+            "queries_used": 6,
+            "operational_cost": 7,
+            "certified_operational_budget": 7,
+            "within_operational_budget": true,
+            "scope": "finite symbolic operation with evidence valid under a global bounded corruption model"
+          }
+        },
+        "trace_hash": "afde5e6044db3b4e9bb3561d3bff90839be50a0a43b0c93539b78690ff07b843"
+      },
+      {
+        "label": "pilot-3",
+        "episode_id": "a2464a44f8d341f3adf4e9dfca99daba",
+        "family": "robust_sensing",
+        "split": "dev",
+        "difficulty": 3,
+        "structural_signature": "robust_sensing:hamming-sixteen-worlds:v1",
+        "twin_kind": "sensor_corruption",
+        "answerable": true,
+        "success": true,
+        "abstained": false,
+        "decision_correct": true,
+        "confidence": 1.0,
+        "brier_decision": 0.0,
+        "recovery": 1.0,
+        "outcome": 1.0,
+        "safety": 1.0,
+        "tool_cost": 9,
+        "tool_calls": 9,
+        "invalid_calls": 0,
+        "wall_seconds": 196.891016,
+        "condition": {
+          "skill": true,
+          "tools": true
+        },
+        "verdict": {
+          "success": true,
+          "recovery": 1.0,
+          "outcome": 1.0,
+          "safety": 1.0,
+          "details": {
+            "actual_operation_succeeded": true,
+            "action_justified_before_commit": true,
+            "valid_exclusions": 15,
+            "required_exclusions": 15,
+            "compatible_worlds_at_commit": 1,
+            "full_identification_required": false,
+            "assigned_corruptions": 1,
+            "observed_corruptions": 1,
+            "global_corruption_limit": 1,
+            "queries_used": 7,
+            "operational_cost": 8,
+            "certified_operational_budget": 8,
+            "within_operational_budget": true,
+            "scope": "finite symbolic operation with evidence valid under a global bounded corruption model"
+          }
+        },
+        "trace_hash": "b39c4585716fa5a33285ea4324f9cd34243d2d323e659c616f1858d4bf64063c"
+      },
+      {
+        "label": "pilot-4",
+        "episode_id": "0e350d9f3d9d471ebf309c8e6a3abd2f",
+        "family": "robust_sensing",
+        "split": "transfer",
+        "difficulty": 1,
+        "structural_signature": "robust_sensing:overlapping-action-regions:v1",
+        "twin_kind": "sensor_corruption",
+        "answerable": true,
+        "success": true,
+        "abstained": false,
+        "decision_correct": true,
+        "confidence": 1.0,
+        "brier_decision": 0.0,
+        "recovery": 1.0,
+        "outcome": 1.0,
+        "safety": 1.0,
+        "tool_cost": 4,
+        "tool_calls": 4,
+        "invalid_calls": 0,
+        "wall_seconds": 196.804183,
+        "condition": {
+          "skill": true,
+          "tools": true
+        },
+        "verdict": {
+          "success": true,
+          "recovery": 1.0,
+          "outcome": 1.0,
+          "safety": 1.0,
+          "details": {
+            "actual_operation_succeeded": true,
+            "action_justified_before_commit": true,
+            "valid_exclusions": 2,
+            "required_exclusions": 2,
+            "compatible_worlds_at_commit": 6,
+            "full_identification_required": false,
+            "assigned_corruptions": 1,
+            "observed_corruptions": 1,
+            "global_corruption_limit": 1,
+            "queries_used": 2,
+            "operational_cost": 3,
+            "certified_operational_budget": 3,
+            "within_operational_budget": true,
+            "scope": "finite symbolic operation with evidence valid under a global bounded corruption model"
+          }
+        },
+        "trace_hash": "33d63b62ff0af128cd7dd5b453d0a9a4a2e6f7e34dded247512e201903d58d04"
+      },
+      {
+        "label": "pilot-5",
+        "episode_id": "ffe48ccd88034b6ea7b51997a0705cd8",
+        "family": "robust_sensing",
+        "split": "transfer",
+        "difficulty": 2,
+        "structural_signature": "robust_sensing:weighted-overlap-with-robust-bypass:v1",
+        "twin_kind": "sensor_corruption",
+        "answerable": true,
+        "success": true,
+        "abstained": false,
+        "decision_correct": true,
+        "confidence": 1.0,
+        "brier_decision": 0.0,
+        "recovery": 1.0,
+        "outcome": 1.0,
+        "safety": 1.0,
+        "tool_cost": 6,
+        "tool_calls": 2,
+        "invalid_calls": 0,
+        "wall_seconds": 196.717061,
+        "condition": {
+          "skill": true,
+          "tools": true
+        },
+        "verdict": {
+          "success": true,
+          "recovery": 1.0,
+          "outcome": 1.0,
+          "safety": 1.0,
+          "details": {
+            "actual_operation_succeeded": true,
+            "action_justified_before_commit": true,
+            "valid_exclusions": 0,
+            "required_exclusions": 0,
+            "compatible_worlds_at_commit": 8,
+            "full_identification_required": false,
+            "assigned_corruptions": 1,
+            "observed_corruptions": 0,
+            "global_corruption_limit": 1,
+            "queries_used": 0,
+            "operational_cost": 5,
+            "certified_operational_budget": 5,
+            "within_operational_budget": true,
+            "scope": "finite symbolic operation with evidence valid under a global bounded corruption model"
+          }
+        },
+        "trace_hash": "05e1c95fdfc817bfd6d1228f8083748d074d5262fad2d5c751b862f779a08e93"
+      },
+      {
+        "label": "pilot-6",
+        "episode_id": "373b66eb70254a09a0b77cfcad92c559",
+        "family": "robust_sensing",
+        "split": "transfer",
+        "difficulty": 3,
+        "structural_signature": "robust_sensing:extended-simplex-two-global-faults:v1",
+        "twin_kind": "sensor_corruption",
+        "answerable": true,
+        "success": true,
+        "abstained": false,
+        "decision_correct": true,
+        "confidence": 1.0,
+        "brier_decision": 0.0,
+        "recovery": 1.0,
+        "outcome": 1.0,
+        "safety": 1.0,
+        "tool_cost": 10,
+        "tool_calls": 9,
+        "invalid_calls": 0,
+        "wall_seconds": 193.997151,
+        "condition": {
+          "skill": true,
+          "tools": true
+        },
+        "verdict": {
+          "success": true,
+          "recovery": 1.0,
+          "outcome": 1.0,
+          "safety": 1.0,
+          "details": {
+            "actual_operation_succeeded": true,
+            "action_justified_before_commit": true,
+            "valid_exclusions": 7,
+            "required_exclusions": 7,
+            "compatible_worlds_at_commit": 1,
+            "full_identification_required": false,
+            "assigned_corruptions": 2,
+            "observed_corruptions": 1,
+            "global_corruption_limit": 2,
+            "queries_used": 7,
+            "operational_cost": 9,
+            "certified_operational_budget": 11,
+            "within_operational_budget": true,
+            "scope": "finite symbolic operation with evidence valid under a global bounded corruption model"
+          }
+        },
+        "trace_hash": "48a4df29e3b3264736f1a23ecd69191a91054213295b7a3f6d1370d3fde807e4"
+      }
+    ],
+    "is_benchmark_leaderboard_score": false,
+    "calibration_limit": "Six related generated cases, one fresh-context assistant, solver-instruction boundary on a shared host; no human calibration or broad hardness inference."
+  },
+  "http_transport_attempt": {
+    "status": "infrastructure-blocked",
+    "transport": "HTTP",
+    "episode_contracts_received": 0,
+    "benchmark_tool_calls": 0,
+    "submissions": 0,
+    "scored_as_agent_failure": false,
+    "reason": "All six loopback endpoints refused connections from the solver execution surface. Host was terminated; fresh cases continue through the public mailbox protocol.",
+    "source_fingerprint": "a7f0b47a3c8a26ebba2cab3dc7fdb9fa5c3ea2c211048c5d872e28e221f61c7a"
+  },
+  "retained_evidence": {
+    "version": "0.5.0",
+    "source_archive_sha256": "2f8a05b6204b4bf9b353f89c883f80e16044f8e773f9b9b336a4b61c2d1d5974",
+    "source_inventory_files_verified": 23429,
+    "unchanged_files": 23422,
+    "modified_files": [
+      "CITATION.cff",
+      "README.md",
+      "causalfill/__init__.py",
+      "causalfill/policies.py",
+      "causalfill/registry.py",
+      "pyproject.toml",
+      "tools/package_release.py"
+    ],
+    "new_files": 4483,
+    "scope": "Restored v0.5.0 source inventory retained and compared byte-for-byte. Changed integration/docs are listed; earlier evidence retains its original version and was not silently relabeled as a new formal run."
+  },
+  "artifacts": {
+    "units": {
+      "file": "reports/v051/unit-tests/result.json",
+      "sha256": "3f5e982b6eea7c1dfe16f3636a6cf514ea84faad82aea4069b3f21e9d395e961",
+      "bytes": 8126
+    },
+    "stress": {
+      "file": "reports/robust-stress-v0.5.1/result.json",
+      "sha256": "8340263de90e296434be5bdb4218aa728c81e73ed52eb4326f4372ca504782ac",
+      "bytes": 12564
+    },
+    "ablation": {
+      "file": "reports/v051/robust-ablation/summary.json",
+      "sha256": "44c5eb86f46b01f34436afae3711d53e99e3107e4520f459c42b0c6a55537698",
+      "bytes": 1238
+    },
+    "formal": {
+      "file": "formal/verification-v051-fault/run-02/results.json",
+      "sha256": "a5efd51d5b1c8548f5dbb47679e77a37ea83db92792687076d5df8fa0f552775",
+      "bytes": 33652
+    },
+    "pilot": {
+      "file": "reports/public-mailbox-pilot-v0.5.1/manifest.json",
+      "sha256": "b07706ac23207d2b02c8c7de09cadb83e454b5c78a532a37abe5ddc0582a6a1e",
+      "bytes": 11469
+    },
+    "http_block": {
+      "file": "reports/public-pilot-v0.5.1/infrastructure-status.json",
+      "sha256": "994e1c94bc19813869ae4be02f4e46fa13869236087a73345768c42a67f87705",
+      "bytes": 452
+    },
+    "suite": {
+      "file": "reports/v051/suite/manifest.json",
+      "sha256": "cf285fa5823e8a689a8aa92766c2cf0f836175d5e18af68f424bab07ce893165",
+      "bytes": 1089
+    },
+    "retained_verification": {
+      "file": "reports/v05/release-verification.json",
+      "sha256": "6b199eb283c24d0460b7683314191b2a21b6742a5768b9b3aa748109dfd4a868",
+      "bytes": 1567126
+    }
+  },
+  "claim_boundaries": [
+    "The scripted suite and restricted controls are implementation diagnostics, not model intelligence scores.",
+    "Finite exact costs apply only to the declared fixed-world, once-only, bounded-flip contracts.",
+    "The 14 new Lean roots prove generic accounting and action soundness; optimizer exactness and Python refinement are not formalized by them.",
+    "The fresh-context pilot has no OS-enforced isolation, full inference telemetry, human comparison or independent mechanism holdout.",
+    "Prior Lean and rendered-vision evidence retain their original versions; the complete behavioral suite was rerun on the new core.",
+    "No physical robot, natural-image generalization, adversarial desktop or certified hosted leaderboard was evaluated.",
+    "Original generators and branding combine established ideas; mathematical or scientific novelty is not established by these checks.",
+    "The 100D tracks are finite-field algebra; five vector probes return 500 field residues."
+  ]
+}

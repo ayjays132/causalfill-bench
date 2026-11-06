@@ -1,0 +1,744 @@
+{
+  "public": {
+    "family": "latent_sparse",
+    "difficulty": 2,
+    "prompt": "Recover a masked affine operator f: GF(101)^32 -> GF(101)^32 under a budget of nine cost units. Each output coordinate depends on at most two input coordinates plus an offset. You may choose bounded intervention vectors for the probe tool. Submit offset and sparse rows: output[i] = (offset[i] + sum(term.coefficient * input[term.column] for term in rows[i])) modulo 101. All entries are integers 0..100; columns are indexed from zero. Your map must work on all inputs, not only your probes.",
+    "slots": {
+      "offset": {
+        "type": "integer_vector",
+        "description": "Exactly 32 residues."
+      },
+      "rows": {
+        "type": "sparse_matrix_rows",
+        "description": "Exactly 32 lists of {column: int, coefficient: int}. No duplicate columns within a row; omitted entries mean zero."
+      }
+    },
+    "files": [
+      "/docs/field.txt",
+      "/skill/recovery.md",
+      "/workspace/operator.masked.json"
+    ],
+    "tools": {
+      "probe": {
+        "description": "Evaluate the operator on one intervention vector; no state is changed.",
+        "arguments": {
+          "vector": "list of 32 integers in [0, 100]"
+        },
+        "cost": 1
+      }
+    },
+    "budget": 9,
+    "max_calls": 14,
+    "episode_id": "f7cd7a0ebcb04f70843de59e98f5d352",
+    "common_tools": {
+      "list_files": {
+        "arguments": {},
+        "cost": 1
+      },
+      "read_file": {
+        "arguments": {
+          "path": "exact listed virtual path"
+        },
+        "cost": 1
+      },
+      "search_files": {
+        "arguments": {
+          "text": "literal string, 1\u2013160 characters"
+        },
+        "cost": 2
+      },
+      "session_status": {
+        "arguments": {},
+        "cost": 1
+      },
+      "submit": {
+        "arguments": {
+          "fill": "object",
+          "confidence": "number 0..1",
+          "abstain": "boolean",
+          "evidence": "list of returned event IDs"
+        },
+        "cost": 0
+      }
+    },
+    "max_seconds": 600,
+    "tools_enabled": true,
+    "submission_rule": "One final submission. Grades are evaluator-only; no retry after submission."
+  },
+  "events": [
+    {
+      "event_id": "e0001",
+      "tool": "read_file",
+      "arguments": {
+        "path": "/workspace/operator.masked.json"
+      },
+      "response": {
+        "path": "/workspace/operator.masked.json",
+        "content": "{\"modulus\":101,\"dimension\":32,\"rows\":[{\"offset\":\"[MASK:b_0]\",\"terms\":[{\"column\":\"[MASK:j_0_0]\",\"coefficient\":\"[MASK:a_0_0]\"}]},{\"offset\":\"[MASK:b_1]\",\"terms\":[{\"column\":\"[MASK:j_1_0]\",\"coefficient\":\"[MASK:a_1_0]\"}]},{\"offset\":\"[MASK:b_2]\",\"terms\":[{\"column\":\"[MASK:j_2_0]\",\"coefficient\":\"[MASK:a_2_0]\"}]},{\"offset\":\"[MASK:b_3]\",\"terms\":[{\"column\":\"[MASK:j_3_0]\",\"coefficient\":\"[MASK:a_3_0]\"}]},{\"offset\":\"[MASK:b_4]\",\"terms\":[{\"column\":\"[MASK:j_4_0]\",\"coefficient\":\"[MASK:a_4_0]\"}]},{\"offset\":\"[MASK:b_5]\",\"terms\":[{\"column\":\"[MASK:j_5_0]\",\"coefficient\":\"[MASK:a_5_0]\"}]},{\"offset\":\"[MASK:b_6]\",\"terms\":[{\"column\":\"[MASK:j_6_0]\",\"coefficient\":\"[MASK:a_6_0]\"}]},{\"offset\":\"[MASK:b_7]\",\"terms\":[{\"column\":\"[MASK:j_7_0]\",\"coefficient\":\"[MASK:a_7_0]\"}]},{\"offset\":\"[MASK:b_8]\",\"terms\":[{\"column\":\"[MASK:j_8_0]\",\"coefficient\":\"[MASK:a_8_0]\"}]},{\"offset\":\"[MASK:b_9]\",\"terms\":[{\"column\":\"[MASK:j_9_0]\",\"coefficient\":\"[MASK:a_9_0]\"}]},{\"offset\":\"[MASK:b_10]\",\"terms\":[{\"column\":\"[MASK:j_10_0]\",\"coefficient\":\"[MASK:a_10_0]\"}]},{\"offset\":\"[MASK:b_11]\",\"terms\":[{\"column\":\"[MASK:j_11_0]\",\"coefficient\":\"[MASK:a_11_0]\"}]},{\"offset\":\"[MASK:b_12]\",\"terms\":[{\"column\":\"[MASK:j_12_0]\",\"coefficient\":\"[MASK:a_12_0]\"}]},{\"offset\":\"[MASK:b_13]\",\"terms\":[{\"column\":\"[MASK:j_13_0]\",\"coefficient\":\"[MASK:a_13_0]\"}]},{\"offset\":\"[MASK:b_14]\",\"terms\":[{\"column\":\"[MASK:j_14_0]\",\"coefficient\":\"[MASK:a_14_0]\"}]},{\"offset\":\"[MASK:b_15]\",\"terms\":[{\"column\":\"[MASK:j_15_0]\",\"coefficient\":\"[MASK:a_15_0]\"}]},{\"offset\":\"[MASK:b_16]\",\"terms\":[{\"column\":\"[MASK:j_16_0]\",\"coefficient\":\"[MASK:a_16_0]\"}]},{\"offset\":\"[MASK:b_17]\",\"terms\":[{\"column\":\"[MASK:j_17_0]\",\"coefficient\":\"[MASK:a_17_0]\"}]},{\"offset\":\"[MASK:b_18]\",\"terms\":[{\"column\":\"[MASK:j_18_0]\",\"coefficient\":\"[MASK:a_18_0]\"}]},{\"offset\":\"[MASK:b_19]\",\"terms\":[{\"column\":\"[MASK:j_19_0]\",\"coefficient\":\"[MASK:a_19_0]\"}]},{\"offset\":\"[MASK:b_20]\",\"terms\":[{\"column\":\"[MASK:j_20_0]\",\"coefficient\":\"[MASK:a_20_0]\"}]},{\"offset\":\"[MASK:b_21]\",\"terms\":[{\"column\":\"[MASK:j_21_0]\",\"coefficient\":\"[MASK:a_21_0]\"}]},{\"offset\":\"[MASK:b_22]\",\"terms\":[{\"column\":\"[MASK:j_22_0]\",\"coefficient\":\"[MASK:a_22_0]\"}]},{\"offset\":\"[MASK:b_23]\",\"terms\":[{\"column\":\"[MASK:j_23_0]\",\"coefficient\":\"[MASK:a_23_0]\"}]},{\"offset\":\"[MASK:b_24]\",\"terms\":[{\"column\":\"[MASK:j_24_0]\",\"coefficient\":\"[MASK:a_24_0]\"}]},{\"offset\":\"[MASK:b_25]\",\"terms\":[{\"column\":\"[MASK:j_25_0]\",\"coefficient\":\"[MASK:a_25_0]\"}]},{\"offset\":\"[MASK:b_26]\",\"terms\":[{\"column\":\"[MASK:j_26_0]\",\"coefficient\":\"[MASK:a_26_0]\"}]},{\"offset\":\"[MASK:b_27]\",\"terms\":[{\"column\":\"[MASK:j_27_0]\",\"coefficient\":\"[MASK:a_27_0]\"}]},{\"offset\":\"[MASK:b_28]\",\"terms\":[{\"column\":\"[MASK:j_28_0]\",\"coefficient\":\"[MASK:a_28_0]\"}]},{\"offset\":\"[MASK:b_29]\",\"terms\":[{\"column\":\"[MASK:j_29_0]\",\"coefficient\":\"[MASK:a_29_0]\"}]},{\"offset\":\"[MASK:b_30]\",\"terms\":[{\"column\":\"[MASK:j_30_0]\",\"coefficient\":\"[MASK:a_30_0]\"}]},{\"offset\":\"[MASK:b_31]\",\"terms\":[{\"column\":\"[MASK:j_31_0]\",\"coefficient\":\"[MASK:a_31_0]\"}]}]}",
+        "event_id": "e0001",
+        "cost_used": 1
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "ffde66d17fadf08e161b38f90eef5041af38b7b76a7dc2f174b52f6ae99dc473"
+    },
+    {
+      "event_id": "e0002",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "response": {
+        "output": [
+          84,
+          28,
+          88,
+          18,
+          76,
+          23,
+          45,
+          59,
+          18,
+          72,
+          81,
+          65,
+          19,
+          1,
+          55,
+          99,
+          1,
+          97,
+          83,
+          52,
+          88,
+          90,
+          47,
+          97,
+          92,
+          25,
+          25,
+          52,
+          12,
+          62,
+          54,
+          31
+        ],
+        "modulus": 101,
+        "event_id": "e0002",
+        "cost_used": 2
+      },
+      "previous_hash": "ffde66d17fadf08e161b38f90eef5041af38b7b76a7dc2f174b52f6ae99dc473",
+      "hash": "c15de26ead2198ec00eebeb9cf08fd4a1d283f7feb8573da82ac5135550e6a68"
+    },
+    {
+      "event_id": "e0003",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "response": {
+        "output": [
+          94,
+          96,
+          71,
+          81,
+          98,
+          49,
+          16,
+          84,
+          77,
+          36,
+          57,
+          43,
+          95,
+          42,
+          71,
+          48,
+          81,
+          64,
+          8,
+          40,
+          27,
+          12,
+          2,
+          48,
+          2,
+          14,
+          16,
+          57,
+          53,
+          25,
+          44,
+          2
+        ],
+        "modulus": 101,
+        "event_id": "e0003",
+        "cost_used": 3
+      },
+      "previous_hash": "c15de26ead2198ec00eebeb9cf08fd4a1d283f7feb8573da82ac5135550e6a68",
+      "hash": "ec3d01a60e228e10c9fe346c67ed4d22570d0bcea73df12396bd6ab290a53c3c"
+    },
+    {
+      "event_id": "e0004",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31
+        ]
+      },
+      "response": {
+        "output": [
+          84,
+          96,
+          54,
+          5,
+          63,
+          52,
+          73,
+          32,
+          86,
+          51,
+          43,
+          25,
+          22,
+          29,
+          77,
+          41,
+          69,
+          41,
+          46,
+          26,
+          80,
+          68,
+          67,
+          81,
+          53,
+          53,
+          94,
+          86,
+          49,
+          100,
+          57,
+          41
+        ],
+        "modulus": 101,
+        "event_id": "e0004",
+        "cost_used": 4
+      },
+      "previous_hash": "ec3d01a60e228e10c9fe346c67ed4d22570d0bcea73df12396bd6ab290a53c3c",
+      "hash": "2b31a41ebbd507fcacb5f57c887e838c580c20e352c95ce2b129bd859faed938"
+    },
+    {
+      "event_id": "e0005",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          1,
+          4,
+          9,
+          16,
+          25,
+          36,
+          49,
+          64,
+          81,
+          100,
+          20,
+          43,
+          68,
+          95,
+          23,
+          54,
+          87,
+          21,
+          58,
+          97,
+          37,
+          80,
+          24,
+          71,
+          19,
+          70,
+          22,
+          77,
+          33,
+          92,
+          52
+        ]
+      },
+      "response": {
+        "output": [
+          84,
+          96,
+          20,
+          80,
+          24,
+          67,
+          11,
+          72,
+          57,
+          85,
+          4,
+          29,
+          55,
+          62,
+          60,
+          37,
+          79,
+          54,
+          23,
+          63,
+          29,
+          32,
+          83,
+          32,
+          65,
+          18,
+          1,
+          61,
+          38,
+          53,
+          43,
+          38
+        ],
+        "modulus": 101,
+        "event_id": "e0005",
+        "cost_used": 5
+      },
+      "previous_hash": "2b31a41ebbd507fcacb5f57c887e838c580c20e352c95ce2b129bd859faed938",
+      "hash": "d4ec6bedc0cdb539ecb09e1d8d8018caf2375123d46bafa0d579f5002436021d"
+    },
+    {
+      "event_id": "e0006",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          1,
+          8,
+          27,
+          64,
+          24,
+          14,
+          40,
+          7,
+          22,
+          91,
+          18,
+          11,
+          76,
+          17,
+          42,
+          56,
+          65,
+          75,
+          92,
+          21,
+          70,
+          43,
+          47,
+          88,
+          71,
+          2,
+          89,
+          35,
+          48,
+          33,
+          97
+        ]
+      },
+      "response": {
+        "output": [
+          84,
+          96,
+          53,
+          2,
+          70,
+          41,
+          43,
+          49,
+          27,
+          88,
+          18,
+          73,
+          47,
+          87,
+          24,
+          78,
+          37,
+          73,
+          13,
+          59,
+          19,
+          84,
+          31,
+          16,
+          50,
+          52,
+          7,
+          93,
+          33,
+          3,
+          27,
+          46
+        ],
+        "modulus": 101,
+        "event_id": "e0006",
+        "cost_used": 6
+      },
+      "previous_hash": "d4ec6bedc0cdb539ecb09e1d8d8018caf2375123d46bafa0d579f5002436021d",
+      "hash": "52f8ca5684b2b37670ebd841d50df5a62cd8551abce6b7debf3a5836eec7bc23"
+    },
+    {
+      "event_id": "e0007",
+      "tool": "submit",
+      "arguments": {
+        "fill": {
+          "offset": [
+            84,
+            28,
+            88,
+            18,
+            76,
+            23,
+            45,
+            59,
+            18,
+            72,
+            81,
+            65,
+            19,
+            1,
+            55,
+            99,
+            1,
+            97,
+            83,
+            52,
+            88,
+            90,
+            47,
+            97,
+            92,
+            25,
+            25,
+            52,
+            12,
+            62,
+            54,
+            31
+          ],
+          "rows": [
+            [
+              {
+                "column": 0,
+                "coefficient": 10
+              }
+            ],
+            [
+              {
+                "column": 1,
+                "coefficient": 68
+              }
+            ],
+            [
+              {
+                "column": 2,
+                "coefficient": 84
+              }
+            ],
+            [
+              {
+                "column": 3,
+                "coefficient": 63
+              }
+            ],
+            [
+              {
+                "column": 4,
+                "coefficient": 22
+              }
+            ],
+            [
+              {
+                "column": 5,
+                "coefficient": 26
+              }
+            ],
+            [
+              {
+                "column": 6,
+                "coefficient": 72
+              }
+            ],
+            [
+              {
+                "column": 7,
+                "coefficient": 25
+              }
+            ],
+            [
+              {
+                "column": 8,
+                "coefficient": 59
+              }
+            ],
+            [
+              {
+                "column": 9,
+                "coefficient": 65
+              }
+            ],
+            [
+              {
+                "column": 10,
+                "coefficient": 77
+              }
+            ],
+            [
+              {
+                "column": 11,
+                "coefficient": 79
+              }
+            ],
+            [
+              {
+                "column": 12,
+                "coefficient": 76
+              }
+            ],
+            [
+              {
+                "column": 13,
+                "coefficient": 41
+              }
+            ],
+            [
+              {
+                "column": 14,
+                "coefficient": 16
+              }
+            ],
+            [
+              {
+                "column": 15,
+                "coefficient": 50
+              }
+            ],
+            [
+              {
+                "column": 16,
+                "coefficient": 80
+              }
+            ],
+            [
+              {
+                "column": 17,
+                "coefficient": 68
+              }
+            ],
+            [
+              {
+                "column": 18,
+                "coefficient": 26
+              }
+            ],
+            [
+              {
+                "column": 19,
+                "coefficient": 89
+              }
+            ],
+            [
+              {
+                "column": 20,
+                "coefficient": 40
+              }
+            ],
+            [
+              {
+                "column": 21,
+                "coefficient": 23
+              }
+            ],
+            [
+              {
+                "column": 22,
+                "coefficient": 56
+              }
+            ],
+            [
+              {
+                "column": 23,
+                "coefficient": 52
+              }
+            ],
+            [
+              {
+                "column": 24,
+                "coefficient": 11
+              }
+            ],
+            [
+              {
+                "column": 25,
+                "coefficient": 90
+              }
+            ],
+            [
+              {
+                "column": 26,
+                "coefficient": 92
+              }
+            ],
+            [
+              {
+                "column": 27,
+                "coefficient": 5
+              }
+            ],
+            [
+              {
+                "column": 28,
+                "coefficient": 41
+              }
+            ],
+            [
+              {
+                "column": 29,
+                "coefficient": 64
+              }
+            ],
+            [
+              {
+                "column": 30,
+                "coefficient": 91
+              }
+            ],
+            [
+              {
+                "column": 31,
+                "coefficient": 72
+              }
+            ]
+          ]
+        },
+        "confidence": 1.0,
+        "abstain": false,
+        "evidence": [
+          "e0001",
+          "e0002",
+          "e0003",
+          "e0004",
+          "e0005",
+          "e0006"
+        ]
+      },
+      "response": {
+        "accepted": true,
+        "episode_closed": true,
+        "event_id": "e0007",
+        "cost_used": 6
+      },
+      "previous_hash": "52f8ca5684b2b37670ebd841d50df5a62cd8551abce6b7debf3a5836eec7bc23",
+      "hash": "0858f13b778a7ba885cceec87b674948f277200fce5ac89bd8a21865bfb48b67"
+    }
+  ]
+}

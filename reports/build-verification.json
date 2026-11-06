@@ -1,0 +1,233 @@
+{
+  "schema": "causalfill.release-verification.v4",
+  "benchmark": "CausalFill-Bench",
+  "version": "0.4.0",
+  "status": "passed-development-verification",
+  "verified_utc": "2026-11-04T14:22:57.996645+00:00",
+  "source_sha256": "02d337e217efc9e67247df537339033b83e2db935619ec6db25a1127161e5248",
+  "task_configurations": 12,
+  "conceptual_domains": 8,
+  "unit_and_integration_tests": {
+    "passed": 214,
+    "failed": 0,
+    "errors": 0,
+    "seconds": 13.464,
+    "log": "reports/unittest-v0.4.txt"
+  },
+  "scripted_controls": {
+    "path": "reports/development-run-v0.4-final",
+    "records": 3240,
+    "traces_rechecked": 3240,
+    "policies": {
+      "evidence": {
+        "episodes": 1080,
+        "answerable": 990,
+        "answerable_successes": 990,
+        "unanswerable": 90,
+        "correct_unanswerable_abstentions": 90,
+        "complete_pairs": 540
+      },
+      "blind": {
+        "episodes": 1080,
+        "answerable": 990,
+        "answerable_successes": 0,
+        "unanswerable": 90,
+        "correct_unanswerable_abstentions": 0,
+        "complete_pairs": 540
+      },
+      "abstain": {
+        "episodes": 1080,
+        "answerable": 990,
+        "answerable_successes": 0,
+        "unanswerable": 90,
+        "correct_unanswerable_abstentions": 90,
+        "complete_pairs": 540
+      }
+    },
+    "interpretation": "task-aware scripted controls, not LLM scores"
+  },
+  "reports": {
+    "runtime": "reports/stress-v0.4/adaptive-runtime-complete-responses.json",
+    "analytic": "reports/stress-v0.4/belief-analytic-final.json",
+    "policy_enumeration": "reports/stress-v0.4/belief-games-independent-audit.json",
+    "protocol": "reports/stress-v0.4/protocol-final.json",
+    "formal_current": "formal/verification-v04-current/results.json",
+    "formal_binding": "formal/verification-v04-binding/results.json",
+    "formal_stress": "formal/verification-v04-stress/results.json",
+    "formal_retained_regression": "formal/verification-v04-final/results.json",
+    "formal_binding_review": "reports/stress-v0.4/formal-binding-review.json",
+    "independent_kernels": "formal/verification-v04-kernels/replay/results.json",
+    "pilot": "reports/public-interface-pilot-v0.4/manifest.json"
+  },
+  "report_sha256": {
+    "runtime": "a533148e5dfcf5578a0fe1e1126601074182d87d621706efd318476c80c8df26",
+    "analytic": "80941f7506661a9f7f91b3415df8b4b0d2520569c92b85e0ae42e5f29aef43f2",
+    "policy_enumeration": "fffeaa81e68e0d4fbfb953886be25d8b8e2fc867d4f78c107b6622f29bd75cb8",
+    "protocol": "8af4e57ff4c1c2cc6fc274dd776de0ffb349aa4846f5e5e7009d9a4958d760a6",
+    "formal_current": "29d9270f69ea499042207d8bdcc5063172fced079372ad646642adb7d68805c3",
+    "formal_binding": "30445e89cc6116e0992842a83a4a5a2b640e22674e702e15a0b48d27bba307aa",
+    "formal_stress": "61f5d67359c6e574df833571fbced17f9ecfe8425bbd6ab148626281492e47b5",
+    "formal_retained_regression": "cf0ac305d99a361a2732e401a66b73e343694ba87c9b94e577119a8c9b708e9a",
+    "formal_binding_review": "c3a4d4323467b28b8ff2bf6f883667ee1822af45f1a141053ffb8356f56f92d7",
+    "independent_kernels": "78bbcd8e39e5eabb736bd9937faf791338a1d3e28c1aa203cb5653c80f692db4",
+    "pilot": "4be8e0e6af2325ad9f9249f121bfe733269f0c4ab08bfe1e0a3f211a6369f8df"
+  },
+  "stress_summary": {
+    "runtime": {
+      "assertions": 2951089,
+      "certificates": 108,
+      "reachable_states_replayed": 83616,
+      "stuttering_tools_checked": 334464,
+      "invalid_actions_checked": 1533240,
+      "transitions_executed": 139080,
+      "equivalent_history_response_comparisons": 48636,
+      "equivalent_transition_response_comparisons": 74667,
+      "attaining_session_worlds": 384
+    },
+    "analytic": {
+      "certificates": 240,
+      "beliefs_checked": 22488,
+      "assertions": 1441,
+      "initial_worlds_replayed": 560,
+      "metamorphic_cases": 180,
+      "forged_certificates_rejected": 720
+    },
+    "policy_enumeration": {
+      "games": 256,
+      "complete_syntactic_policies_enumerated": 601600,
+      "exact_optimum_comparisons": 1024
+    },
+    "protocol": {
+      "checks": 101349,
+      "failures": 0
+    },
+    "formal_mutation_controls": 10,
+    "units_note": "Correlated assertions, states, edges, syntactic policies and model episodes are distinct units; do not add them into an intelligence score."
+  },
+  "formal_assurance": {
+    "lean_version": "4.35.0",
+    "kernel_trust_level": 0,
+    "new_generic_roots": 21,
+    "concrete_profile_roots": 4,
+    "concrete_binding_roots": 4,
+    "concrete_fixture": "four policy-mode arenas of ONE two-round, four-world market (448 raw states)",
+    "concrete_adaptive_cost": 8,
+    "concrete_restricted_modes_unwinnable": true,
+    "independent_export_roots": 29,
+    "checker_configurations": 6,
+    "external_checker_implementations": 4,
+    "valid_export_acceptances": 6,
+    "corrupted_proof_nonacceptances_with_type_diagnostics": 6,
+    "exported_axioms": [
+      "Quot.sound",
+      "propext"
+    ],
+    "retained_resolution_steps": [
+      865,
+      6018
+    ],
+    "retained_resolution_independent_export_included": false,
+    "trusted_python_projection_and_runtime_refinement_proved": false,
+    "lake_paranoid_sandbox_run": false,
+    "full_gates_source_snapshot": "formal/verification-v04-final/source-snapshot.json"
+  },
+  "public_interface_pilot": {
+    "episodes": 6,
+    "successes": 6,
+    "rows": [
+      {
+        "label": "pilot-1",
+        "family": "vending_adaptive",
+        "split": "train",
+        "difficulty": 3,
+        "success": true,
+        "tool_cost": 26,
+        "invalid_calls": 0,
+        "operational_cost": 20,
+        "setup_and_static_cost": 6,
+        "certified_worst_case_operational_cost_for_profile": 16,
+        "comparison_scope": "post-hoc observed operational cost compared with the profile's certified minimax bound; not a pointwise regret claim"
+      },
+      {
+        "label": "pilot-2",
+        "family": "vending_adaptive",
+        "split": "dev",
+        "difficulty": 3,
+        "success": true,
+        "tool_cost": 26,
+        "invalid_calls": 0,
+        "operational_cost": 20,
+        "setup_and_static_cost": 6,
+        "certified_worst_case_operational_cost_for_profile": 17,
+        "comparison_scope": "post-hoc observed operational cost compared with the profile's certified minimax bound; not a pointwise regret claim"
+      },
+      {
+        "label": "pilot-3",
+        "family": "vending_adaptive",
+        "split": "transfer",
+        "difficulty": 3,
+        "success": true,
+        "tool_cost": 26,
+        "invalid_calls": 0,
+        "operational_cost": 20,
+        "setup_and_static_cost": 6,
+        "certified_worst_case_operational_cost_for_profile": 17,
+        "comparison_scope": "post-hoc observed operational cost compared with the profile's certified minimax bound; not a pointwise regret claim"
+      },
+      {
+        "label": "pilot-4",
+        "family": "robotics_barrier",
+        "split": "transfer",
+        "difficulty": 3,
+        "success": true,
+        "tool_cost": 19,
+        "invalid_calls": 0
+      },
+      {
+        "label": "pilot-5",
+        "family": "diagnosis",
+        "split": "transfer",
+        "difficulty": 3,
+        "success": true,
+        "tool_cost": 6,
+        "invalid_calls": 0
+      },
+      {
+        "label": "pilot-6",
+        "family": "proof",
+        "split": "transfer",
+        "difficulty": 3,
+        "success": true,
+        "tool_cost": 4,
+        "invalid_calls": 0
+      }
+    ],
+    "transport": "public-json-mailbox",
+    "fresh_solver_context": true,
+    "os_enforced_isolation": false,
+    "exact_model_snapshot_available": false,
+    "token_compute_telemetry_available": false,
+    "certified_leaderboard_score": false,
+    "access_evidence": "solver self-report and saved public-only scripts; no OS access attestation",
+    "http_attempts": "excluded infrastructure failure before any task observation",
+    "interpretation": "limited exploratory pilot; six successes are not evidence that these profiles are frontier-hard"
+  },
+  "repairs": [
+    "Bind reported mode, root, node count and root value to the rechecked source certificate.",
+    "Add kernel equality of whole imported arenas to independent expected literals, defeating an exporter-controlled JSON echo."
+  ],
+  "historical_v03": {
+    "archive_sha256": "6371248c901580654d5ed4cd0740fd9ad3221e496b6d01f61012bafa73f627d6",
+    "preserved_verification": "reports/build-verification-v0.3.json",
+    "historical_stress_counts_relabelled_as_v04": false
+  },
+  "github_hosted_ci_run": false,
+  "external_github_publication": false,
+  "limitations": [
+    "Public small development generators and fixtures are not a private held-out evaluation set.",
+    "Classical belief-space planning and weighted-cover methods are prior art; no first/hardest/breakthrough claim is established.",
+    "Internal AI-assisted reviewers and independent implementations are not external laboratory replication.",
+    "Robotics remains symbolic; no camera-image, motor-dynamics or physical robot experiment was performed.",
+    "Operational finite-game cost excludes setup/static reads and final masked-term reconstruction."
+  ]
+}
