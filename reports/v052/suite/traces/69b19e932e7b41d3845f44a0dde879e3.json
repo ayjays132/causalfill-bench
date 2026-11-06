@@ -1,0 +1,361 @@
+{
+  "public": {
+    "family": "robust_sensing",
+    "difficulty": 3,
+    "prompt": "Signal Repair: complete a controller's missing routing decision and execute it. Exactly one listed operating world is current. The truthful binary probe table and successful worlds for every action are public. Across the entire episode, at most 1 distinct probe readings may be flipped. This is one shared corruption limit, not a new allowance for each probe. Each probe can be used once. Choose evidence and then commit an action irreversibly. Success requires the actual operation to succeed AND that the pre-commit observations justify that action in every world compatible with the corruption limit. Full world identification is unnecessary when one action succeeds in all remaining worlds. The operational budget limits probe costs plus the committed action separately from setup-read credits; unused setup credits cannot increase that limit. Complete the action and evidence holes after committing. For each world where the chosen action would fail, cite at least k+1 distinct observed probes contradicting that world's truthful table. Read /formal/robust-sensing.json.",
+    "slots": {
+      "problem_sha256": {
+        "type": "string",
+        "description": "Exact digest in the public contract."
+      },
+      "action": {
+        "type": "string",
+        "description": "ID of the action actually committed."
+      },
+      "exclusions": {
+        "type": "array[object]",
+        "description": "One {world, conflicts:[experiment IDs]} for every world outside the chosen action's success set; each needs k+1 distinct observed contradictions."
+      }
+    },
+    "files": [
+      "/docs/robust-sensing.txt",
+      "/formal/robust-sensing.json",
+      "/skill/recovery.md"
+    ],
+    "tools": {
+      "probe_q00": {
+        "description": "Read probe q00 once; the response may be corrupted within the shared limit.",
+        "arguments": {},
+        "cost": 1
+      },
+      "probe_q01": {
+        "description": "Read probe q01 once; the response may be corrupted within the shared limit.",
+        "arguments": {},
+        "cost": 1
+      },
+      "probe_q02": {
+        "description": "Read probe q02 once; the response may be corrupted within the shared limit.",
+        "arguments": {},
+        "cost": 1
+      },
+      "probe_q03": {
+        "description": "Read probe q03 once; the response may be corrupted within the shared limit.",
+        "arguments": {},
+        "cost": 1
+      },
+      "probe_q04": {
+        "description": "Read probe q04 once; the response may be corrupted within the shared limit.",
+        "arguments": {},
+        "cost": 1
+      },
+      "probe_q05": {
+        "description": "Read probe q05 once; the response may be corrupted within the shared limit.",
+        "arguments": {},
+        "cost": 1
+      },
+      "probe_q06": {
+        "description": "Read probe q06 once; the response may be corrupted within the shared limit.",
+        "arguments": {},
+        "cost": 1
+      },
+      "probe_q07": {
+        "description": "Read probe q07 once; the response may be corrupted within the shared limit.",
+        "arguments": {},
+        "cost": 1
+      },
+      "probe_q08": {
+        "description": "Read probe q08 once; the response may be corrupted within the shared limit.",
+        "arguments": {},
+        "cost": 1
+      },
+      "commit_a00": {
+        "description": "Irreversibly execute action a00; later probing is unavailable. Outcome stays evaluator-only.",
+        "arguments": {},
+        "cost": 1
+      },
+      "commit_a01": {
+        "description": "Irreversibly execute action a01; later probing is unavailable. Outcome stays evaluator-only.",
+        "arguments": {},
+        "cost": 1
+      },
+      "commit_a02": {
+        "description": "Irreversibly execute action a02; later probing is unavailable. Outcome stays evaluator-only.",
+        "arguments": {},
+        "cost": 1
+      },
+      "commit_a03": {
+        "description": "Irreversibly execute action a03; later probing is unavailable. Outcome stays evaluator-only.",
+        "arguments": {},
+        "cost": 1
+      },
+      "commit_a04": {
+        "description": "Irreversibly execute action a04; later probing is unavailable. Outcome stays evaluator-only.",
+        "arguments": {},
+        "cost": 1
+      },
+      "commit_a05": {
+        "description": "Irreversibly execute action a05; later probing is unavailable. Outcome stays evaluator-only.",
+        "arguments": {},
+        "cost": 1
+      },
+      "commit_a06": {
+        "description": "Irreversibly execute action a06; later probing is unavailable. Outcome stays evaluator-only.",
+        "arguments": {},
+        "cost": 1
+      },
+      "commit_a07": {
+        "description": "Irreversibly execute action a07; later probing is unavailable. Outcome stays evaluator-only.",
+        "arguments": {},
+        "cost": 1
+      }
+    },
+    "budget": 10,
+    "max_calls": 21,
+    "episode_id": "69b19e932e7b41d3845f44a0dde879e3",
+    "common_tools": {
+      "list_files": {
+        "arguments": {},
+        "cost": 1
+      },
+      "read_file": {
+        "arguments": {
+          "path": "exact listed virtual path"
+        },
+        "cost": 1
+      },
+      "search_files": {
+        "arguments": {
+          "text": "literal string, 1\u2013160 characters"
+        },
+        "cost": 2
+      },
+      "session_status": {
+        "arguments": {},
+        "cost": 1
+      },
+      "submit": {
+        "arguments": {
+          "fill": "object",
+          "confidence": "number 0..1",
+          "abstain": "boolean",
+          "evidence": "list of returned event IDs"
+        },
+        "cost": 0
+      }
+    },
+    "max_seconds": 600,
+    "tools_enabled": true,
+    "submission_rule": "One final submission. Grades are evaluator-only; no retry after submission."
+  },
+  "events": [
+    {
+      "event_id": "e0001",
+      "tool": "read_file",
+      "arguments": {
+        "path": "/formal/robust-sensing.json"
+      },
+      "response": {
+        "path": "/formal/robust-sensing.json",
+        "content": "{\"problem\":{\"schema\":\"causalfill.robust-decision.v1\",\"worlds\":[\"w00\",\"w01\",\"w02\",\"w03\",\"w04\",\"w05\",\"w06\",\"w07\"],\"max_corruptions\":1,\"actions\":[{\"cost\":1,\"success_worlds\":[\"w01\"],\"id\":\"a00\"},{\"cost\":1,\"success_worlds\":[\"w00\"],\"id\":\"a01\"},{\"cost\":1,\"success_worlds\":[\"w06\"],\"id\":\"a02\"},{\"cost\":1,\"success_worlds\":[\"w02\"],\"id\":\"a03\"},{\"cost\":1,\"success_worlds\":[\"w07\"],\"id\":\"a04\"},{\"cost\":1,\"success_worlds\":[\"w05\"],\"id\":\"a05\"},{\"cost\":1,\"success_worlds\":[\"w04\"],\"id\":\"a06\"},{\"cost\":1,\"success_worlds\":[\"w03\"],\"id\":\"a07\"}],\"experiments\":[{\"id\":\"q00\",\"cost\":1,\"responses\":{\"w00\":1,\"w01\":1,\"w02\":1,\"w03\":0,\"w04\":0,\"w05\":0,\"w06\":0,\"w07\":1}},{\"id\":\"q01\",\"cost\":1,\"responses\":{\"w00\":1,\"w01\":1,\"w02\":0,\"w03\":0,\"w04\":1,\"w05\":0,\"w06\":1,\"w07\":0}},{\"id\":\"q02\",\"cost\":1,\"responses\":{\"w00\":0,\"w01\":1,\"w02\":1,\"w03\":1,\"w04\":1,\"w05\":0,\"w06\":0,\"w07\":0}},{\"id\":\"q03\",\"cost\":1,\"responses\":{\"w00\":1,\"w01\":0,\"w02\":0,\"w03\":0,\"w04\":0,\"w05\":1,\"w06\":1,\"w07\":1}},{\"id\":\"q04\",\"cost\":1,\"responses\":{\"w00\":1,\"w01\":1,\"w02\":0,\"w03\":0,\"w04\":1,\"w05\":0,\"w06\":1,\"w07\":0}},{\"id\":\"q05\",\"cost\":1,\"responses\":{\"w00\":0,\"w01\":0,\"w02\":0,\"w03\":1,\"w04\":1,\"w05\":1,\"w06\":1,\"w07\":0}},{\"id\":\"q06\",\"cost\":1,\"responses\":{\"w00\":1,\"w01\":1,\"w02\":0,\"w03\":0,\"w04\":1,\"w05\":0,\"w06\":1,\"w07\":0}},{\"id\":\"q07\",\"cost\":1,\"responses\":{\"w00\":0,\"w01\":1,\"w02\":1,\"w03\":1,\"w04\":1,\"w05\":0,\"w06\":0,\"w07\":0}},{\"id\":\"q08\",\"cost\":1,\"responses\":{\"w00\":0,\"w01\":0,\"w02\":0,\"w03\":1,\"w04\":1,\"w05\":1,\"w06\":1,\"w07\":0}}]},\"problem_sha256\":\"5a3405291e43319dd24e9fda18f82f63ae43773e9a534e4adfd3871531eb1706\",\"operational_budget\":8,\"budget_scope\":\"probe costs plus one terminal action; setup reads excluded\",\"setup_credit_rule\":\"unused setup credits cannot increase the operational budget\",\"query_rule\":\"each listed probe is available once\",\"fault_rule\":\"at most max_corruptions flipped responses in the whole episode\",\"fill_rule\":\"witnesses must refer to distinct observations made before commitment\"}",
+        "event_id": "e0001",
+        "cost_used": 1
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "68a8820a237cf134944a81f01d6566a3317710f2690b605dd5e2668821af9495"
+    },
+    {
+      "event_id": "e0002",
+      "tool": "probe_q00",
+      "arguments": {},
+      "response": {
+        "experiment": "q00",
+        "outcome": 0,
+        "remaining_probes": 8,
+        "event_id": "e0002",
+        "cost_used": 2
+      },
+      "previous_hash": "68a8820a237cf134944a81f01d6566a3317710f2690b605dd5e2668821af9495",
+      "hash": "33577efb6a07a6620074b51df98fc284c856ff818e9f149b3f7e1a9efbc59861"
+    },
+    {
+      "event_id": "e0003",
+      "tool": "probe_q01",
+      "arguments": {},
+      "response": {
+        "experiment": "q01",
+        "outcome": 0,
+        "remaining_probes": 7,
+        "event_id": "e0003",
+        "cost_used": 3
+      },
+      "previous_hash": "33577efb6a07a6620074b51df98fc284c856ff818e9f149b3f7e1a9efbc59861",
+      "hash": "35036c69b01666873abe6e5681332e7e26412dece10aa388f0c9b07928473d99"
+    },
+    {
+      "event_id": "e0004",
+      "tool": "probe_q02",
+      "arguments": {},
+      "response": {
+        "experiment": "q02",
+        "outcome": 0,
+        "remaining_probes": 6,
+        "event_id": "e0004",
+        "cost_used": 4
+      },
+      "previous_hash": "35036c69b01666873abe6e5681332e7e26412dece10aa388f0c9b07928473d99",
+      "hash": "6c461a4fe7777239248a1909c3a20044a594a5ab8ccaf4ffc7c2823d519deb9c"
+    },
+    {
+      "event_id": "e0005",
+      "tool": "probe_q03",
+      "arguments": {},
+      "response": {
+        "experiment": "q03",
+        "outcome": 1,
+        "remaining_probes": 5,
+        "event_id": "e0005",
+        "cost_used": 5
+      },
+      "previous_hash": "6c461a4fe7777239248a1909c3a20044a594a5ab8ccaf4ffc7c2823d519deb9c",
+      "hash": "d16284662cb8688312f27c084cbb10007513dce48163cc282ce39373d2a5cc35"
+    },
+    {
+      "event_id": "e0006",
+      "tool": "probe_q04",
+      "arguments": {},
+      "response": {
+        "experiment": "q04",
+        "outcome": 0,
+        "remaining_probes": 4,
+        "event_id": "e0006",
+        "cost_used": 6
+      },
+      "previous_hash": "d16284662cb8688312f27c084cbb10007513dce48163cc282ce39373d2a5cc35",
+      "hash": "2daa97712fc19a2bb34ea7934cf1dff305cae9c61b1060f90adc62d72f26e9b3"
+    },
+    {
+      "event_id": "e0007",
+      "tool": "probe_q05",
+      "arguments": {},
+      "response": {
+        "experiment": "q05",
+        "outcome": 0,
+        "remaining_probes": 3,
+        "event_id": "e0007",
+        "cost_used": 7
+      },
+      "previous_hash": "2daa97712fc19a2bb34ea7934cf1dff305cae9c61b1060f90adc62d72f26e9b3",
+      "hash": "0233e3161da2d2df7f68512349d2f44bf7eb4c242018d1ebb6904fb3ce2d2b00"
+    },
+    {
+      "event_id": "e0008",
+      "tool": "probe_q08",
+      "arguments": {},
+      "response": {
+        "experiment": "q08",
+        "outcome": 1,
+        "remaining_probes": 2,
+        "event_id": "e0008",
+        "cost_used": 8
+      },
+      "previous_hash": "0233e3161da2d2df7f68512349d2f44bf7eb4c242018d1ebb6904fb3ce2d2b00",
+      "hash": "a972c45458ffecbdd21c62d0f089a5fa3b528fc422fdf85dbfcd1a41e7c01a76"
+    },
+    {
+      "event_id": "e0009",
+      "tool": "commit_a05",
+      "arguments": {},
+      "response": {
+        "action": "a05",
+        "committed": true,
+        "next_step": "Submit the action and observed exclusion witnesses.",
+        "event_id": "e0009",
+        "cost_used": 9
+      },
+      "previous_hash": "a972c45458ffecbdd21c62d0f089a5fa3b528fc422fdf85dbfcd1a41e7c01a76",
+      "hash": "dde66d146ef5d22fa8b603879e9af6fd518aece0b298a79b810aa5a6f945d529"
+    },
+    {
+      "event_id": "e0010",
+      "tool": "submit",
+      "arguments": {
+        "fill": {
+          "problem_sha256": "5a3405291e43319dd24e9fda18f82f63ae43773e9a534e4adfd3871531eb1706",
+          "action": "a05",
+          "exclusions": [
+            {
+              "world": "w00",
+              "conflicts": [
+                "q00",
+                "q01"
+              ]
+            },
+            {
+              "world": "w01",
+              "conflicts": [
+                "q00",
+                "q01"
+              ]
+            },
+            {
+              "world": "w02",
+              "conflicts": [
+                "q00",
+                "q02"
+              ]
+            },
+            {
+              "world": "w03",
+              "conflicts": [
+                "q02",
+                "q03"
+              ]
+            },
+            {
+              "world": "w04",
+              "conflicts": [
+                "q01",
+                "q02"
+              ]
+            },
+            {
+              "world": "w06",
+              "conflicts": [
+                "q01",
+                "q04"
+              ]
+            },
+            {
+              "world": "w07",
+              "conflicts": [
+                "q00",
+                "q08"
+              ]
+            }
+          ]
+        },
+        "confidence": 1.0,
+        "abstain": false,
+        "evidence": [
+          "e0001",
+          "e0002",
+          "e0003",
+          "e0004",
+          "e0005",
+          "e0006",
+          "e0007",
+          "e0008",
+          "e0009"
+        ]
+      },
+      "response": {
+        "accepted": true,
+        "episode_closed": true,
+        "event_id": "e0010",
+        "cost_used": 9
+      },
+      "previous_hash": "dde66d146ef5d22fa8b603879e9af6fd518aece0b298a79b810aa5a6f945d529",
+      "hash": "57df693f060063eff93075d45e9a7840c16cd1baffc505e1b2268839b7c97bac"
+    }
+  ]
+}

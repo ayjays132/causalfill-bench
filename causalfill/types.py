@@ -10,6 +10,10 @@ from dataclasses import dataclass, field
 from typing import Any
 
 SPLITS = ("train", "dev", "transfer")
+# Version the meaning of evaluator results independently of the package version.
+# v2 preserves committed-operation diagnostics on rejected/unfinished completions
+# and groups equivalent Signal Repair mechanisms under one structural signature.
+SCORING_VERSION = "causalfill.scoring.v2"
 
 
 def canonical(value: Any) -> str:
@@ -80,6 +84,15 @@ class Task:
 
     def evaluate(self, fill: dict) -> Verdict:
         raise NotImplementedError
+
+    def failure_verdict(self, details: dict) -> Verdict:
+        """Report a failed completion, retaining task-specific state if applicable.
+
+        Stateful tasks may override this evaluator-only hook to report an action
+        that already happened before an abstention, invalid fill or termination.
+        The default preserves the behavior of tasks without such diagnostics.
+        """
+        return Verdict(False, details=copy.deepcopy(details))
 
     def reference_answer(self) -> dict:
         raise NotImplementedError

@@ -1,0 +1,368 @@
+{
+  "public": {
+    "family": "latent_sparse",
+    "difficulty": 1,
+    "prompt": "Recover a masked affine operator f: GF(101)^8 -> GF(101)^8 under a budget of nine cost units. Each output coordinate depends on at most two input coordinates plus an offset. You may choose bounded intervention vectors for the probe tool. Submit offset and sparse rows: output[i] = (offset[i] + sum(term.coefficient * input[term.column] for term in rows[i])) modulo 101. All entries are integers 0..100; columns are indexed from zero. Your map must work on all inputs, not only your probes.",
+    "slots": {
+      "offset": {
+        "type": "integer_vector",
+        "description": "Exactly 8 residues."
+      },
+      "rows": {
+        "type": "sparse_matrix_rows",
+        "description": "Exactly 8 lists of {column: int, coefficient: int}. No duplicate columns within a row; omitted entries mean zero."
+      }
+    },
+    "files": [
+      "/docs/field.txt",
+      "/skill/recovery.md",
+      "/workspace/operator.masked.json"
+    ],
+    "tools": {
+      "probe": {
+        "description": "Evaluate the operator on one intervention vector; no state is changed.",
+        "arguments": {
+          "vector": "list of 8 integers in [0, 100]"
+        },
+        "cost": 1
+      }
+    },
+    "budget": 9,
+    "max_calls": 14,
+    "episode_id": "dc813aed843242d9aa13f910af75c9a1",
+    "common_tools": {
+      "list_files": {
+        "arguments": {},
+        "cost": 1
+      },
+      "read_file": {
+        "arguments": {
+          "path": "exact listed virtual path"
+        },
+        "cost": 1
+      },
+      "search_files": {
+        "arguments": {
+          "text": "literal string, 1\u2013160 characters"
+        },
+        "cost": 2
+      },
+      "session_status": {
+        "arguments": {},
+        "cost": 1
+      },
+      "submit": {
+        "arguments": {
+          "fill": "object",
+          "confidence": "number 0..1",
+          "abstain": "boolean",
+          "evidence": "list of returned event IDs"
+        },
+        "cost": 0
+      }
+    },
+    "max_seconds": 600,
+    "tools_enabled": true,
+    "submission_rule": "One final submission. Grades are evaluator-only; no retry after submission."
+  },
+  "events": [
+    {
+      "event_id": "e0001",
+      "tool": "read_file",
+      "arguments": {
+        "path": "/workspace/operator.masked.json"
+      },
+      "response": {
+        "path": "/workspace/operator.masked.json",
+        "content": "{\"modulus\":101,\"dimension\":8,\"rows\":[{\"offset\":\"[MASK:b_0]\",\"terms\":[{\"column\":\"[MASK:j_0_0]\",\"coefficient\":\"[MASK:a_0_0]\"},{\"column\":\"[MASK:j_0_1]\",\"coefficient\":\"[MASK:a_0_1]\"}]},{\"offset\":\"[MASK:b_1]\",\"terms\":[{\"column\":\"[MASK:j_1_0]\",\"coefficient\":\"[MASK:a_1_0]\"},{\"column\":\"[MASK:j_1_1]\",\"coefficient\":\"[MASK:a_1_1]\"}]},{\"offset\":\"[MASK:b_2]\",\"terms\":[{\"column\":\"[MASK:j_2_0]\",\"coefficient\":\"[MASK:a_2_0]\"},{\"column\":\"[MASK:j_2_1]\",\"coefficient\":\"[MASK:a_2_1]\"}]},{\"offset\":\"[MASK:b_3]\",\"terms\":[{\"column\":\"[MASK:j_3_0]\",\"coefficient\":\"[MASK:a_3_0]\"},{\"column\":\"[MASK:j_3_1]\",\"coefficient\":\"[MASK:a_3_1]\"}]},{\"offset\":\"[MASK:b_4]\",\"terms\":[{\"column\":\"[MASK:j_4_0]\",\"coefficient\":\"[MASK:a_4_0]\"},{\"column\":\"[MASK:j_4_1]\",\"coefficient\":\"[MASK:a_4_1]\"}]},{\"offset\":\"[MASK:b_5]\",\"terms\":[{\"column\":\"[MASK:j_5_0]\",\"coefficient\":\"[MASK:a_5_0]\"},{\"column\":\"[MASK:j_5_1]\",\"coefficient\":\"[MASK:a_5_1]\"}]},{\"offset\":\"[MASK:b_6]\",\"terms\":[{\"column\":\"[MASK:j_6_0]\",\"coefficient\":\"[MASK:a_6_0]\"},{\"column\":\"[MASK:j_6_1]\",\"coefficient\":\"[MASK:a_6_1]\"}]},{\"offset\":\"[MASK:b_7]\",\"terms\":[{\"column\":\"[MASK:j_7_0]\",\"coefficient\":\"[MASK:a_7_0]\"},{\"column\":\"[MASK:j_7_1]\",\"coefficient\":\"[MASK:a_7_1]\"}]}]}",
+        "event_id": "e0001",
+        "cost_used": 1
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "09a6711917fee49045fa6233077ef67e1c84ae2362a6cbe479139950d0dba01c"
+    },
+    {
+      "event_id": "e0002",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "response": {
+        "output": [
+          92,
+          38,
+          68,
+          76,
+          51,
+          3,
+          18,
+          49
+        ],
+        "modulus": 101,
+        "event_id": "e0002",
+        "cost_used": 2
+      },
+      "previous_hash": "09a6711917fee49045fa6233077ef67e1c84ae2362a6cbe479139950d0dba01c",
+      "hash": "e3ff9f5b1fb90d6d3829f7e59d9ecd30cb1163ed87254d800b897d27ef2e3220"
+    },
+    {
+      "event_id": "e0003",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "response": {
+        "output": [
+          93,
+          61,
+          43,
+          59,
+          45,
+          66,
+          57,
+          19
+        ],
+        "modulus": 101,
+        "event_id": "e0003",
+        "cost_used": 3
+      },
+      "previous_hash": "e3ff9f5b1fb90d6d3829f7e59d9ecd30cb1163ed87254d800b897d27ef2e3220",
+      "hash": "4403844e068788d6ceedba57cbf6b4c0925e53f149d940a7a7399bfa1729d4b2"
+    },
+    {
+      "event_id": "e0004",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "response": {
+        "output": [
+          63,
+          85,
+          59,
+          23,
+          61,
+          96,
+          33,
+          74
+        ],
+        "modulus": 101,
+        "event_id": "e0004",
+        "cost_used": 4
+      },
+      "previous_hash": "4403844e068788d6ceedba57cbf6b4c0925e53f149d940a7a7399bfa1729d4b2",
+      "hash": "51f78720d02f67852db871f2bdff3ca34ad4c326580bc3ab339bc226f49f45c7"
+    },
+    {
+      "event_id": "e0005",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          1,
+          4,
+          9,
+          16,
+          25,
+          36,
+          49
+        ]
+      },
+      "response": {
+        "output": [
+          11,
+          32,
+          70,
+          0,
+          10,
+          64,
+          58,
+          79
+        ],
+        "modulus": 101,
+        "event_id": "e0005",
+        "cost_used": 5
+      },
+      "previous_hash": "51f78720d02f67852db871f2bdff3ca34ad4c326580bc3ab339bc226f49f45c7",
+      "hash": "a31fe07150798c0ff8041a2c231006ead5b639e15dc7c00cbe21b6dd725836be"
+    },
+    {
+      "event_id": "e0006",
+      "tool": "probe",
+      "arguments": {
+        "vector": [
+          0,
+          1,
+          8,
+          27,
+          64,
+          24,
+          14,
+          40
+        ]
+      },
+      "response": {
+        "output": [
+          40,
+          27,
+          46,
+          1,
+          7,
+          5,
+          12,
+          60
+        ],
+        "modulus": 101,
+        "event_id": "e0006",
+        "cost_used": 6
+      },
+      "previous_hash": "a31fe07150798c0ff8041a2c231006ead5b639e15dc7c00cbe21b6dd725836be",
+      "hash": "810b53bf7f3cdfe4dfdf27f96d3ddb17d420aa672024250800564c2f0581c258"
+    },
+    {
+      "event_id": "e0007",
+      "tool": "submit",
+      "arguments": {
+        "fill": {
+          "offset": [
+            92,
+            38,
+            68,
+            76,
+            51,
+            3,
+            18,
+            49
+          ],
+          "rows": [
+            [
+              {
+                "column": 2,
+                "coefficient": 67
+              },
+              {
+                "column": 4,
+                "coefficient": 35
+              }
+            ],
+            [
+              {
+                "column": 1,
+                "coefficient": 100
+              },
+              {
+                "column": 2,
+                "coefficient": 24
+              }
+            ],
+            [
+              {
+                "column": 1,
+                "coefficient": 6
+              },
+              {
+                "column": 7,
+                "coefficient": 70
+              }
+            ],
+            [
+              {
+                "column": 6,
+                "coefficient": 35
+              },
+              {
+                "column": 7,
+                "coefficient": 49
+              }
+            ],
+            [
+              {
+                "column": 0,
+                "coefficient": 26
+              },
+              {
+                "column": 6,
+                "coefficient": 69
+              }
+            ],
+            [
+              {
+                "column": 0,
+                "coefficient": 4
+              },
+              {
+                "column": 5,
+                "coefficient": 59
+              }
+            ],
+            [
+              {
+                "column": 3,
+                "coefficient": 90
+              },
+              {
+                "column": 5,
+                "coefficient": 50
+              }
+            ],
+            [
+              {
+                "column": 3,
+                "coefficient": 57
+              },
+              {
+                "column": 4,
+                "coefficient": 14
+              }
+            ]
+          ]
+        },
+        "confidence": 1.0,
+        "abstain": false,
+        "evidence": [
+          "e0001",
+          "e0002",
+          "e0003",
+          "e0004",
+          "e0005",
+          "e0006"
+        ]
+      },
+      "response": {
+        "accepted": true,
+        "episode_closed": true,
+        "event_id": "e0007",
+        "cost_used": 6
+      },
+      "previous_hash": "810b53bf7f3cdfe4dfdf27f96d3ddb17d420aa672024250800564c2f0581c258",
+      "hash": "5ccb4d15a983356d7ca6ce825ea21e05c3047d599d4c125ffed1056e5e7f2285"
+    }
+  ]
+}

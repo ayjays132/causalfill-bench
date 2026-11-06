@@ -1,4 +1,4 @@
-# Scoring and uncertainty — v0.5.0
+# Scoring and uncertainty — v0.5.2
 
 `causalfill.metrics.summarize(records, bootstrap_seed=0, n_bootstrap=1000)` accepts
 evaluator result dictionaries, including the fields emitted by `Session`. It
@@ -16,9 +16,9 @@ This gives each represented family equal weight, regardless of how many seeds it
 has. It does not automatically make a small synthetic family representative of a
 real-world capability. Family definitions and task counts must be published.
 
-Version 0.5.0 has fourteen task configurations across nine conceptual domains:
+Version 0.5.2 has fifteen task configurations across nine conceptual domains:
 `words`/`ambiguity`, `latent`/`latent_sparse`, `robotics`/`robotics_barrier`/`robotics_vision`, and
-`vending`/`vending_adaptive`
+`vending`/`vending_adaptive` and `diagnosis`/`robust_sensing`
 each share a conceptual domain. The analyzer uses the actual `family` labels
 in records, so base and challenge configurations retain separate weights.
 The unanswerable `ambiguity` control is excluded from the capability mean.
@@ -77,6 +77,30 @@ does not establish operational or physical safety. Certificate correctness does
 not establish that the Python checker itself has been formally verified. See
 [Assumptions and guarantees](assumptions-and-guarantees.md).
 
+### Signal Repair: committed outcome and certificate acceptance
+
+The `robust_sensing` task requires a successful committed action, robust
+justification from pre-commit observations, a complete valid exclusion
+certificate bound to the public contract, and compliance with the operational
+budget. Each unsafe world needs at least `k+1` distinct accepted probe
+observations contradicting it under the one shared corruption limit.
+
+In scoring v2, `outcome` is calculated from the action actually committed and
+the true world, independently of final-fill parsing. `safety` is the indicator
+that the chosen action succeeds in every world still compatible with the
+pre-commit evidence. It describes finite-model justification, not physical
+safety. A successful justified action followed by a malformed certificate has
+`success: false`, `outcome: 1.0`, and `safety: 1.0`. A lucky action without
+sufficient evidence can have outcome one and safety zero.
+
+These diagnostics also survive abstention or forced termination after an
+irreversible action. With no committed action, both are zero and
+`verdict.details.action_committed` is false. `committed_action`,
+`certificate_valid`, and `action_justified_before_commit` provide explicit
+diagnostics. A claimant's submitted action name never replaces the actual
+committed action in the outcome calculation. Other task families retain their
+own existing diagnostic definitions. See [migration notes](migration-v052.md).
+
 ### Sequential operational cost
 
 The `vending_adaptive` task separates strict realized success from the certified
@@ -124,7 +148,7 @@ terminal costs. See [Decision sufficiency](decision-sufficiency.md).
 Groups use the complete identity:
 
 ```text
-policy + config_id + model + harness + condition
+policy + config_id + model + harness + scoring_version + condition
 ```
 
 `model_id` and `harness_id` are accepted aliases if their primary fields are absent.
@@ -134,6 +158,11 @@ score pooled across groups. Missing policy/configuration names are marked
 `unspecified` and flagged. The analyzer cannot discover unrecorded configuration
 differences; assign a distinct `config_id` to each model, harness, prompt, budget,
 or tool setup that should not be pooled.
+
+New v0.5.2 results carry `scoring_version: causalfill.scoring.v2`. Missing
+historical versions are labelled `legacy-unspecified` and remain in a separate
+group. Do not retrofit a current version label onto old measurements. The
+summary schema is `causalfill.metrics.v2`.
 
 Family results and episode counts remain visible. For comparisons across splits,
 difficulty settings, or resource budgets, place the chosen condition in the
@@ -166,6 +195,11 @@ sampled design. All-pass/all-fail data can produce a degenerate interval; that i
 not evidence of zero risk on unseen tasks. Adding thousands of seeds to one
 template does not increase the number of independent structural clusters.
 
+Signal Repair's equivalent train/difficulty-1 and dev/difficulty-1 repetition
+mechanisms now share `robust_sensing:repetition-1-bits-one-global-fault:v1`.
+Split names, shuffled labels and polarity changes do not count as independent
+mechanisms. This corrects metadata grouping without changing task generation.
+
 ## Paired variants and intervention kinds
 
 Records may include `pair_id` and integer `twin` equal to 0 or 1. Pairing occurs
@@ -197,6 +231,7 @@ each recorded kind:
 | `target_horizontal_translation` | Pose, relational count and dispatch are correct in both pixel scenes under fixed nuisance variables. |
 | `gate_lane` | Both rendered gate variants lead to successful simulated delivery. |
 | `surface_friction` | Both initial contact regimes permit successful handling, including valid conditioning alternatives. |
+| `sensor_corruption` | Both assigned fault variants satisfy the shared global cap, operational action and observed certificate obligations; an assigned fault may never be probed. |
 | `unspecified` | Legacy metadata does not establish which interpretation applies. |
 
 The overall `paired` section is a descriptive summary across the configured
@@ -210,12 +245,12 @@ online adaptation within one continuous run.
 
 ```json
 {
-  "schema_version": "causalfill.metrics.v1",
+  "schema_version": "causalfill.metrics.v2",
   "record_count": 12,
   "group_count": 1,
   "groups": [{
     "group_id": "stable identity hash",
-    "identity": {"policy": "name", "config_id": "version", "model": null, "harness": null, "condition": {}},
+    "identity": {"policy": "name", "config_id": "version", "model": null, "harness": null, "scoring_version": "causalfill.scoring.v2", "condition": {}},
     "headline": {"name": "macro_family_solvable_success", "value": 0.5, "answerable_families": 2, "ci95": null},
     "aggregate": {"episodes": 12, "solvable_success_rate": 0.5, "metric_means": {}},
     "per_family": {"family-name": {"episodes": 6, "solvable_success_rate": 0.5}},

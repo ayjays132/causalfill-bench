@@ -1,22 +1,19 @@
 # CausalFill-Bench
 
 <picture>
-  <source media="(max-width: 700px)" srcset="branding/hero-mobile.svg">
-  <img src="branding/hero.svg" alt="CausalFill-Bench. Recover the missing. Prove the result. Choose evidence and make the completed procedure work.">
+  <source media="(max-width: 700px)" srcset="branding/v052/hero-mobile.svg">
+  <img src="branding/v052/hero.svg" alt="CausalFill-Bench. Evidence into action. Recover missing components, choose observations, and verify the result.">
 </picture>
 
 **An executable research benchmark for recovering missing components, choosing evidence, and completing a procedure that works.**
 
 CausalFill-Bench is an original, executable research prototype for tool-using agents. An agent encounters missing words, code, rules, procurement parameters, scene state, a mathematical operator, a proof, or a diagnosis. It must use a bounded public tool interface, produce a typed completion, and satisfy an independent verifier. Some tracks require a checked certificate as well as a recovered answer.
 
-**Version 0.5.1 adds Signal Repair: decisions under one shared sensor-corruption limit, with an irreversible action and observed exclusion witnesses.** The release has **15 task configurations across nine conceptual domains**, an exact finite cost engine, a separate live-case audit, and 14 new generic Lean theorem roots. The existing controlled PNG perception and rendered robotics tracks remain included. Public generators and development results establish working mechanisms; frontier-model hardness and physical-robot transfer remain unestablished. See [release results](docs/v0.5.1-results.md), [Signal Repair](docs/robust-sensing.md), and [research positioning](docs/robust-research.md).
+**Version 0.5.2 makes results easier to inspect and releases easier to reproduce.** Signal Repair now preserves the actual committed outcome when a certificate is malformed or an episode ends without a valid completion. Scoring versions stay separate, equivalent sensing mechanisms share a structural cluster, and a new offline review page connects scores to individual episodes. A checked package inventory protects the archived evidence and source files. The expanded SVG system includes all **15 task configurations across nine conceptual domains**.
 
-<picture>
-  <source media="(max-width: 700px)" srcset="branding/results-sheet-mobile.svg">
-  <img src="branding/results-sheet.svg" alt="Source-bound release evidence cards. Exact measurements, formal scope and research limits are listed in the release results.">
-</picture>
+The benchmark remains a research prototype. Scripted controls establish executable mechanisms; broad model performance and physical-robot transfer require separate experiments. The preserved Lean work establishes selected formal statements under its declared assumptions. See [v0.5.2 measured results](docs/v0.5.2-results.md), [the feature guide](docs/feature-guide.md), and [the next evaluation stage](docs/evaluation-plan-v0.5.1.md).
 
-**Explore:** [Task map](#what-is-implemented) · [Run a task](#run-it-now) · [Evidence and reproduction](docs/v0.5.1-results.md) · [Formal guarantees](formal/verification-v051-fault/README.md) · [Visual identity and cards](docs/brand.md)
+**Explore:** [Quickstart](docs/quickstart.md) · [Task map](#what-is-implemented) · [Features in depth](docs/feature-guide.md) · [Run review](docs/run-review.md) · [Release results](docs/v0.5.2-results.md) · [SVG gallery](branding/v052/index.html) · [Changelog](CHANGELOG.md)
 
 Project concept and direction: **Phillip A. Holland Jr.** Implementation and research synthesis: AI-assisted. Original task code and assets are provided under MIT. No ARC tasks, third-party skills, robot assets, or OpenAI model weights are bundled. Serialized Lean proof dependencies retain their upstream terms; [the official upstream notices](formal/licenses/README.md) are included.
 
@@ -26,6 +23,7 @@ Python 3.10 or later; the benchmark core has **no third-party runtime dependenci
 
 ```bash
 python -m causalfill list
+python -m causalfill --version
 python -m causalfill demo --family robust_sensing --split transfer --difficulty 3
 python -m causalfill demo --family visual --split transfer --difficulty 3
 python -m causalfill demo --family robotics_vision --split transfer --difficulty 3
@@ -49,6 +47,28 @@ python -m causalfill suite --output private-runs/evidence \
 ```
 
 The output directory must be new or empty. `records.jsonl`, `summary.json`, `manifest.json`, and per-episode traces are produced. Seeds, private outcomes, and source fingerprints belong to the evaluator. Do not mount these into an agent container. The default suite includes both paired variants. Their intervention type depends on the track, as described below.
+
+Build an interactive review of that run, then open the HTML file locally:
+
+```bash
+python -m causalfill review private-runs/evidence \
+  --output private-runs/evidence-review.html --verify-traces
+```
+
+The review is self-contained and works offline. It separates policy/model/harness/scoring configurations, filters episodes, exposes certificate failures and resource use, and checks supplied manifest and trace bindings. It contains evaluator data; it is not a solver interface. [Review guide](docs/run-review.md).
+
+## What's improved in v0.5.2
+
+| Improvement | Resulting behavior |
+|---|---|
+| Correct operation diagnostics | A successful committed action remains visible as `outcome: 1` even if its final certificate is rejected. Strict success stays false. |
+| Explicit scoring semantics | New records carry `causalfill.scoring.v2`; legacy records cannot silently merge into the same group. |
+| Canonical structural grouping | The equivalent one-bit repetition mechanisms in train and dev contribute one structural cluster within the sensing family. |
+| Offline run review | Inspect complete configuration scores, task breakdowns, pairs, costs, provenance and individual records in one HTML file. |
+| Complete release packaging | Restored historical logs and C frontend sources are pinned by hash; the current source inventory checks archive and checkout completeness. |
+| Expanded visual identity | Versioned heroes, all-configuration icons, explanatory feature plates and a responsive SVG gallery have deterministic source builders. |
+
+[Migration notes](docs/migration-v052.md) explain the metric/schema changes. [Release instructions](docs/releasing-v052.md) describe verification and packaging.
 
 ## What is implemented
 
@@ -275,6 +295,8 @@ No claim of being the first, hardest, or a breakthrough is made. A publishable c
 - `formal/`: Lean source, complete exported proof sources, round-trip data, and verification logs.
 - `tools/stress_*.py`: deterministic semantic, operational, and real-transport stress harnesses.
 - `configs/`: research-source provenance and optional isolation example.
+- `branding/v052/`: current SVG identity, task icons, feature illustrations and gallery.
+- `reports/v052/`: source-bound v0.5.2 development checks and the offline review.
 
 The **CausalFill Benchmark** companion skill provides author/evaluator and solver workflows. Its solver workflow excludes evaluator/source access. Skill installation is separate from the benchmark source distribution. The source package runs independently of that optional companion.
 

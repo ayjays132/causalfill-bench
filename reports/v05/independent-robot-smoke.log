@@ -1,0 +1,197 @@
+{
+  "checks": 2078,
+  "failure_count": 0,
+  "measurements": {
+    "robot_transitions": {
+      "base_episodes": 18,
+      "rendered_gate_frames_checked": 36,
+      "committed_transition_cases": 504,
+      "prefixes": [
+        [],
+        [
+          "gentle"
+        ],
+        [
+          "firm"
+        ],
+        [
+          "firm",
+          "gentle"
+        ]
+      ],
+      "legal_terminal_actions_per_prefix": 7,
+      "maximum_opening_center_error_world": 0.2610704659222236,
+      "probe_reading_blinded_conditioning_grip": {
+        "conditionable/relaxed": {
+          "episodes": 18,
+          "successes": 18,
+          "stalls": 0
+        }
+      },
+      "oracle": "exact decimal Fraction physical conditions plus independent time/energy/wear accounting",
+      "scope": "four selected prefixes, not every possible history; scripted controls only"
+    },
+    "robot_action_intersections": {
+      "strict_known_lane_profiles": [
+        {
+          "contact_profile": "conditionable",
+          "prefix": [],
+          "successful_action_sets": [
+            [
+              [
+                "upper",
+                "grip"
+              ]
+            ],
+            [
+              [
+                "upper",
+                "roll"
+              ]
+            ]
+          ],
+          "common": []
+        },
+        {
+          "contact_profile": "conditionable",
+          "prefix": [
+            "gentle"
+          ],
+          "successful_action_sets": [
+            [
+              [
+                "upper",
+                "grip"
+              ]
+            ],
+            [
+              [
+                "upper",
+                "roll"
+              ]
+            ]
+          ],
+          "common": []
+        },
+        {
+          "contact_profile": "conditionable",
+          "prefix": [
+            "firm"
+          ],
+          "successful_action_sets": [
+            [
+              [
+                "upper",
+                "grip"
+              ]
+            ],
+            [
+              [
+                "upper",
+                "grip"
+              ],
+              [
+                "upper",
+                "roll"
+              ]
+            ]
+          ],
+          "common": [
+            [
+              "upper",
+              "grip"
+            ]
+          ]
+        },
+        {
+          "contact_profile": "conditionable",
+          "prefix": [
+            "firm",
+            "gentle"
+          ],
+          "successful_action_sets": [
+            [],
+            []
+          ],
+          "common": []
+        },
+        {
+          "contact_profile": "resistant",
+          "prefix": [],
+          "successful_action_sets": [
+            [
+              [
+                "upper",
+                "grip"
+              ]
+            ],
+            [
+              [
+                "upper",
+                "roll"
+              ]
+            ]
+          ],
+          "common": []
+        },
+        {
+          "contact_profile": "resistant",
+          "prefix": [
+            "gentle"
+          ],
+          "successful_action_sets": [
+            [
+              [
+                "upper",
+                "grip"
+              ]
+            ],
+            [
+              [
+                "upper",
+                "roll"
+              ]
+            ]
+          ],
+          "common": []
+        },
+        {
+          "contact_profile": "resistant",
+          "prefix": [
+            "firm"
+          ],
+          "successful_action_sets": [
+            [
+              [
+                "upper",
+                "grip"
+              ]
+            ],
+            [
+              [
+                "upper",
+                "roll"
+              ]
+            ]
+          ],
+          "common": []
+        },
+        {
+          "contact_profile": "resistant",
+          "prefix": [
+            "firm",
+            "gentle"
+          ],
+          "successful_action_sets": [
+            [],
+            []
+          ],
+          "common": []
+        }
+      ],
+      "interpretation": "Firm contact creates a common grip action only in the deliberately conditionable profile; resistant profiles require information or more contact than the strict deadline permits. Geometry sensing is still consequential for strict gate pairs.",
+      "scope": "Exhaustive seven terminal actions after listed prefixes, not an exact optimum over all sensing histories."
+    }
+  },
+  "output": "reports/v05/independent-robot-smoke.json"
+}

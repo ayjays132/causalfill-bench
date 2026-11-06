@@ -1,0 +1,276 @@
+{
+  "checks": 28460,
+  "failure_count": 0,
+  "measurements": {
+    "raster": {
+      "scenes": 64,
+      "exact_pixel_samples": 36864,
+      "oracle": "Fraction geometry plus independently parsed pixels"
+    },
+    "decoder": {
+      "malformed_png_cases": 20,
+      "malformed_envelopes": 7,
+      "independent_valid_controls": 2,
+      "maximum_bomb_uncompressed_bytes": 1000000
+    },
+    "finite_transfer_calibration": {
+      "canonical_camera_target_configurations": 192,
+      "full_represented_subpixel_support_enumerated": true,
+      "factorization": "4 orientations \u00d7 2 shear signs \u00d7 4 subpixel phase pairs \u00d7 6 target centers",
+      "maximum_exact_error_world": "673/12012",
+      "maximum_error_world": 0.056027306027306024,
+      "worst_case": [
+        0,
+        -0.25,
+        0.25,
+        0.25,
+        28,
+        44
+      ],
+      "acceptance_tolerance_world": "3/5",
+      "minimum_semantic_color_linf_separation": 54,
+      "maximum_rgb_noise": 6,
+      "scope": "Finite 2D renderer support. Integer-translation invariance requires no clipping; palette/noise invariance follows from nonoverlapping bounded RGB supports. Not a physical sensor calibration guarantee."
+    },
+    "small_policy_oracle": {
+      "observation_support_tables": 81,
+      "model_objective_comparisons": 1377,
+      "complete_syntactic_policies_per_model": 74,
+      "whole_policy_evaluations": 101898,
+      "selected_policy_replay_leaves": 1326,
+      "scope": "2 worlds, 2 one-use experiments with supports {0}, {1}, {0,1}, 2 actions; all 16 action success-set pairs",
+      "independence": "full syntactic tree enumeration and raw world-path execution, no production belief recursion"
+    },
+    "alias_replay": {
+      "worlds": 11,
+      "experiments": 10,
+      "labels_per_world_sensor": 8,
+      "represented_supported_policy_leaves": 2300875336,
+      "executed_replay_states": 76,
+      "exact_cost_range": [
+        1,
+        10
+      ],
+      "count_warning": "The leaf count is an exact multiplicity sum, not billions of individually executed trials."
+    },
+    "visual_domain": {
+      "episodes": 216,
+      "scripted_public_pixel_successes": 216,
+      "maximum_position_error_world": 0.05602700000000027,
+      "natural_images_or_model_trials": false
+    },
+    "image_http_client": {
+      "transport": "real authenticated loopback HTTP plus copied standalone public client",
+      "png_bytes": 111341,
+      "inline_observation_response_bytes": 148677,
+      "copied_client_imports_evaluator": false,
+      "os_isolation_certified": false
+    },
+    "robot_transitions": {
+      "base_episodes": 216,
+      "rendered_gate_frames_checked": 432,
+      "committed_transition_cases": 6048,
+      "prefixes": [
+        [],
+        [
+          "gentle"
+        ],
+        [
+          "firm"
+        ],
+        [
+          "firm",
+          "gentle"
+        ]
+      ],
+      "legal_terminal_actions_per_prefix": 7,
+      "maximum_opening_center_error_world": 0.2610704659222236,
+      "probe_reading_blinded_conditioning_grip": {
+        "conditionable/relaxed": {
+          "episodes": 36,
+          "successes": 36,
+          "stalls": 0
+        },
+        "conditionable/strict": {
+          "episodes": 72,
+          "successes": 72,
+          "stalls": 0
+        },
+        "resistant/strict": {
+          "episodes": 72,
+          "successes": 38,
+          "stalls": 34
+        },
+        "resistant/relaxed": {
+          "episodes": 36,
+          "successes": 17,
+          "stalls": 19
+        }
+      },
+      "oracle": "exact decimal Fraction physical conditions plus independent time/energy/wear accounting",
+      "scope": "four selected prefixes, not every possible history; scripted controls only"
+    },
+    "robot_action_intersections": {
+      "strict_known_lane_profiles": [
+        {
+          "contact_profile": "conditionable",
+          "prefix": [],
+          "successful_action_sets": [
+            [
+              [
+                "upper",
+                "grip"
+              ]
+            ],
+            [
+              [
+                "upper",
+                "roll"
+              ]
+            ]
+          ],
+          "common": []
+        },
+        {
+          "contact_profile": "conditionable",
+          "prefix": [
+            "gentle"
+          ],
+          "successful_action_sets": [
+            [
+              [
+                "upper",
+                "grip"
+              ]
+            ],
+            [
+              [
+                "upper",
+                "roll"
+              ]
+            ]
+          ],
+          "common": []
+        },
+        {
+          "contact_profile": "conditionable",
+          "prefix": [
+            "firm"
+          ],
+          "successful_action_sets": [
+            [
+              [
+                "upper",
+                "grip"
+              ]
+            ],
+            [
+              [
+                "upper",
+                "grip"
+              ],
+              [
+                "upper",
+                "roll"
+              ]
+            ]
+          ],
+          "common": [
+            [
+              "upper",
+              "grip"
+            ]
+          ]
+        },
+        {
+          "contact_profile": "conditionable",
+          "prefix": [
+            "firm",
+            "gentle"
+          ],
+          "successful_action_sets": [
+            [],
+            []
+          ],
+          "common": []
+        },
+        {
+          "contact_profile": "resistant",
+          "prefix": [],
+          "successful_action_sets": [
+            [
+              [
+                "upper",
+                "grip"
+              ]
+            ],
+            [
+              [
+                "upper",
+                "roll"
+              ]
+            ]
+          ],
+          "common": []
+        },
+        {
+          "contact_profile": "resistant",
+          "prefix": [
+            "gentle"
+          ],
+          "successful_action_sets": [
+            [
+              [
+                "upper",
+                "grip"
+              ]
+            ],
+            [
+              [
+                "upper",
+                "roll"
+              ]
+            ]
+          ],
+          "common": []
+        },
+        {
+          "contact_profile": "resistant",
+          "prefix": [
+            "firm"
+          ],
+          "successful_action_sets": [
+            [
+              [
+                "upper",
+                "grip"
+              ]
+            ],
+            [
+              [
+                "upper",
+                "roll"
+              ]
+            ]
+          ],
+          "common": []
+        },
+        {
+          "contact_profile": "resistant",
+          "prefix": [
+            "firm",
+            "gentle"
+          ],
+          "successful_action_sets": [
+            [],
+            []
+          ],
+          "common": []
+        }
+      ],
+      "interpretation": "Firm contact creates a common grip action only in the deliberately conditionable profile; resistant profiles require information or more contact than the strict deadline permits. Geometry sensing is still consequential for strict gate pairs.",
+      "scope": "Exhaustive seven terminal actions after listed prefixes, not an exact optimum over all sensing histories."
+    }
+  },
+  "output": "reports/v05/independent-vision-audit-final.json"
+}

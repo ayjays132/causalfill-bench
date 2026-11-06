@@ -1,0 +1,413 @@
+{
+  "public": {
+    "family": "vending_adaptive",
+    "difficulty": 2,
+    "prompt": "Fill four holes in the procurement skill AND fulfill every round's real market requests. Each round demands one whole case of either tea or cocoa; a case fills the entire cold store. Buying the wrong product loses that service contract irreversibly. Quotes reveal economic terms, not demand. Use the public candidate-world table and any suitable observations to decide what to buy. Choose either supplier; the final cash goal allows one express surcharge in total. Complete 3 rounds with all requests served and cash at least 6232 cents. No particular sensor or observation count is required for scoring. Read /market/contract.json, /skills/procurement.txt and /docs/accounting.txt.",
+    "slots": {
+      "standard_lead_days": {
+        "type": "integer",
+        "description": "Standard shipping lead time in days."
+      },
+      "fixed_shipping_cents": {
+        "type": "integer",
+        "description": "Fixed standard shipping fee per order."
+      },
+      "case_shipping_cents": {
+        "type": "integer",
+        "description": "Additional standard shipping fee per indivisible case."
+      },
+      "receipt_event": {
+        "type": "string",
+        "description": "Event that makes invoiced goods physically available."
+      }
+    },
+    "files": [
+      "/docs/accounting.txt",
+      "/market/contract.json",
+      "/skill/recovery.md",
+      "/skills/procurement.txt"
+    ],
+    "tools": {
+      "quote": {
+        "cost": 1,
+        "arguments": {
+          "supplier": "standard or express",
+          "cases": "integer 1..3"
+        },
+        "description": "Hypothetical itemized quote. Static terms; no current/future demand is revealed."
+      },
+      "calibrate": {
+        "cost": 1,
+        "arguments": {},
+        "description": "Once per episode, before an order, observe the shared forecast calibration bit."
+      },
+      "forecast": {
+        "cost": 1,
+        "arguments": {},
+        "description": "Use this round's single diagnostic sample to observe its coded forecast bit."
+      },
+      "assay": {
+        "cost": 2,
+        "arguments": {},
+        "description": "Alternative diagnostic sample: observe the current demanded-product bit directly."
+      },
+      "order": {
+        "cost": 2,
+        "arguments": {
+          "product": "tea or cocoa",
+          "supplier": "standard or express"
+        },
+        "description": "Pay for one indivisible case, irreversibly. One case fills storage. Invoice creates pending stock; no stock is available yet."
+      },
+      "settle": {
+        "cost": 1,
+        "arguments": {},
+        "description": "Advance to this round's day-2 market: receive deliveries, serve requests, dispose leftovers and pay the operating fee."
+      },
+      "status": {
+        "cost": 1,
+        "arguments": {},
+        "description": "Repeat the full public observation and accounting totals; no new latent information."
+      },
+      "ledger": {
+        "cost": 1,
+        "arguments": {
+          "last_n": "integer 1..100"
+        },
+        "description": "Read prior invoices, deliveries, sales, expiry and fees. No future events."
+      }
+    },
+    "budget": 23,
+    "max_calls": 38,
+    "episode_id": "d94facd316ad486ba594cead8769d3bc",
+    "common_tools": {
+      "list_files": {
+        "arguments": {},
+        "cost": 1
+      },
+      "read_file": {
+        "arguments": {
+          "path": "exact listed virtual path"
+        },
+        "cost": 1
+      },
+      "search_files": {
+        "arguments": {
+          "text": "literal string, 1\u2013160 characters"
+        },
+        "cost": 2
+      },
+      "session_status": {
+        "arguments": {},
+        "cost": 1
+      },
+      "submit": {
+        "arguments": {
+          "fill": "object",
+          "confidence": "number 0..1",
+          "abstain": "boolean",
+          "evidence": "list of returned event IDs"
+        },
+        "cost": 0
+      }
+    },
+    "max_seconds": 600,
+    "tools_enabled": true,
+    "submission_rule": "One final submission. Grades are evaluator-only; no retry after submission."
+  },
+  "events": [
+    {
+      "event_id": "e0001",
+      "tool": "read_file",
+      "arguments": {
+        "path": "/market/contract.json"
+      },
+      "response": {
+        "path": "/market/contract.json",
+        "content": "{\n  \"profile_version\": \"vending_adaptive_v1\",\n  \"forecast_rule\": \"current\",\n  \"stages\": 3,\n  \"products\": [\n    \"tea\",\n    \"cocoa\"\n  ],\n  \"worlds\": [\n    {\n      \"demand\": [\n        0,\n        1,\n        1\n      ],\n      \"calibration\": 0\n    },\n    {\n      \"demand\": [\n        0,\n        0,\n        0\n      ],\n      \"calibration\": 0\n    },\n    {\n      \"demand\": [\n        0,\n        1,\n        0\n      ],\n      \"calibration\": 0\n    },\n    {\n      \"demand\": [\n        1,\n        0,\n        0\n      ],\n      \"calibration\": 0\n    },\n    {\n      \"demand\": [\n        1,\n        1,\n        1\n      ],\n      \"calibration\": 0\n    },\n    {\n      \"demand\": [\n        0,\n        0,\n        1\n      ],\n      \"calibration\": 0\n    },\n    {\n      \"demand\": [\n        1,\n        0,\n        1\n      ],\n      \"calibration\": 0\n    },\n    {\n      \"demand\": [\n        1,\n        1,\n        0\n      ],\n      \"calibration\": 0\n    }\n  ],\n  \"units_per_case\": 4,\n  \"capacity_units\": 4,\n  \"round_length_days\": 2,\n  \"selling_price_cents\": 168,\n  \"unit_cost_cents\": 49,\n  \"operating_fee_cents\": 20,\n  \"express_surcharge_cents\": 37,\n  \"initial_cash_cents\": 5000,\n  \"cash_target_cents\": 6232\n}",
+        "event_id": "e0001",
+        "cost_used": 1
+      },
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "hash": "a0b70d5bf4ce14ac1adc56af90c92a7b46029fe03f0e710cfd34ca011819b894"
+    },
+    {
+      "event_id": "e0002",
+      "tool": "quote",
+      "arguments": {
+        "supplier": "standard",
+        "cases": 1
+      },
+      "response": {
+        "quote": {
+          "supplier": "standard",
+          "cases": 1,
+          "quantity": 4,
+          "unit_cost_cents": 49,
+          "shipping_cents": 33,
+          "total_cents": 229,
+          "order_day": 0,
+          "arrival_day": 2
+        },
+        "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5000,\"cash_target_cents\":6232,\"day\":0,\"express_orders\":0,\"past_demand\":[],\"pending_order\":null,\"pending_units\":0,\"phase\":\"open\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":null,\"stage\":0,\"stages\":3,\"status\":\"live\",\"units_expired\":0,\"units_received\":0,\"units_sold\":0}",
+        "event_id": "e0002",
+        "cost_used": 2
+      },
+      "previous_hash": "a0b70d5bf4ce14ac1adc56af90c92a7b46029fe03f0e710cfd34ca011819b894",
+      "hash": "bd316e54aa3c4efaa3bc50121550a4ee67a1c6e50a7fdf8393c6a3e578196723"
+    },
+    {
+      "event_id": "e0003",
+      "tool": "quote",
+      "arguments": {
+        "supplier": "standard",
+        "cases": 2
+      },
+      "response": {
+        "quote": {
+          "supplier": "standard",
+          "cases": 2,
+          "quantity": 8,
+          "unit_cost_cents": 49,
+          "shipping_cents": 33,
+          "total_cents": 425,
+          "order_day": 0,
+          "arrival_day": 2
+        },
+        "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5000,\"cash_target_cents\":6232,\"day\":0,\"express_orders\":0,\"past_demand\":[],\"pending_order\":null,\"pending_units\":0,\"phase\":\"open\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":null,\"stage\":0,\"stages\":3,\"status\":\"live\",\"units_expired\":0,\"units_received\":0,\"units_sold\":0}",
+        "event_id": "e0003",
+        "cost_used": 3
+      },
+      "previous_hash": "bd316e54aa3c4efaa3bc50121550a4ee67a1c6e50a7fdf8393c6a3e578196723",
+      "hash": "cc0d90b10ca75e30c1f849b3aab50ab89ba1c75b7ab75b3f909e276a0596d727"
+    },
+    {
+      "event_id": "e0004",
+      "tool": "forecast",
+      "arguments": {},
+      "response": {
+        "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5000,\"cash_target_cents\":6232,\"day\":0,\"express_orders\":0,\"past_demand\":[],\"pending_order\":null,\"pending_units\":0,\"phase\":\"open\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":{\"kind\":\"forecast\",\"value\":0},\"stage\":0,\"stages\":3,\"status\":\"live\",\"units_expired\":0,\"units_received\":0,\"units_sold\":0}",
+        "event_id": "e0004",
+        "cost_used": 4
+      },
+      "previous_hash": "cc0d90b10ca75e30c1f849b3aab50ab89ba1c75b7ab75b3f909e276a0596d727",
+      "hash": "e49e79bbd3c0005c15bbba89c18e724dc4c4e43141e08542b87075528a6eded0"
+    },
+    {
+      "event_id": "e0005",
+      "tool": "order",
+      "arguments": {
+        "product": "tea",
+        "supplier": "standard"
+      },
+      "response": {
+        "invoice": {
+          "event": "invoice",
+          "stage": 0,
+          "product": "tea",
+          "supplier": "standard",
+          "cases": 1,
+          "quantity": 4,
+          "unit_cost_cents": 49,
+          "shipping_cents": 33,
+          "total_cents": 229,
+          "order_day": 0,
+          "arrival_day": 2
+        },
+        "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":4771,\"cash_target_cents\":6232,\"day\":0,\"express_orders\":0,\"past_demand\":[],\"pending_order\":{\"arrival_day\":2,\"product\":\"tea\",\"supplier\":\"standard\",\"units\":4},\"pending_units\":4,\"phase\":\"ordered\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":{\"kind\":\"forecast\",\"value\":0},\"stage\":0,\"stages\":3,\"status\":\"live\",\"units_expired\":0,\"units_received\":0,\"units_sold\":0}",
+        "event_id": "e0005",
+        "cost_used": 6
+      },
+      "previous_hash": "e49e79bbd3c0005c15bbba89c18e724dc4c4e43141e08542b87075528a6eded0",
+      "hash": "adc1daf17c74f62f3fb490e36b42ce8ad79e343eac5376e2d5554d80544c1121"
+    },
+    {
+      "event_id": "e0006",
+      "tool": "settle",
+      "arguments": {},
+      "response": {
+        "market": {
+          "event": "market_close",
+          "stage": 0,
+          "day": 2,
+          "demanded_product": "tea",
+          "demand_units": 4,
+          "sold_units": 4,
+          "expired_units": 0,
+          "revenue_cents": 672,
+          "operating_fee_cents": 20,
+          "cash_cents": 5423
+        },
+        "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5423,\"cash_target_cents\":6232,\"day\":2,\"express_orders\":0,\"past_demand\":[0],\"pending_order\":null,\"pending_units\":0,\"phase\":\"open\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":null,\"stage\":1,\"stages\":3,\"status\":\"live\",\"units_expired\":0,\"units_received\":4,\"units_sold\":4}",
+        "event_id": "e0006",
+        "cost_used": 7
+      },
+      "previous_hash": "adc1daf17c74f62f3fb490e36b42ce8ad79e343eac5376e2d5554d80544c1121",
+      "hash": "334a90ddb6c8ade57f60c38f32e31abb159c3cd5e3549a95f379b11356bcbc84"
+    },
+    {
+      "event_id": "e0007",
+      "tool": "forecast",
+      "arguments": {},
+      "response": {
+        "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5423,\"cash_target_cents\":6232,\"day\":2,\"express_orders\":0,\"past_demand\":[0],\"pending_order\":null,\"pending_units\":0,\"phase\":\"open\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":{\"kind\":\"forecast\",\"value\":1},\"stage\":1,\"stages\":3,\"status\":\"live\",\"units_expired\":0,\"units_received\":4,\"units_sold\":4}",
+        "event_id": "e0007",
+        "cost_used": 8
+      },
+      "previous_hash": "334a90ddb6c8ade57f60c38f32e31abb159c3cd5e3549a95f379b11356bcbc84",
+      "hash": "8ef5e0a8e43b32b2060e4dc25b75418307de48c4190395b0b591514ca0f8aa3f"
+    },
+    {
+      "event_id": "e0008",
+      "tool": "order",
+      "arguments": {
+        "product": "cocoa",
+        "supplier": "standard"
+      },
+      "response": {
+        "invoice": {
+          "event": "invoice",
+          "stage": 1,
+          "product": "cocoa",
+          "supplier": "standard",
+          "cases": 1,
+          "quantity": 4,
+          "unit_cost_cents": 49,
+          "shipping_cents": 33,
+          "total_cents": 229,
+          "order_day": 2,
+          "arrival_day": 4
+        },
+        "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5194,\"cash_target_cents\":6232,\"day\":2,\"express_orders\":0,\"past_demand\":[0],\"pending_order\":{\"arrival_day\":4,\"product\":\"cocoa\",\"supplier\":\"standard\",\"units\":4},\"pending_units\":4,\"phase\":\"ordered\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":{\"kind\":\"forecast\",\"value\":1},\"stage\":1,\"stages\":3,\"status\":\"live\",\"units_expired\":0,\"units_received\":4,\"units_sold\":4}",
+        "event_id": "e0008",
+        "cost_used": 10
+      },
+      "previous_hash": "8ef5e0a8e43b32b2060e4dc25b75418307de48c4190395b0b591514ca0f8aa3f",
+      "hash": "a51472ab215ddc88f8247c13f40bf51969e8ff2e26525b2c96f6be6218dcb61b"
+    },
+    {
+      "event_id": "e0009",
+      "tool": "settle",
+      "arguments": {},
+      "response": {
+        "market": {
+          "event": "market_close",
+          "stage": 1,
+          "day": 4,
+          "demanded_product": "cocoa",
+          "demand_units": 4,
+          "sold_units": 4,
+          "expired_units": 0,
+          "revenue_cents": 672,
+          "operating_fee_cents": 20,
+          "cash_cents": 5846
+        },
+        "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5846,\"cash_target_cents\":6232,\"day\":4,\"express_orders\":0,\"past_demand\":[0,1],\"pending_order\":null,\"pending_units\":0,\"phase\":\"open\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":null,\"stage\":2,\"stages\":3,\"status\":\"live\",\"units_expired\":0,\"units_received\":8,\"units_sold\":8}",
+        "event_id": "e0009",
+        "cost_used": 11
+      },
+      "previous_hash": "a51472ab215ddc88f8247c13f40bf51969e8ff2e26525b2c96f6be6218dcb61b",
+      "hash": "93bafb6c321bc020c88e610197f2569fc73364b3b38702c10dd65ddc84d4fea6"
+    },
+    {
+      "event_id": "e0010",
+      "tool": "forecast",
+      "arguments": {},
+      "response": {
+        "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5846,\"cash_target_cents\":6232,\"day\":4,\"express_orders\":0,\"past_demand\":[0,1],\"pending_order\":null,\"pending_units\":0,\"phase\":\"open\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":{\"kind\":\"forecast\",\"value\":1},\"stage\":2,\"stages\":3,\"status\":\"live\",\"units_expired\":0,\"units_received\":8,\"units_sold\":8}",
+        "event_id": "e0010",
+        "cost_used": 12
+      },
+      "previous_hash": "93bafb6c321bc020c88e610197f2569fc73364b3b38702c10dd65ddc84d4fea6",
+      "hash": "e98191e2788d9d9522fde4b5ecf19dc86177fce4924dcfa74384d829fc335c26"
+    },
+    {
+      "event_id": "e0011",
+      "tool": "order",
+      "arguments": {
+        "product": "cocoa",
+        "supplier": "standard"
+      },
+      "response": {
+        "invoice": {
+          "event": "invoice",
+          "stage": 2,
+          "product": "cocoa",
+          "supplier": "standard",
+          "cases": 1,
+          "quantity": 4,
+          "unit_cost_cents": 49,
+          "shipping_cents": 33,
+          "total_cents": 229,
+          "order_day": 4,
+          "arrival_day": 6
+        },
+        "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":5617,\"cash_target_cents\":6232,\"day\":4,\"express_orders\":0,\"past_demand\":[0,1],\"pending_order\":{\"arrival_day\":6,\"product\":\"cocoa\",\"supplier\":\"standard\",\"units\":4},\"pending_units\":4,\"phase\":\"ordered\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":{\"kind\":\"forecast\",\"value\":1},\"stage\":2,\"stages\":3,\"status\":\"live\",\"units_expired\":0,\"units_received\":8,\"units_sold\":8}",
+        "event_id": "e0011",
+        "cost_used": 14
+      },
+      "previous_hash": "e98191e2788d9d9522fde4b5ecf19dc86177fce4924dcfa74384d829fc335c26",
+      "hash": "f1d4a6fd182981a27d49cb4d99988ad0b31f2043dc45ff2ca068062d836dea29"
+    },
+    {
+      "event_id": "e0012",
+      "tool": "settle",
+      "arguments": {},
+      "response": {
+        "market": {
+          "event": "market_close",
+          "stage": 2,
+          "day": 6,
+          "demanded_product": "cocoa",
+          "demand_units": 4,
+          "sold_units": 4,
+          "expired_units": 0,
+          "revenue_cents": 672,
+          "operating_fee_cents": 20,
+          "cash_cents": 6269
+        },
+        "observation": "{\"available_units\":0,\"breach\":null,\"calibration_observation\":null,\"cash_cents\":6269,\"cash_target_cents\":6232,\"day\":6,\"express_orders\":0,\"past_demand\":[0,1,1],\"pending_order\":null,\"pending_units\":0,\"phase\":\"closed\",\"profile_version\":\"vending_adaptive_v1\",\"sample\":null,\"stage\":3,\"stages\":3,\"status\":\"success\",\"units_expired\":0,\"units_received\":12,\"units_sold\":12}",
+        "event_id": "e0012",
+        "cost_used": 15
+      },
+      "previous_hash": "f1d4a6fd182981a27d49cb4d99988ad0b31f2043dc45ff2ca068062d836dea29",
+      "hash": "7bf4edfa06a3cc3809fef4ab8e51ac410a093d002708cde8772db4e9bd17a4d9"
+    },
+    {
+      "event_id": "e0013",
+      "tool": "submit",
+      "arguments": {
+        "fill": {
+          "standard_lead_days": 2,
+          "fixed_shipping_cents": 33,
+          "case_shipping_cents": 0,
+          "receipt_event": "delivery"
+        },
+        "confidence": 1.0,
+        "abstain": false,
+        "evidence": [
+          "e0001",
+          "e0002",
+          "e0003",
+          "e0004",
+          "e0005",
+          "e0006",
+          "e0007",
+          "e0008",
+          "e0009",
+          "e0010",
+          "e0011",
+          "e0012"
+        ]
+      },
+      "response": {
+        "accepted": true,
+        "episode_closed": true,
+        "event_id": "e0013",
+        "cost_used": 15
+      },
+      "previous_hash": "7bf4edfa06a3cc3809fef4ab8e51ac410a093d002708cde8772db4e9bd17a4d9",
+      "hash": "99f2179a97be36356907e26f5bdbd18b3de3c16dc5b85e2bd43832f3009ee7d1"
+    }
+  ]
+}

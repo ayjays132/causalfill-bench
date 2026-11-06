@@ -1,0 +1,5 @@
+Lean default kernel rejects the solution: while replaying declaration 'CausalFill.BoundedFault.safe_action_sound':
+(kernel) declaration type mismatch, 'CausalFill.BoundedFault.safe_action_sound' has type
+  Type
+but it is expected to have type
+  forall {Query : Type} {World : Type} {Action : Type} (truth : Query -> World -> Bool) (cap : Nat) (history : List.{0} (CausalFill.BoundedFault.Reading Query)) (worlds : List.{0} World) (success : World -> Action -> Prop) (action : Action) (world : World) (used : Nat), (Membership.mem.{0, 0} World (List.{0} World) (List.instMembership.{0} World) worlds world) -> (CausalFill.BoundedFault.Realizes Query World truth world history used) -> (LE.le.{0} Nat instLENat used cap) -> (CausalFill.BoundedFault.SafeAction Query World Action truth cap history worlds success action) -> (success world action)

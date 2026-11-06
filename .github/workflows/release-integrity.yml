@@ -1,0 +1,21 @@
+name: release-integrity
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  source-and-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: '3.12'
+      - name: Verify complete tracked release inventory
+        run: python tools/release_integrity.py checkout --require-tracked
+      - name: Check archive rejection controls
+        run: python -m unittest tests.test_release_integrity -v
+      - name: Build and verify the source and evidence archive
+        run: python tools/package_release.py --output "${{ runner.temp }}/CausalFill_Bench.tar.gz" --require-tracked
+      - name: Require the frozen inventory to stay unchanged
+        run: git diff --exit-code -- 'reports/source-file-inventory-v*.json'

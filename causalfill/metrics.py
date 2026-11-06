@@ -74,6 +74,9 @@ def _validate(record: Any, index: int) -> None:
             raise ValueError(f"record {index} has conflicting {primary} identifiers")
     if "twin_kind" in record and (type(record["twin_kind"]) is not str or not record["twin_kind"]):
         raise ValueError(f"record {index} needs a nonempty twin_kind when supplied")
+    if "scoring_version" in record and (type(record["scoring_version"]) is not str
+                                         or not record["scoring_version"].strip()):
+        raise ValueError(f"record {index} needs a nonempty scoring_version when supplied")
     condition = record.get("condition", {})
     if not isinstance(condition, dict):
         raise ValueError(f"record {index} condition must be an object")
@@ -85,6 +88,7 @@ def _validate(record: Any, index: int) -> None:
 
 def _identity(record: dict) -> dict:
     return {
+        "scoring_version": record.get("scoring_version", "legacy-unspecified"),
         "policy": record.get("policy") or "unspecified",
         "config_id": record.get("config_id") or "unspecified",
         "model": record.get("model") or record.get("model_id"),
@@ -249,9 +253,11 @@ def _pairs(records: list[dict]) -> dict:
 def summarize(records: list[dict], bootstrap_seed: int = 0, n_bootstrap: int = 1000) -> dict:
     """Summarize trusted evaluator results without pooling configurations.
 
-    ``policy``, ``config_id``, optional model/harness IDs, and the complete
-    ``condition`` object define groups. Missing identifiers are explicitly marked
-    unspecified; callers must label configurations before mixing result files.
+    ``scoring_version``, ``policy``, ``config_id``, optional model/harness IDs, and
+    the complete ``condition`` object define groups. Legacy records without a
+    scoring version remain separate from explicitly versioned results. Missing
+    identifiers are marked unspecified; callers must label configurations before
+    mixing result files.
     """
     if not isinstance(records, list):
         raise ValueError("records must be a list")
@@ -277,6 +283,8 @@ def summarize(records: list[dict], bootstrap_seed: int = 0, n_bootstrap: int = 1
         uncertainty = _bootstrap(dict(families), bootstrap_seed, key, n_bootstrap)
         notes = []
         identity = json.loads(key)
+        if identity["scoring_version"] == "legacy-unspecified":
+            notes.append("No scoring version was recorded; these rows stay separate from versioned results. Revised diagnostics require a new evaluator run.")
         if identity["policy"] == "unspecified" or identity["config_id"] == "unspecified":
             notes.append("Some configuration identifiers are unspecified; unseen differences cannot be separated automatically.")
         if uncertainty["singleton_families"]:
@@ -301,13 +309,14 @@ def summarize(records: list[dict], bootstrap_seed: int = 0, n_bootstrap: int = 1
             "notes": notes,
         })
     return {
-        "schema_version": "causalfill.metrics.v1",
+        "schema_version": "causalfill.metrics.v2",
         "record_count": len(records),
         "group_count": len(groups),
         "groups": groups,
         "methodology": {
             "headline": "Equal-weight mean of family success rates on answerable episodes only; abstentions on answerable tasks are failures.",
-            "configuration_separation": "policy + config_id + model + harness + complete condition object",
+            "configuration_separation": "scoring_version + policy + config_id + model + harness + complete condition object",
+            "legacy_scoring": "Records without scoring_version are labelled legacy-unspecified and never pooled with explicitly versioned scoring results.",
             "bootstrap_seed": bootstrap_seed,
             "n_bootstrap": n_bootstrap,
             "no_pooled_configuration_score": True,

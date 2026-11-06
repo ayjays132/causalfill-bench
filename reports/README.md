@@ -1,9 +1,27 @@
 # Release evidence
 
-## Current release: v0.4.0
+## Current release: v0.5.2
 
-`build-verification-v0.4.json` is the current versioned record;
-`build-verification.json` is its current-release copy.
+The current source-bound record is [v052/release-verification.json](v052/release-verification.json). The [release results](../docs/v0.5.2-results.md) explain measured counts and limits. The [offline review](v052/review.html) presents the 4,050-episode scripted suite, and the [scoring regression review](v052/scoring-review.html) exposes the nine targeted failure-path cases.
+
+- **352** unit/integration tests passed with no failures, errors or skips.
+- **4,050** scripted control episodes: evidence reference 1,260/1,260 answerable success, 90/90 correct ambiguity abstention, 630/630 jointly successful answerable pairs.
+- **3,584** independent finite optimum comparisons, **1,280** forged certificate rejections, and **2,652** live fault cases across 27 generated profiles.
+- **180** deliberately restricted scripted ablations and **9** targeted scoring episodes with 55 checks.
+- **134** restored historical files pinned by exact bytes; a complete current package inventory protects checkout/archive consistency.
+
+These are development and regression results, not learned-model evaluations. Retained Lean artifacts keep their original version and scope; the v0.5.2 Python checks do not execute Lean. Browser interaction/rendering was blocked by the environment; SVG previews were rendered and visually inspected separately.
+
+Revalidate the current record with `python tools/build_release_verification_v052.py --check`. See [reproduction and packaging](../docs/releasing-v052.md). Historical validators require their corresponding source versions and should not be applied to the current core as if fingerprints were interchangeable.
+
+## Preserved v0.5.1 and v0.5 evidence
+
+The [v0.5.1 results](../docs/v0.5.1-results.md) and `v051/` directory preserve the Signal Repair development and pilot. The [v0.5 results](../docs/v0.5-results.md) and `v05/` directory preserve controlled perception and rendered robotics. Their original records remain unchanged.
+
+## Historical release: v0.4.0
+
+`build-verification-v0.4.json` is the preserved v0.4 versioned record;
+`build-verification.json` is its historical unversioned copy.
 `tools/build_release_verification_v04.py` reassembles it by checking the frozen
 Python source, all 3,240 control traces, source-bound stress reports, formal
 artifacts and the separate public-interface pilot. It reads completed evidence;

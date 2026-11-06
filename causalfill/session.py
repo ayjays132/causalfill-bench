@@ -6,7 +6,7 @@ import time
 import uuid
 from dataclasses import asdict
 
-from .types import Task, Verdict, canonical, digest, fields, finite_number
+from .types import SCORING_VERSION, Task, Verdict, canonical, digest, fields, finite_number
 
 GENERAL_SKILL = """# Recover a missing causal component
 Read the task contract and identify each typed gap. Use authoritative current evidence;
@@ -163,12 +163,12 @@ class Session:
                 self.finish_failure("malformed_submission_budget")
             return response
         if args["abstain"]:
-            verdict = Verdict(False, details={"abstained": True})
+            verdict = self.task.failure_verdict({"abstained": True})
         else:
             try:
                 verdict = self.task.evaluate(copy.deepcopy(args["fill"]))
             except (ValueError, TypeError, KeyError, IndexError, OverflowError):
-                verdict = Verdict(False, details={"invalid_fill": True})
+                verdict = self.task.failure_verdict({"invalid_fill": True})
         self.closed = True
         out = self._log("submit", args, {"accepted": True, "episode_closed": True})
         self.result = self._result(verdict, args["abstain"], confidence)
@@ -179,6 +179,7 @@ class Session:
         decision_correct = (abstained and not self.task.answerable) or outcome
         return {
             "episode_id": self.id, "family": self.task.family,
+            "scoring_version": SCORING_VERSION,
             "split": self.task.split, "difficulty": self.task.difficulty,
             "structural_signature": self.task.structural_signature,
             "twin_kind": getattr(self.task,"twin_kind","causal_parameter"),
@@ -196,7 +197,7 @@ class Session:
         if not self.closed:
             self.closed = True
             self._log("__termination__",{}, {"reason":reason,"episode_closed":True})
-            self.result = self._result(Verdict(False, details={"failure": reason}), False, 0.0)
+            self.result = self._result(self.task.failure_verdict({"failure": reason}), False, 0.0)
 
 
 def verify_trace(trace: list[dict]) -> bool:

@@ -1,15 +1,17 @@
-# Release gates and remaining work — v0.5.0
+# Release gates and remaining work — v0.5.2
 
 ## Appropriate now
 
-Share the source as a development research prototype with fourteen configurations across nine conceptual domains. Include the original task generators, deterministic verification, public protocol, finite certificate checkers, scripted references, actual raster observations, executed robot controls, image interventions, and limitations. Attribute prior work and label AI-assisted task authoring. Development controls establish implementation behavior; they do not supply an intelligence leaderboard.
+Version 0.5.2 corrects Signal Repair failure-path outcome reporting, versions the scoring semantics, groups an equivalent sensing mechanism consistently, adds an offline review, and strengthens package completeness. The [current release record](v0.5.2-results.md) reports fresh Python checks and scripted controls. The [release workflow](releasing-v052.md) separates executable checks, retained formal evidence, inventory integrity and unestablished model claims.
+
+Share the source as a development research prototype with fifteen configurations across nine conceptual domains. Include the original task generators, deterministic verification, public protocol, finite certificate checkers, scripted references, actual raster observations, executed robot controls, image interventions, and limitations. Attribute prior work and label AI-assisted task authoring. Development controls establish implementation behavior; they do not supply an intelligence leaderboard.
 
 Version 0.5 adds controlled pixels, stateful contact/route choices, and noisy
 finite decision-sufficiency checks. The release record binds completed gates to
 the new sources. Its image atlas is evaluator-only and contains private labels.
 All 624 observation PNGs have independent decode/semantic checks and their 39
 contact sheets have recorded AI visual inspection. Those counts are not learned
-vision results. See [Current release results](v0.5-results.md).
+vision results. See [Historical v0.5 release results](v0.5-results.md).
 
 The certificate claims can be stated precisely under their published assumptions: propositional entailment from consistent premises, affine equality within the enforced grammar, and optimal worst-case experiment depth for an explicit finite noiseless table. The Lean project separately proves resolution/indexed-checker soundness and two complete exported certificates. Generic Python/Lean equivalence is not proved. Workflow equality and value bounds, and the barrier observation-necessity construction, have separate sufficient certificates implemented in Python. See [Assumptions and guarantees](assumptions-and-guarantees.md).
 
@@ -49,7 +51,7 @@ These checks are review obligations, not a claim that exhaustive tests establish
 8. Publish complete permitted traces, costs, errors and confidence intervals; disclose adaptive selection and excluded runs.
 9. Have another group reproduce the findings.
 
-Record `twin_kind` and report `causal_parameter`, `wall_y_translation`, `theorem_polarity`, `diagnostic_state`, `demand_trajectory`, `target_horizontal_translation`, `gate_lane`, and `surface_friction` separately. Theorem binding and categorical state identification are valuable but do not establish physical causal inference. Keep prior releases' task rosters comparable before contrasting headline numbers; adding a challenge profile changes the average being measured.
+Record `twin_kind` and report `causal_parameter`, `wall_y_translation`, `theorem_polarity`, `diagnostic_state`, `demand_trajectory`, `target_horizontal_translation`, `gate_lane`, `surface_friction`, and `sensor_corruption` separately. Theorem binding and categorical state identification are valuable but do not establish physical causal inference. Keep prior releases' task rosters comparable before contrasting headline numbers; adding a challenge profile changes the average being measured.
 
 Any exploratory model run must disclose isolation limits, missing deployment metadata and the opportunity for contamination. A shared-host trial or a model-assisted certificate is useful development evidence, but it is not equivalent to an independently isolated leaderboard submission. A successful hard-setting run is also evidence against declaring that setting universally difficult.
 

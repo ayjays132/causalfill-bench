@@ -11,6 +11,7 @@ from .registry import factories, make_task
 from .runner import run_episode,run_suite,write_json
 from .session import Session,verify_trace
 from .protocol_json import MAX_BODY_BYTES, _strict_json
+from . import __version__
 
 
 def task_options(p):
@@ -26,6 +27,7 @@ def task_options(p):
 
 def main(argv=None):
     parser=argparse.ArgumentParser(description="CausalFill-Bench research prototype; scripted controls are not AI scores.")
+    parser.add_argument("--version", action="version", version=f"CausalFill-Bench {__version__}")
     sub=parser.add_subparsers(dest="command",required=True)
     sub.add_parser("list",help="list task families")
     demo=sub.add_parser("demo",help="run a scripted development control")
@@ -57,6 +59,10 @@ def main(argv=None):
     verify.add_argument("path",type=Path)
     score=sub.add_parser("summarize",help="summarize trusted evaluator records")
     score.add_argument("path",type=Path)
+    review=sub.add_parser("review",help="build a self-contained offline evaluator run review")
+    review.add_argument("path",type=Path,help="suite directory or records.jsonl")
+    review.add_argument("--output",type=Path,required=True,help="new .html file")
+    review.add_argument("--verify-traces",action="store_true",help="verify supplied chains and final record bindings")
     args=parser.parse_args(argv)
     try:
         if args.command=="list":
@@ -83,6 +89,9 @@ def main(argv=None):
             from .metrics import summarize
             rows=[json.loads(x) for x in args.path.read_text().splitlines() if x.strip()]
             print(json.dumps(summarize(rows),indent=2));return
+        if args.command=="review":
+            from .review import write_review
+            print(json.dumps(write_review(args.path,args.output,args.verify_traces),indent=2));return
         task=make_task(args.family,args.seed,args.split,args.difficulty,args.twin,args.mask_strategy)
         session=Session(task,skill=not args.no_skill,tools_enabled=not args.no_tools)
         if args.command=="serve":

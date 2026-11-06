@@ -1,76 +1,87 @@
 #!/usr/bin/env python3
-"""Create a deterministic source/evidence archive with a per-file inventory.
+"""Build and verify a deterministic source/evidence archive with a complete inventory.
 
-Compiler caches, installed toolchains, credentials and local environments are
-not release artifacts. The inventory commits every other regular source file;
-it excludes its own bytes to avoid a recursive hash definition.
+Write the archive outside the checkout. Historical evidence is preserved and its
+restored files are checked before the current inventory can be regenerated.
 """
 from __future__ import annotations
 
 import argparse
 import gzip
-import hashlib
 import io
 import json
 from pathlib import Path
-import tarfile
 import sys
+import tarfile
+import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "tools"))
 from causalfill import __version__
-INVENTORY = f"reports/source-file-inventory-v{__version__}.json"
-EXCLUDED_COMPONENTS = {"__pycache__", ".lake", ".git", ".venv", "node_modules", "private-runs", "dist", "build", "tmp", "output"}
-EXCLUDED_SUFFIXES = {".pyc", ".pyo", ".olean", ".ilean", ".key", ".o", ".ir"}
-EXCLUDED_NAME_ENDINGS = (".olean.private", ".olean.server", ".ir.sig")
+from release_integrity import (
+    ARCHIVE_PREFIX, EXCLUDED_COMPONENTS, EXCLUDED_SUFFIXES, EXCLUDED_NAME_ENDINGS,
+    IntegrityError, eligible, inventory_entries, inventory_name, no_symlink_path,
+    require, validate_archive, validate_checkout, write_inventory,
+)
+
+INVENTORY = inventory_name(__version__)
 
 
-def eligible(path):
-    relative = path.relative_to(ROOT)
-    selected = (path.is_file() and not path.is_symlink()
-            and not any(part in EXCLUDED_COMPONENTS for part in relative.parts)
-            and path.suffix not in EXCLUDED_SUFFIXES
-            and not path.name.endswith(EXCLUDED_NAME_ENDINGS))
-    if not selected:
-        return False
-    with path.open("rb") as stream:
-        return stream.read(4) != b"\x7fELF"
+def build_archive(root, output, version, require_tracked=False):
+    root, output = Path(root).resolve(), Path(output).resolve()
+    require(not output.is_relative_to(root), "Write the archive outside the source tree.")
+    write_inventory(root, version, require_tracked)
+    inventory_relative = inventory_name(version)
+    inventory_data = (root / inventory_relative).read_bytes()
+    _, entries = inventory_entries(inventory_data, version, inventory_relative)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile(dir=output.parent, prefix=".causalfill-package-", delete=False) as stream:
+        temporary = Path(stream.name)
+    try:
+        with temporary.open("wb") as stream:
+            with gzip.GzipFile(filename="", mode="wb", fileobj=stream, mtime=0) as compressed:
+                with tarfile.open(fileobj=compressed, mode="w|", format=tarfile.PAX_FORMAT) as archive:
+                    for relative in sorted([*entries, inventory_relative]):
+                        if relative == inventory_relative:
+                            size, mode = len(inventory_data), 0o644
+                            source = io.BytesIO(inventory_data)
+                        else:
+                            expected = entries[relative]
+                            path = no_symlink_path(root, relative)
+                            require(path.is_file(), "source file disappeared while packaging: " + relative)
+                            size, mode = expected["bytes"], int(expected["mode"], 8)
+                            source = path.open("rb")
+                        info = tarfile.TarInfo(ARCHIVE_PREFIX + "/" + relative)
+                        info.size, info.mode, info.mtime = size, mode, 0
+                        info.uid = info.gid = 0
+                        info.uname = info.gname = ""
+                        with source:
+                            archive.addfile(info, source)
+        # Bind the archived bytes to the inventory and reject a source tree that
+        # changed while the archive was being written.
+        receipt = validate_archive(temporary, version)
+        validate_checkout(root, version, require_tracked)
+        temporary.replace(output)
+        return {"archive": str(output), **receipt,
+                "tracked_files_required": require_tracked,
+                "scope": "Byte integrity of source and retained evidence; archived proof/model claims keep their original scope."}
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--require-tracked", action="store_true", help="require every packaged file in the Git index")
     args = parser.parse_args()
-    output = args.output.resolve()
-    if output.is_relative_to(ROOT):
-        raise ValueError("Write the archive outside the source tree.")
-    paths = sorted(p for p in ROOT.rglob("*") if eligible(p) and p.relative_to(ROOT).as_posix() != INVENTORY)
-    entries = [{"path": p.relative_to(ROOT).as_posix(), "bytes": p.stat().st_size,
-                "sha256": hashlib.sha256(p.read_bytes()).hexdigest()} for p in paths]
-    inventory = {"schema": "causalfill.file-inventory.v1", "version": __version__,
-                 "scope": "All archived regular files except this inventory itself; SHA-256 is integrity, not authentication.",
-                 "excluded_components": sorted(EXCLUDED_COMPONENTS),
-                 "excluded_suffixes": sorted(EXCLUDED_SUFFIXES),
-                 "excluded_generated_name_endings": EXCLUDED_NAME_ENDINGS,
-                 "exclude_elf_executables": True, "files": entries}
-    (ROOT / INVENTORY).write_text(json.dumps(inventory, indent=2) + "\n")
-    paths = sorted([*paths, ROOT / INVENTORY])
-    output.parent.mkdir(parents=True, exist_ok=True)
-    with output.open("wb") as stream:
-        with gzip.GzipFile(filename="", mode="wb", fileobj=stream, mtime=0) as compressed:
-            with tarfile.open(fileobj=compressed, mode="w|", format=tarfile.PAX_FORMAT) as archive:
-                for path in paths:
-                    data = path.read_bytes()
-                    name = "causalfill-bench/" + path.relative_to(ROOT).as_posix()
-                    info = tarfile.TarInfo(name)
-                    info.size = len(data)
-                    info.mode = 0o755 if path.stat().st_mode & 0o111 else 0o644
-                    info.mtime = 0
-                    archive.addfile(info, io.BytesIO(data))
-    print(json.dumps({"archive": str(output), "files": len(paths),
-                      "bytes": output.stat().st_size,
-                      "sha256": hashlib.sha256(output.read_bytes()).hexdigest()}, indent=2))
+    try:
+        print(json.dumps(build_archive(ROOT, args.output, __version__, args.require_tracked), indent=2))
+    except (IntegrityError, OSError, tarfile.TarError) as exc:
+        print(json.dumps({"status": "failed", "error": str(exc)}, indent=2), file=sys.stderr)
+        return 1
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

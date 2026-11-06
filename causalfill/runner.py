@@ -11,7 +11,7 @@ from . import __version__
 from .policies import evidence_reference
 from .registry import make_task
 from .session import Session,verify_trace
-from .types import digest,canonical
+from .types import SCORING_VERSION,digest,canonical
 
 
 def source_fingerprint():
@@ -82,6 +82,7 @@ def run_suite(output,families,splits,difficulties,seeds,policies=("evidence",),t
     with records_path.open("w",encoding="utf-8") as f:
         for rec in records: f.write(json.dumps(rec,sort_keys=True,allow_nan=False)+"\n")
     manifest={"benchmark":"CausalFill-Bench","version":__version__,"status":"development-only",
+        "scoring_version":SCORING_VERSION,
         "created_utc":datetime.now(timezone.utc).isoformat(),"python":platform.python_version(),
         "platform":platform.platform(),"families":list(families),"splits":list(splits),
         "difficulties":list(difficulties),"seeds":list(seeds),"policies":list(policies),"twins":twins,

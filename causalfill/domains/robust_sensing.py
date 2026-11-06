@@ -34,7 +34,9 @@ def _make_contract(rng, split: str, difficulty: int) -> tuple[dict, str]:
     elif split == "dev":
         if difficulty == 1:
             dimension, masks = 1, [1, 1, 1]
-            structure = "repetition-one-bit"
+            # This is the same mechanism as train/difficulty=1. Relabelled
+            # worlds, query order and polarities do not create a new cluster.
+            structure = "repetition-1-bits-one-global-fault"
         elif difficulty == 2:
             dimension, masks = 3, [1, 2, 3, 4, 5, 6]
             structure = "punctured-simplex-eight-worlds"
@@ -268,7 +270,41 @@ class RobustSensingTask(Task):
         return {w: sum(self._queries[o["experiment"]]["responses"][w] != o["outcome"]
                        for o in observations) for w in self._problem["worlds"]}
 
+    def failure_verdict(self, details: dict) -> Verdict:
+        """Grade completion failure without erasing an irreversible operation.
+
+        These diagnostics depend only on the action actually executed and its
+        saved pre-commit observations. A submitted action or certificate cannot
+        change them. With no committed action, outcome and justification are
+        both zero; the explicit action_committed flag distinguishes that case.
+        """
+        action = self._actions.get(self.committed)
+        k = self._problem["max_corruptions"]
+        counts = self._mismatch_counts(self.commit_observations) if action else {}
+        possible = [world for world, count in counts.items() if count <= k]
+        outcome = bool(action and self._world in action["success_worlds"])
+        justified = bool(action and possible
+                         and all(world in action["success_worlds"] for world in possible))
+        diagnostics = {
+            "action_committed": action is not None, "committed_action": self.committed,
+            "actual_operation_succeeded": outcome, "action_justified_before_commit": justified,
+            "valid_exclusions": 0,
+            "required_exclusions": (len(set(self._problem["worlds"]) - set(action["success_worlds"]))
+                                    if action else None),
+            "certificate_valid": False,
+            "compatible_worlds_at_commit": len(possible) if action else None,
+            "full_identification_required": False,
+            "assigned_corruptions": len(self._faults), "observed_corruptions": self._observed_faults,
+            "global_corruption_limit": k, "queries_used": len(self.used),
+            "operational_cost": self.operational_cost, "certified_operational_budget": self.operational_budget,
+            "within_operational_budget": self.operational_cost <= self.operational_budget,
+            "scope": "finite symbolic operation with evidence valid under a global bounded corruption model",
+        }
+        diagnostics.update(copy.deepcopy(details))
+        return Verdict(False, outcome=float(outcome), safety=float(justified), details=diagnostics)
+
     def evaluate(self, fill: dict) -> Verdict:
+        verdict = self.failure_verdict({})
         try:
             fields(fill, {"problem_sha256", "action", "exclusions"})
             if type(fill["problem_sha256"]) is not str or fill["problem_sha256"] != self._problem_sha256:
@@ -299,26 +335,14 @@ class RobustSensingTask(Task):
                 if all(q in observed and self._queries[q]["responses"][world] != observed[q]
                        for q in conflicts):
                     valid += 1
-            counts = self._mismatch_counts(self.commit_observations)
-            possible = [w for w, count in counts.items() if count <= k]
-            justified = bool(possible) and all(w in action["success_worlds"] for w in possible)
-            outcome = self._world in action["success_worlds"]
-            within_budget = self.operational_cost <= self.operational_budget
             witnesses_complete = valid == len(unsafe)
-            success = outcome and justified and witnesses_complete and within_budget
-            return Verdict(success, valid / len(unsafe) if unsafe else 1.0, float(outcome),
-                           float(justified), {
-                "actual_operation_succeeded": outcome, "action_justified_before_commit": justified,
-                "valid_exclusions": valid, "required_exclusions": len(unsafe),
-                "compatible_worlds_at_commit": len(possible), "full_identification_required": False,
-                "assigned_corruptions": len(self._faults), "observed_corruptions": self._observed_faults,
-                "global_corruption_limit": k, "queries_used": len(self.used),
-                "operational_cost": self.operational_cost, "certified_operational_budget": self.operational_budget,
-                "within_operational_budget": within_budget,
-                "scope": "finite symbolic operation with evidence valid under a global bounded corruption model",
-            })
+            verdict.recovery = valid / len(unsafe) if unsafe else 1.0
+            verdict.details.update(valid_exclusions=valid, certificate_valid=witnesses_complete)
+            verdict.success = bool(verdict.outcome and verdict.safety and witnesses_complete
+                                   and verdict.details["within_operational_budget"])
         except (ValueError, TypeError, KeyError, IndexError) as exc:
-            return Verdict(False, details={"invalid_fill": str(exc)[:240]})
+            verdict.details["invalid_fill"] = str(exc)[:240]
+        return verdict
 
     def reference_actions(self) -> list[tuple[str, dict]]:
         node = self._policy["root"]

@@ -1,0 +1,798 @@
+{
+  "schema": "causalfill.scoring-audit.v052",
+  "version": "0.5.2",
+  "scoring_version": "causalfill.scoring.v2",
+  "passed": true,
+  "episodes": 9,
+  "check_count": 55,
+  "passed_checks": 55,
+  "failed_checks": [],
+  "source_fingerprint": "6c3f206dc8c31ec36f14d77dfc6ab10c0008ec3fc2e15360b62638407ec7d1c9",
+  "source_fingerprint_after": "6c3f206dc8c31ec36f14d77dfc6ab10c0008ec3fc2e15360b62638407ec7d1c9",
+  "source_stable": true,
+  "harness_path": "tools/audit_scoring_v052.py",
+  "harness_sha256": "b3400185164118eb461d23acb10f27a0c5756d7d220b62f3a6f957f29a3768d3",
+  "harness_sha256_after": "b3400185164118eb461d23acb10f27a0c5756d7d220b62f3a6f957f29a3768d3",
+  "invocation": {
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "tools/audit_scoring_v052.py",
+      "--output",
+      "reports/v052/scoring-audit"
+    ],
+    "cwd": "/workspace/scratch/b694b010a594/release-v052/causalfill-bench",
+    "shell_command": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3 tools/audit_scoring_v052.py --output reports/v052/scoring-audit"
+  },
+  "seed": 20261105,
+  "elapsed_seconds": 0.02555,
+  "scope": "Author/evaluator scripted regression audit, not an AI-model evaluation. Valid operations use the public-information reference control. Lucky and failed actions are deliberately selected using evaluator state. Scenarios reuse one generated contract and are not independent mechanism replications. The grouping fixture is derived metadata, not additional episodes. No new Lean run is implied.",
+  "checks": [
+    {
+      "name": "valid_completion:metrics",
+      "passed": true,
+      "observed": {
+        "success": true,
+        "outcome": 1.0,
+        "safety": 1.0,
+        "action_committed": true,
+        "certificate_valid": true,
+        "abstained": false
+      },
+      "expected": {
+        "success": true,
+        "outcome": 1.0,
+        "safety": 1.0,
+        "action_committed": true,
+        "certificate_valid": true,
+        "abstained": false
+      }
+    },
+    {
+      "name": "valid_completion:independent_state",
+      "passed": true,
+      "observed": {
+        "action_committed": true,
+        "committed_action": "a01",
+        "actual_operation_succeeded": true,
+        "action_justified_before_commit": true,
+        "compatible_worlds_at_commit": 1
+      },
+      "expected": {
+        "action_committed": true,
+        "committed_action": "a01",
+        "actual_operation_succeeded": true,
+        "action_justified_before_commit": true,
+        "compatible_worlds_at_commit": 1
+      }
+    },
+    {
+      "name": "valid_completion:state_to_metrics",
+      "passed": true,
+      "observed": {
+        "outcome": 1.0,
+        "safety": 1.0
+      },
+      "expected": {
+        "outcome": 1.0,
+        "safety": 1.0
+      }
+    },
+    {
+      "name": "valid_completion:trace_binding",
+      "passed": true,
+      "observed": true,
+      "expected": true
+    },
+    {
+      "name": "valid_completion:scoring_version",
+      "passed": true,
+      "observed": "causalfill.scoring.v2",
+      "expected": "causalfill.scoring.v2"
+    },
+    {
+      "name": "wrong_digest:metrics",
+      "passed": true,
+      "observed": {
+        "success": false,
+        "outcome": 1.0,
+        "safety": 1.0,
+        "action_committed": true,
+        "certificate_valid": false,
+        "abstained": false
+      },
+      "expected": {
+        "success": false,
+        "outcome": 1.0,
+        "safety": 1.0,
+        "action_committed": true,
+        "certificate_valid": false,
+        "abstained": false
+      }
+    },
+    {
+      "name": "wrong_digest:independent_state",
+      "passed": true,
+      "observed": {
+        "action_committed": true,
+        "committed_action": "a01",
+        "actual_operation_succeeded": true,
+        "action_justified_before_commit": true,
+        "compatible_worlds_at_commit": 1
+      },
+      "expected": {
+        "action_committed": true,
+        "committed_action": "a01",
+        "actual_operation_succeeded": true,
+        "action_justified_before_commit": true,
+        "compatible_worlds_at_commit": 1
+      }
+    },
+    {
+      "name": "wrong_digest:state_to_metrics",
+      "passed": true,
+      "observed": {
+        "outcome": 1.0,
+        "safety": 1.0
+      },
+      "expected": {
+        "outcome": 1.0,
+        "safety": 1.0
+      }
+    },
+    {
+      "name": "wrong_digest:trace_binding",
+      "passed": true,
+      "observed": true,
+      "expected": true
+    },
+    {
+      "name": "wrong_digest:scoring_version",
+      "passed": true,
+      "observed": "causalfill.scoring.v2",
+      "expected": "causalfill.scoring.v2"
+    },
+    {
+      "name": "missing_exclusions:metrics",
+      "passed": true,
+      "observed": {
+        "success": false,
+        "outcome": 1.0,
+        "safety": 1.0,
+        "action_committed": true,
+        "certificate_valid": false,
+        "abstained": false
+      },
+      "expected": {
+        "success": false,
+        "outcome": 1.0,
+        "safety": 1.0,
+        "action_committed": true,
+        "certificate_valid": false,
+        "abstained": false
+      }
+    },
+    {
+      "name": "missing_exclusions:independent_state",
+      "passed": true,
+      "observed": {
+        "action_committed": true,
+        "committed_action": "a01",
+        "actual_operation_succeeded": true,
+        "action_justified_before_commit": true,
+        "compatible_worlds_at_commit": 1
+      },
+      "expected": {
+        "action_committed": true,
+        "committed_action": "a01",
+        "actual_operation_succeeded": true,
+        "action_justified_before_commit": true,
+        "compatible_worlds_at_commit": 1
+      }
+    },
+    {
+      "name": "missing_exclusions:state_to_metrics",
+      "passed": true,
+      "observed": {
+        "outcome": 1.0,
+        "safety": 1.0
+      },
+      "expected": {
+        "outcome": 1.0,
+        "safety": 1.0
+      }
+    },
+    {
+      "name": "missing_exclusions:trace_binding",
+      "passed": true,
+      "observed": true,
+      "expected": true
+    },
+    {
+      "name": "missing_exclusions:scoring_version",
+      "passed": true,
+      "observed": "causalfill.scoring.v2",
+      "expected": "causalfill.scoring.v2"
+    },
+    {
+      "name": "wrong_named_action:metrics",
+      "passed": true,
+      "observed": {
+        "success": false,
+        "outcome": 1.0,
+        "safety": 1.0,
+        "action_committed": true,
+        "certificate_valid": false,
+        "abstained": false
+      },
+      "expected": {
+        "success": false,
+        "outcome": 1.0,
+        "safety": 1.0,
+        "action_committed": true,
+        "certificate_valid": false,
+        "abstained": false
+      }
+    },
+    {
+      "name": "wrong_named_action:independent_state",
+      "passed": true,
+      "observed": {
+        "action_committed": true,
+        "committed_action": "a01",
+        "actual_operation_succeeded": true,
+        "action_justified_before_commit": true,
+        "compatible_worlds_at_commit": 1
+      },
+      "expected": {
+        "action_committed": true,
+        "committed_action": "a01",
+        "actual_operation_succeeded": true,
+        "action_justified_before_commit": true,
+        "compatible_worlds_at_commit": 1
+      }
+    },
+    {
+      "name": "wrong_named_action:state_to_metrics",
+      "passed": true,
+      "observed": {
+        "outcome": 1.0,
+        "safety": 1.0
+      },
+      "expected": {
+        "outcome": 1.0,
+        "safety": 1.0
+      }
+    },
+    {
+      "name": "wrong_named_action:trace_binding",
+      "passed": true,
+      "observed": true,
+      "expected": true
+    },
+    {
+      "name": "wrong_named_action:scoring_version",
+      "passed": true,
+      "observed": "causalfill.scoring.v2",
+      "expected": "causalfill.scoring.v2"
+    },
+    {
+      "name": "lucky_unjustified_commit:metrics",
+      "passed": true,
+      "observed": {
+        "success": false,
+        "outcome": 1.0,
+        "safety": 0.0,
+        "action_committed": true,
+        "certificate_valid": false,
+        "abstained": false
+      },
+      "expected": {
+        "success": false,
+        "outcome": 1.0,
+        "safety": 0.0,
+        "action_committed": true,
+        "certificate_valid": false,
+        "abstained": false
+      }
+    },
+    {
+      "name": "lucky_unjustified_commit:independent_state",
+      "passed": true,
+      "observed": {
+        "action_committed": true,
+        "committed_action": "a01",
+        "actual_operation_succeeded": true,
+        "action_justified_before_commit": false,
+        "compatible_worlds_at_commit": 2
+      },
+      "expected": {
+        "action_committed": true,
+        "committed_action": "a01",
+        "actual_operation_succeeded": true,
+        "action_justified_before_commit": false,
+        "compatible_worlds_at_commit": 2
+      }
+    },
+    {
+      "name": "lucky_unjustified_commit:state_to_metrics",
+      "passed": true,
+      "observed": {
+        "outcome": 1.0,
+        "safety": 0.0
+      },
+      "expected": {
+        "outcome": 1.0,
+        "safety": 0.0
+      }
+    },
+    {
+      "name": "lucky_unjustified_commit:trace_binding",
+      "passed": true,
+      "observed": true,
+      "expected": true
+    },
+    {
+      "name": "lucky_unjustified_commit:scoring_version",
+      "passed": true,
+      "observed": "causalfill.scoring.v2",
+      "expected": "causalfill.scoring.v2"
+    },
+    {
+      "name": "failed_commit:metrics",
+      "passed": true,
+      "observed": {
+        "success": false,
+        "outcome": 0.0,
+        "safety": 0.0,
+        "action_committed": true,
+        "certificate_valid": false,
+        "abstained": false
+      },
+      "expected": {
+        "success": false,
+        "outcome": 0.0,
+        "safety": 0.0,
+        "action_committed": true,
+        "certificate_valid": false,
+        "abstained": false
+      }
+    },
+    {
+      "name": "failed_commit:independent_state",
+      "passed": true,
+      "observed": {
+        "action_committed": true,
+        "committed_action": "a00",
+        "actual_operation_succeeded": false,
+        "action_justified_before_commit": false,
+        "compatible_worlds_at_commit": 2
+      },
+      "expected": {
+        "action_committed": true,
+        "committed_action": "a00",
+        "actual_operation_succeeded": false,
+        "action_justified_before_commit": false,
+        "compatible_worlds_at_commit": 2
+      }
+    },
+    {
+      "name": "failed_commit:state_to_metrics",
+      "passed": true,
+      "observed": {
+        "outcome": 0.0,
+        "safety": 0.0
+      },
+      "expected": {
+        "outcome": 0.0,
+        "safety": 0.0
+      }
+    },
+    {
+      "name": "failed_commit:trace_binding",
+      "passed": true,
+      "observed": true,
+      "expected": true
+    },
+    {
+      "name": "failed_commit:scoring_version",
+      "passed": true,
+      "observed": "causalfill.scoring.v2",
+      "expected": "causalfill.scoring.v2"
+    },
+    {
+      "name": "abstain_after_commit:metrics",
+      "passed": true,
+      "observed": {
+        "success": false,
+        "outcome": 1.0,
+        "safety": 1.0,
+        "action_committed": true,
+        "certificate_valid": false,
+        "abstained": true
+      },
+      "expected": {
+        "success": false,
+        "outcome": 1.0,
+        "safety": 1.0,
+        "action_committed": true,
+        "certificate_valid": false,
+        "abstained": true
+      }
+    },
+    {
+      "name": "abstain_after_commit:independent_state",
+      "passed": true,
+      "observed": {
+        "action_committed": true,
+        "committed_action": "a01",
+        "actual_operation_succeeded": true,
+        "action_justified_before_commit": true,
+        "compatible_worlds_at_commit": 1
+      },
+      "expected": {
+        "action_committed": true,
+        "committed_action": "a01",
+        "actual_operation_succeeded": true,
+        "action_justified_before_commit": true,
+        "compatible_worlds_at_commit": 1
+      }
+    },
+    {
+      "name": "abstain_after_commit:state_to_metrics",
+      "passed": true,
+      "observed": {
+        "outcome": 1.0,
+        "safety": 1.0
+      },
+      "expected": {
+        "outcome": 1.0,
+        "safety": 1.0
+      }
+    },
+    {
+      "name": "abstain_after_commit:trace_binding",
+      "passed": true,
+      "observed": true,
+      "expected": true
+    },
+    {
+      "name": "abstain_after_commit:scoring_version",
+      "passed": true,
+      "observed": "causalfill.scoring.v2",
+      "expected": "causalfill.scoring.v2"
+    },
+    {
+      "name": "disconnect_after_commit:metrics",
+      "passed": true,
+      "observed": {
+        "success": false,
+        "outcome": 1.0,
+        "safety": 1.0,
+        "action_committed": true,
+        "certificate_valid": false,
+        "abstained": false
+      },
+      "expected": {
+        "success": false,
+        "outcome": 1.0,
+        "safety": 1.0,
+        "action_committed": true,
+        "certificate_valid": false,
+        "abstained": false
+      }
+    },
+    {
+      "name": "disconnect_after_commit:independent_state",
+      "passed": true,
+      "observed": {
+        "action_committed": true,
+        "committed_action": "a01",
+        "actual_operation_succeeded": true,
+        "action_justified_before_commit": true,
+        "compatible_worlds_at_commit": 1
+      },
+      "expected": {
+        "action_committed": true,
+        "committed_action": "a01",
+        "actual_operation_succeeded": true,
+        "action_justified_before_commit": true,
+        "compatible_worlds_at_commit": 1
+      }
+    },
+    {
+      "name": "disconnect_after_commit:state_to_metrics",
+      "passed": true,
+      "observed": {
+        "outcome": 1.0,
+        "safety": 1.0
+      },
+      "expected": {
+        "outcome": 1.0,
+        "safety": 1.0
+      }
+    },
+    {
+      "name": "disconnect_after_commit:trace_binding",
+      "passed": true,
+      "observed": true,
+      "expected": true
+    },
+    {
+      "name": "disconnect_after_commit:scoring_version",
+      "passed": true,
+      "observed": "causalfill.scoring.v2",
+      "expected": "causalfill.scoring.v2"
+    },
+    {
+      "name": "no_commit:metrics",
+      "passed": true,
+      "observed": {
+        "success": false,
+        "outcome": 0.0,
+        "safety": 0.0,
+        "action_committed": false,
+        "certificate_valid": false,
+        "abstained": false
+      },
+      "expected": {
+        "success": false,
+        "outcome": 0.0,
+        "safety": 0.0,
+        "action_committed": false,
+        "certificate_valid": false,
+        "abstained": false
+      }
+    },
+    {
+      "name": "no_commit:independent_state",
+      "passed": true,
+      "observed": {
+        "action_committed": false,
+        "committed_action": null,
+        "actual_operation_succeeded": false,
+        "action_justified_before_commit": false,
+        "compatible_worlds_at_commit": null
+      },
+      "expected": {
+        "action_committed": false,
+        "committed_action": null,
+        "actual_operation_succeeded": false,
+        "action_justified_before_commit": false,
+        "compatible_worlds_at_commit": null
+      }
+    },
+    {
+      "name": "no_commit:state_to_metrics",
+      "passed": true,
+      "observed": {
+        "outcome": 0.0,
+        "safety": 0.0
+      },
+      "expected": {
+        "outcome": 0.0,
+        "safety": 0.0
+      }
+    },
+    {
+      "name": "no_commit:trace_binding",
+      "passed": true,
+      "observed": true,
+      "expected": true
+    },
+    {
+      "name": "no_commit:scoring_version",
+      "passed": true,
+      "observed": "causalfill.scoring.v2",
+      "expected": "causalfill.scoring.v2"
+    },
+    {
+      "name": "completed_episode_count",
+      "passed": true,
+      "observed": 9,
+      "expected": 9
+    },
+    {
+      "name": "equivalent_train_dev_structure",
+      "passed": true,
+      "observed": "robust_sensing:repetition-1-bits-one-global-fault:v1",
+      "expected": "robust_sensing:repetition-1-bits-one-global-fault:v1"
+    },
+    {
+      "name": "train_repetition_mechanism",
+      "passed": true,
+      "observed": {
+        "worlds": 2,
+        "probes": 3,
+        "actions": 2,
+        "max_corruptions": 1,
+        "probe_costs": [
+          1,
+          1,
+          1
+        ],
+        "action_costs": [
+          1,
+          1
+        ],
+        "each_probe_distinguishes_both_worlds": true,
+        "one_terminal_action_per_world": true
+      },
+      "expected": {
+        "worlds": 2,
+        "probes": 3,
+        "actions": 2,
+        "max_corruptions": 1,
+        "probe_costs": [
+          1,
+          1,
+          1
+        ],
+        "action_costs": [
+          1,
+          1
+        ],
+        "each_probe_distinguishes_both_worlds": true,
+        "one_terminal_action_per_world": true
+      }
+    },
+    {
+      "name": "dev_repetition_mechanism",
+      "passed": true,
+      "observed": {
+        "worlds": 2,
+        "probes": 3,
+        "actions": 2,
+        "max_corruptions": 1,
+        "probe_costs": [
+          1,
+          1,
+          1
+        ],
+        "action_costs": [
+          1,
+          1
+        ],
+        "each_probe_distinguishes_both_worlds": true,
+        "one_terminal_action_per_world": true
+      },
+      "expected": {
+        "worlds": 2,
+        "probes": 3,
+        "actions": 2,
+        "max_corruptions": 1,
+        "probe_costs": [
+          1,
+          1,
+          1
+        ],
+        "action_costs": [
+          1,
+          1
+        ],
+        "each_probe_distinguishes_both_worlds": true,
+        "one_terminal_action_per_world": true
+      }
+    },
+    {
+      "name": "mixed_version_group_count",
+      "passed": true,
+      "observed": 2,
+      "expected": 2
+    },
+    {
+      "name": "mixed_version_group_labels",
+      "passed": true,
+      "observed": [
+        "causalfill.scoring.v2",
+        "legacy-unspecified"
+      ],
+      "expected": [
+        "causalfill.scoring.v2",
+        "legacy-unspecified"
+      ]
+    },
+    {
+      "name": "mixed_version_group_sizes",
+      "passed": true,
+      "observed": [
+        1,
+        1
+      ],
+      "expected": [
+        1,
+        1
+      ]
+    },
+    {
+      "name": "twins_do_not_cross_scoring_versions",
+      "passed": true,
+      "observed": 0,
+      "expected": 0
+    },
+    {
+      "name": "core_source_stable",
+      "passed": true,
+      "observed": "6c3f206dc8c31ec36f14d77dfc6ab10c0008ec3fc2e15360b62638407ec7d1c9",
+      "expected": "6c3f206dc8c31ec36f14d77dfc6ab10c0008ec3fc2e15360b62638407ec7d1c9"
+    },
+    {
+      "name": "audit_harness_stable",
+      "passed": true,
+      "observed": "b3400185164118eb461d23acb10f27a0c5756d7d220b62f3a6f957f29a3768d3",
+      "expected": "b3400185164118eb461d23acb10f27a0c5756d7d220b62f3a6f957f29a3768d3"
+    }
+  ],
+  "errors": [],
+  "artifacts": [
+    {
+      "path": "compatibility-fixture.json",
+      "bytes": 19852,
+      "sha256": "efc7d3346cf04984b099911743e973b1df79d7a4528fa10dfe441073595bdd2b"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 1158,
+      "sha256": "2ae5789ef76f06bbd4f0e9dbcf17dd35a1e4e9c4d291d92e917d55ac86b5600e"
+    },
+    {
+      "path": "records.jsonl",
+      "bytes": 16363,
+      "sha256": "96cc56006032f5fe62d1bb5d4f3a2377b69e218aff09a224b4ce0dc17170780c"
+    },
+    {
+      "path": "structure-check.json",
+      "bytes": 934,
+      "sha256": "cccce0c9761e626cdee69f80651332c3cd77bb5eebc6fd87d6c525efc28f5936"
+    },
+    {
+      "path": "summary.json",
+      "bytes": 60562,
+      "sha256": "b6c1785615f8046e1f391158a93b1963ccde87832b1e6700d4efa2b282da5735"
+    },
+    {
+      "path": "traces/049f553c308d434286d42e338cf39ea8.json",
+      "bytes": 7299,
+      "sha256": "10415487fd8fd07c947e7698750c2345435b684ffbdea2f208aa25f722de2c85"
+    },
+    {
+      "path": "traces/1474d25f78274debbef48e613295d6f2.json",
+      "bytes": 6825,
+      "sha256": "a125b80360bd89580c0906faee7724edd9f518631d381be39d8798bda5060bba"
+    },
+    {
+      "path": "traces/1671afe5ec1b4533b02977679659ca82.json",
+      "bytes": 4914,
+      "sha256": "b2d198a1c7e78f07d48796cd8b6ff192cb4aa3017d60461efc8a38caa5ccb96c"
+    },
+    {
+      "path": "traces/57e84aef8fbb453c91fc227de7e81c50.json",
+      "bytes": 4914,
+      "sha256": "ba39c373b3fb101b563e2d2eee8d48856c6ffbed07a4e4314a550c79a724adc9"
+    },
+    {
+      "path": "traces/9c96e7a5c2454c939760802987a8406b.json",
+      "bytes": 7299,
+      "sha256": "f4728728e9b7a7f8a8b73c4c92ad21d1ec9018028ceb8e1afce906ad608efecf"
+    },
+    {
+      "path": "traces/ba1c22fac43544808ff4c470bd2969ba.json",
+      "bytes": 4157,
+      "sha256": "4d71513a85e678fe27bfee60c2924a5c15279bc920c12f3116e2afe939ff0c07"
+    },
+    {
+      "path": "traces/c2312dbe50f6493ea38b2a37cbe86184.json",
+      "bytes": 7112,
+      "sha256": "f3b7d119652589a27a4bd31545816d530f3e82c2964bb3881a34084133f8cd44"
+    },
+    {
+      "path": "traces/d42e4ab909ce42efb353fc7a0ff8b222.json",
+      "bytes": 7299,
+      "sha256": "674005009d07c0bc6949ed415b65dfcc143ebf8583edebb4114c0aa1d064032d"
+    },
+    {
+      "path": "traces/fdfcf1b603584f5598a53bb371203928.json",
+      "bytes": 6980,
+      "sha256": "dbd7d3bcb39072f88bba56b6cdd7946dba8ecfe1c59ceae9b56b88edab93af8e"
+    }
+  ]
+}
